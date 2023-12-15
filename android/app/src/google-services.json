@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "969629870665",
+    "project_id": "cat304-30c1e",
+    "storage_bucket": "cat304-30c1e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:969629870665:android:63b1909c5c1dfde8f1ed98",
+        "android_client_info": {
+          "package_name": "com.hypeteq.fitnessapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCe_LdVgiHP1LSh6Y1bAlNybWD0cdomZvQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
