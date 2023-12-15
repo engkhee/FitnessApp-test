@@ -15,7 +15,7 @@ import 'package:flutter/cupertino.dart';
 
 final Map<String, WidgetBuilder> routes = {
   OnBoardingScreen.routeName: (context) => const OnBoardingScreen(),
-  LoginScreen.routeName: (context) => LoginScreen(),
+  LoginScreen.routeName: (context) => const LoginScreen(),
   StartScreen.routeName: (context) => const StartScreen(),
   SignupScreen.routeName: (context) => const SignupScreen(),
   CompleteProfileScreen.routeName: (context) => const CompleteProfileScreen(),

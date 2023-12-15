@@ -13,9 +13,9 @@ class RoundGradientButton extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       child: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(colors: AppColors.primaryG,begin: Alignment.centerLeft,end: Alignment.centerRight),
-          borderRadius: BorderRadius.circular(25),
-          boxShadow: const [BoxShadow(color: Colors.black26,blurRadius: 2,offset: Offset(0,2))]
+            gradient: LinearGradient(colors: AppColors.primaryG,begin: Alignment.centerLeft,end: Alignment.centerRight),
+            borderRadius: BorderRadius.circular(25),
+            boxShadow: const [BoxShadow(color: Colors.black26,blurRadius: 2,offset: Offset(0,2))]
         ),
         child: MaterialButton(
           minWidth: double.maxFinite,

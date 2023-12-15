@@ -11,7 +11,6 @@ class CompleteProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController dobController = TextEditingController();
     var media = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
@@ -22,19 +21,19 @@ class CompleteProfileScreen extends StatelessWidget {
             child: Column(
               children: [
                 Image.asset("assets/images/complete_profile.png",width: media.width),
-                const SizedBox(
+                SizedBox(
                   height: 15,
                 ),
-                const Text(
+                Text(
                   "Let’s complete your profile",
                   style: TextStyle(
-                    color: AppColors.blackColor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700
+                      color: AppColors.blackColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700
                   ),
                 ),
-                const SizedBox(height: 5),
-                const Text(
+                SizedBox(height: 5),
+                Text(
                   "It will help us to know more about you!",
                   style: TextStyle(
                     color: AppColors.grayColor,
@@ -43,7 +42,7 @@ class CompleteProfileScreen extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                const SizedBox(height: 25),
+                SizedBox(height: 25),
                 Container(
                   decoration: BoxDecoration(
                       color: AppColors.lightGrayColor,
@@ -67,35 +66,32 @@ class CompleteProfileScreen extends StatelessWidget {
                           items: ["Male","Female"].map((name) => DropdownMenuItem(value:name,child: Text(
                             name,style: const TextStyle(color: AppColors.grayColor,fontSize: 14),
                           ))).toList(), onChanged: (value) {  },isExpanded: true,
-                          hint: const Text("Choose Gender",style: TextStyle(color: AppColors.grayColor,fontSize: 12)),
+                          hint: Text("Choose Gender",style: const TextStyle(color: AppColors.grayColor,fontSize: 12)),
                         ),
                       )),
-                      const SizedBox(width: 8,)
+                      SizedBox(width: 8,)
                     ],
                   ),
                 ),
-                const SizedBox(height: 15),
-                const RoundTextField(
+                SizedBox(height: 15),
+                RoundTextField(
                   hintText: "Date of Birth",
                   icon: "assets/icons/calendar_icon.png",
                   textInputType: TextInputType.text,
-                  controller: dobController,
                 ),
-                const SizedBox(height: 15),
-                const RoundTextField(
+                SizedBox(height: 15),
+                RoundTextField(
                   hintText: "Your Weight",
                   icon: "assets/icons/weight_icon.png",
                   textInputType: TextInputType.text,
-                  controller: dobController,
                 ),
-                const SizedBox(height: 15),
-                const RoundTextField(
+                SizedBox(height: 15),
+                RoundTextField(
                   hintText: "Your Height",
                   icon: "assets/icons/swap_icon.png",
                   textInputType: TextInputType.text,
-                  controller: dobController,
                 ),
-                const SizedBox(height: 15),
+                SizedBox(height: 15),
                 RoundGradientButton(
                   title: "Next >",
                   onPressed: () {

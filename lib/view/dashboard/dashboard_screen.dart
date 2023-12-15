@@ -133,10 +133,10 @@ class TabButton extends StatelessWidget {
 
   const TabButton(
       {Key? key,
-      required this.icon,
-      required this.selectIcon,
-      required this.isActive,
-      required this.onTap})
+        required this.icon,
+        required this.selectIcon,
+        required this.isActive,
+        required this.onTap})
       : super(key: key);
 
   @override

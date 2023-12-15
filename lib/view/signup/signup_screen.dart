@@ -1,11 +1,9 @@
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import '../../common_widgets/round_gradient_button.dart';
 import '../../common_widgets/round_textfield.dart';
 import '../profile/complete_profile_screen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class SignupScreen extends StatefulWidget {
   static String routeName = "/SignupScreen";
@@ -18,24 +16,15 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   bool isCheck = false;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  // Declare TextEditingController for each text field
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController dobController = TextEditingController();
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: AppColors.whiteColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -67,47 +56,42 @@ class _SignupScreenState extends State<SignupScreen> {
                   hintText: "First Name",
                   icon: "assets/icons/profile_icon.png",
                   textInputType: TextInputType.name,
-                  controller: dobController),
+                ),
                 SizedBox(
                   height: 15,
                 ),
                 RoundTextField(
                     hintText: "Last Name",
                     icon: "assets/icons/profile_icon.png",
-                    textInputType: TextInputType.name,
-                    controller: dobController,),
+                    textInputType: TextInputType.name),
                 SizedBox(
                   height: 15,
                 ),
                 RoundTextField(
                     hintText: "Email",
                     icon: "assets/icons/message_icon.png",
-                    textInputType: TextInputType.emailAddress, ),
-                    controller: dobController,
+                    textInputType: TextInputType.emailAddress),
+                SizedBox(
                   height: 15,
                 ),
                 RoundTextField(
-                  // hintText: "Password",
-                  // icon: "assets/icons/lock_icon.png",
-                  // textInputType: TextInputType.text,
-                  // isObscureText: true,
-                  // rightIcon: TextButton(
-                  //     onPressed: () {},
-                  //     child: Container(
-                  //         alignment: Alignment.center,
-                  //         width: 20,
-                  //         height: 20,
-                  //         child: Image.asset(
-                  //           "assets/icons/hide_pwd_icon.png",
-                  //           width: 20,
-                  //           height: 20,
-                  //           fit: BoxFit.contain,
-                  //           color: AppColors.grayColor,
-                  //         ))),
-                  controller: firstNameController,
-                  hintText: "First Name",
-                  icon: "assets/icons/profile_icon.png",
-                  textInputType: TextInputType.name,
+                  hintText: "Password",
+                  icon: "assets/icons/lock_icon.png",
+                  textInputType: TextInputType.text,
+                  isObscureText: true,
+                  rightIcon: TextButton(
+                      onPressed: () {},
+                      child: Container(
+                          alignment: Alignment.center,
+                          width: 20,
+                          height: 20,
+                          child: Image.asset(
+                            "assets/icons/hide_pwd_icon.png",
+                            width: 20,
+                            height: 20,
+                            fit: BoxFit.contain,
+                            color: AppColors.grayColor,
+                          ))),
                 ),
                 SizedBox(
                   height: 15,
@@ -142,31 +126,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 RoundGradientButton(
                   title: "Register",
-                  onPressed: () async {
-                    try {
-                      UserCredential userCredential = await _auth
-                          .createUserWithEmailAndPassword(
-                          email: emailController.text,
-                          password: passwordController.text);
-
-                      // Store additional user information in Firestore
-                      await _firestore.collection('users').doc(userCredential.user!.uid).set({
-                        'firstName': firstNameController.text,
-                        'lastName': lastNameController.text,
-                        'email': emailController.text,
-                        // Add other fields as needed
-                      });
-
-                      Navigator.pushNamed(context, CompleteProfileScreen.routeName);
-                    } on FirebaseAuthException catch (e) {
-                      if (e.code == 'weak-password') {
-                        print('The password provided is too weak.');
-                      } else if (e.code == 'email-already-in-use') {
-                        print('The account already exists for that email.');
-                      }
-                    } catch (e) {
-                      print(e);
-                    }
+                  onPressed: () {
+                    Navigator.pushNamed(context, CompleteProfileScreen.routeName);
                   },
                 ),
                 SizedBox(
@@ -176,10 +137,10 @@ class _SignupScreenState extends State<SignupScreen> {
                   children: [
                     Expanded(
                         child: Container(
-                      width: double.maxFinite,
-                      height: 1,
-                      color: AppColors.grayColor.withOpacity(0.5),
-                    )),
+                          width: double.maxFinite,
+                          height: 1,
+                          color: AppColors.grayColor.withOpacity(0.5),
+                        )),
                     Text("  Or  ",
                         style: TextStyle(
                             color: AppColors.grayColor,
@@ -187,10 +148,10 @@ class _SignupScreenState extends State<SignupScreen> {
                             fontWeight: FontWeight.w400)),
                     Expanded(
                         child: Container(
-                      width: double.maxFinite,
-                      height: 1,
-                      color: AppColors.grayColor.withOpacity(0.5),
-                    )),
+                          width: double.maxFinite,
+                          height: 1,
+                          color: AppColors.grayColor.withOpacity(0.5),
+                        )),
                   ],
                 ),
                 SizedBox(
@@ -247,7 +208,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               fontSize: 14,
                               fontWeight: FontWeight.w400),
                           children: [
-                            TextSpan(
+                            const TextSpan(
                               text: "Already have an account? ",
                             ),
                             TextSpan(
@@ -262,6 +223,7 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
           ),
         ),
+      ),
     );
   }
 }

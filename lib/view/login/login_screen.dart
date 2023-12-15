@@ -1,26 +1,18 @@
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import '../../common_widgets/round_gradient_button.dart';
 import '../../common_widgets/round_textfield.dart';
 import '../profile/complete_profile_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   static String routeName = "/LoginScreen";
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  LoginScreen({super.key}) {
-    // TODO: implement LoginScreen
-    throw UnimplementedError();
-  }
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       body: SafeArea(
@@ -60,36 +52,29 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: media.width*0.05),
-
-              // Use TextEditingController for email and password fields
+              const RoundTextField(
+                  hintText: "Email",
+                  icon: "assets/icons/message_icon.png",
+                  textInputType: TextInputType.emailAddress),
+              SizedBox(height: media.width*0.05),
               RoundTextField(
-                controller: emailController,
-                hintText: "Email",
-                icon: "assets/icons/message_icon.png",
-                textInputType: TextInputType.emailAddress,
-              ),
-              SizedBox(height: media.width * 0.05),
-              RoundTextField(
-                controller: passwordController,
                 hintText: "Password",
                 icon: "assets/icons/lock_icon.png",
                 textInputType: TextInputType.text,
                 isObscureText: true,
                 rightIcon: TextButton(
-                  onPressed: () {},
-                  child: Container(
-                    alignment: Alignment.center,
-                    width: 20,
-                    height: 20,
-                    child: Image.asset(
-                      "assets/icons/hide_pwd_icon.png",
-                      width: 20,
-                      height: 20,
-                      fit: BoxFit.contain,
-                      color: AppColors.grayColor,
-                    ),
-                  ),
-                ),
+                    onPressed: () {},
+                    child: Container(
+                        alignment: Alignment.center,
+                        width: 20,
+                        height: 20,
+                        child: Image.asset(
+                          "assets/icons/hide_pwd_icon.png",
+                          width: 20,
+                          height: 20,
+                          fit: BoxFit.contain,
+                          color: AppColors.grayColor,
+                        ))),
               ),
               SizedBox(height: media.width*0.03),
               const Text("Forgot your password?",
@@ -100,26 +85,8 @@ class LoginScreen extends StatelessWidget {
               const Spacer(),
               RoundGradientButton(
                 title: "Login",
-                onPressed: () async {
-                  try {
-                    UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-                      email: emailController.text,
-                      password: passwordController.text,
-                    );
-
-                    // If login is successful, navigate to the desired screen (e.g., HomeScreen)
-                    if (userCredential.user != null) {
-                      Navigator.pushNamed(context, CompleteProfileScreen.routeName);
-                    }
-                  } on FirebaseAuthException catch (e) {
-                    if (e.code == 'user-not-found') {
-                      print('No user found for that email.');
-                    } else if (e.code == 'wrong-password') {
-                      print('Wrong password provided for that user.');
-                    }
-                  } catch (e) {
-                    print(e);
-                  }
+                onPressed: () {
+                  Navigator.pushNamed(context, CompleteProfileScreen.routeName);
                 },
               ),
               SizedBox(height: media.width*0.01),
