@@ -1,4 +1,5 @@
 import 'package:fitnessapp/utils/app_colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../common_widgets/round_gradient_button.dart';
@@ -16,6 +17,25 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   bool isCheck = false;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  Future<void> _register() async {
+    try {
+      final UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      // Navigate to profile completion or other screen
+      Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+    } on FirebaseAuthException catch (e) {
+      // Handle errors (e.g., email already in use, weak password)
+      print(e.message);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +73,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   height: 15,
                 ),
                 RoundTextField(
+                  controller: _firstNameController,
                   hintText: "First Name",
                   icon: "assets/icons/profile_icon.png",
                   textInputType: TextInputType.name,
@@ -61,20 +82,37 @@ class _SignupScreenState extends State<SignupScreen> {
                   height: 15,
                 ),
                 RoundTextField(
+                    controller: _lastNameController,
                     hintText: "Last Name",
                     icon: "assets/icons/profile_icon.png",
                     textInputType: TextInputType.name),
                 SizedBox(
                   height: 15,
                 ),
+
+                // RoundTextField(
+                //     hintText: "Email",
+                //     icon: "assets/icons/message_icon.png",
+                //     textInputType: TextInputType.emailAddress),
+                // Update the Email TextField
                 RoundTextField(
-                    hintText: "Email",
-                    icon: "assets/icons/message_icon.png",
-                    textInputType: TextInputType.emailAddress),
+                  controller: _emailController, // Add this line
+                  hintText: "Email",
+                  icon: "assets/icons/message_icon.png",
+                  textInputType: TextInputType.emailAddress,
+                ),
                 SizedBox(
                   height: 15,
                 ),
+                // RoundTextField(
+                //   hintText: "Password",
+                //   icon: "assets/icons/lock_icon.png",
+                //   textInputType: TextInputType.text,
+                //   isObscureText: true,
+
+                // Update the Password TextField
                 RoundTextField(
+                  controller: _passwordController, // Add this line
                   hintText: "Password",
                   icon: "assets/icons/lock_icon.png",
                   textInputType: TextInputType.text,
@@ -124,10 +162,17 @@ class _SignupScreenState extends State<SignupScreen> {
                 SizedBox(
                   height: 40,
                 ),
+                // RoundGradientButton(
+                //   title: "Register",
+                //   onPressed: () {
+                //     Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                //   },
+                // ),
+                // Update the Register Button
                 RoundGradientButton(
                   title: "Register",
                   onPressed: () {
-                    Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                    _register(); // Call the register function
                   },
                 ),
                 SizedBox(

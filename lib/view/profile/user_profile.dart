@@ -3,8 +3,8 @@ import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/profile/widgets/setting_row.dart';
 import 'package:fitnessapp/view/profile/widgets/title_subtitle_cell.dart';
 import 'package:flutter/material.dart';
-
 import '../../common_widgets/round_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class UserProfile extends StatefulWidget {
 class _UserProfileState extends State<UserProfile> {
 
   bool positive = false;
-
+  late User user; // Variable to hold the current user
   List accountArr = [
     {"image": "assets/icons/p_personal.png", "name": "Personal Data", "tag": "1"},
     {"image": "assets/icons/p_achi.png", "name": "Achievement", "tag": "2"},
@@ -39,7 +39,36 @@ class _UserProfileState extends State<UserProfile> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    // Get the current user when the widget is initialized
+    user = FirebaseAuth.instance.currentUser!;
+  }
+
+  @override
   Widget build(BuildContext context) {
+    String userName = "Stefani Wong"; // Default value
+    String userHeight = "180cm"; // Default value
+    String userWeight = "65kg"; // Default value
+    String userAge = "22yo"; // Default value
+
+    // Check if user data is available
+    if (user.displayName != null) {
+      userName = user.displayName!;
+    }
+    if (user.providerData.isNotEmpty) {
+      // Update user data based on the actual data structure in Firebase
+      // This depends on how you stored the user data during registration
+      // Adjust the path accordingly
+      userWeight = "65kg"; // Replace with the actual path to user weight
+      userHeight = "180cm"; // Replace with the actual path to user height
+
+      // Assuming date of birth is stored as a String in the format "yyyy-MM-dd"
+      String dob = "2001-01-01"; // Replace with the actual path to user date of birth
+      DateTime birthDate = DateTime.parse(dob);
+      userAge = _calculateAge(birthDate);
+    }
+
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       appBar: AppBar(
@@ -99,7 +128,7 @@ class _UserProfileState extends State<UserProfile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Stefani Wong",
+                          userName, //user's name
                           style: TextStyle(
                             color: AppColors.blackColor,
                             fontSize: 14,
@@ -132,11 +161,11 @@ class _UserProfileState extends State<UserProfile> {
               const SizedBox(
                 height: 15,
               ),
-              const Row(
+              Row(
                 children: [
                   Expanded(
                     child: TitleSubtitleCell(
-                      title: "180cm",
+                      title: userHeight, // user's height
                       subtitle: "Height",
                     ),
                   ),
@@ -145,7 +174,7 @@ class _UserProfileState extends State<UserProfile> {
                   ),
                   Expanded(
                     child: TitleSubtitleCell(
-                      title: "65kg",
+                      title: userWeight, // user's weight
                       subtitle: "Weight",
                     ),
                   ),
@@ -154,7 +183,7 @@ class _UserProfileState extends State<UserProfile> {
                   ),
                   Expanded(
                     child: TitleSubtitleCell(
-                      title: "22yo",
+                      title: userAge, // user's age
                       subtitle: "Age",
                     ),
                   ),
@@ -358,4 +387,11 @@ class _UserProfileState extends State<UserProfile> {
       ),
     );
   }
+}
+
+// Function to calculate age based on the date of birth
+String _calculateAge(DateTime birthDate) {
+  final now = DateTime.now();
+  final age = now.year - birthDate.year - (now.month > birthDate.month || (now.month == birthDate.month && now.day >= birthDate.day) ? 0 : 1);
+  return '$age yo';
 }

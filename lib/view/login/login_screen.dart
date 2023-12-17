@@ -1,14 +1,38 @@
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import '../../common_widgets/round_gradient_button.dart';
 import '../../common_widgets/round_textfield.dart';
 import '../profile/complete_profile_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   static String routeName = "/LoginScreen";
+
   const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  Future<void> _login() async {
+    try {
+      final UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      // Navigate to next screen or home page
+      Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+    } on FirebaseAuthException catch (e) {
+      // Handle errors (e.g., user not found, wrong password)
+      print(e.message);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +76,22 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: media.width*0.05),
-              const RoundTextField(
-                  hintText: "Email",
-                  icon: "assets/icons/message_icon.png",
-                  textInputType: TextInputType.emailAddress),
+              RoundTextField(
+                  // hintText: "Email",
+                  // icon: "assets/icons/message_icon.png",
+                  // textInputType: TextInputType.emailAddress),
+                controller: _emailController,
+                hintText: "Email",
+                icon: "assets/icons/message_icon.png",
+                textInputType: TextInputType.emailAddress,
+              ),
               SizedBox(height: media.width*0.05),
               RoundTextField(
+                // hintText: "Password",
+                // icon: "assets/icons/lock_icon.png",
+                // textInputType: TextInputType.text,
+                // isObscureText: true,
+                controller: _passwordController, // Add this line
                 hintText: "Password",
                 icon: "assets/icons/lock_icon.png",
                 textInputType: TextInputType.text,
@@ -84,9 +118,14 @@ class LoginScreen extends StatelessWidget {
                   )),
               const Spacer(),
               RoundGradientButton(
+              //   title: "Login",
+              //   onPressed: () {
+              //     Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+              //   },
+              // ),
                 title: "Login",
                 onPressed: () {
-                  Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                  _login(); // Call the login function
                 },
               ),
               SizedBox(height: media.width*0.01),
