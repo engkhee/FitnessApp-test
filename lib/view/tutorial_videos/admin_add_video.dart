@@ -36,12 +36,18 @@ class AddVideo extends StatelessWidget {
             ),
             SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () {
-                _firebaseService.addTutorialVideo(
+              onPressed: () async {
+                bool success = await _firebaseService.addTutorialVideo(
                   titleController.text,
                   descriptionController.text,
                   videoIdController.text,
                 );
+                if (success) {
+                  showSnackBar(context, 'Video uploaded successfully');
+                } else {
+                  showSnackBar(context, 'Error uploading video');
+                }
+
               },
               child: Text('Upload Video'),
             ),
@@ -50,4 +56,13 @@ class AddVideo extends StatelessWidget {
       ),
     );
   }
+}
+
+void showSnackBar(BuildContext context, String message) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(message),
+      duration: Duration(seconds: 2),
+    ),
+  );
 }
