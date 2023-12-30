@@ -30,6 +30,43 @@ class UserPage extends StatelessWidget {
   }
 }
 
+// class TutorialVideoList extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return StreamBuilder<QuerySnapshot>(
+//       stream: FirebaseFirestore.instance.collection('tutorial_videos').snapshots(),
+//       builder: (context, snapshot) {
+//         if (snapshot.hasData && snapshot.data != null) {
+//           var videos = snapshot.data!.docs;
+//           return ListView.builder(
+//             itemCount: videos.length,
+//             itemBuilder: (context, index) {
+//               var video = videos[index].data() as Map<String, dynamic>;
+//               var videoId = video['videoId'].toString();
+//               return ListTile(
+//                 title: Text(video['title']),
+//                 subtitle: Text(video['description']),
+//                 onTap: () {
+//                   Navigator.push(
+//                     context,
+//                     MaterialPageRoute(
+//                       builder: (context) => VideoPlayerPage(videoId: videoId),
+//                     ),
+//                   );
+//                 },
+//               );
+//             },
+//           );
+//         } else if (snapshot.hasError) {
+//           return Text('Error: ${snapshot.error}');
+//         } else {
+//           return Center(child: CircularProgressIndicator());
+//         }
+//       },
+//     );
+//   }
+// }
+
 class TutorialVideoList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -42,8 +79,18 @@ class TutorialVideoList extends StatelessWidget {
             itemCount: videos.length,
             itemBuilder: (context, index) {
               var video = videos[index].data() as Map<String, dynamic>;
-              var videoId = video['videoId'].toString();
+              var videoId = YoutubePlayer.convertUrlToId(video['videoId']) ?? ''; // Extract video ID from URL
+              var thumbnailUrl = 'https://img.youtube.com/vi/$videoId/0.jpg'; // YouTube thumbnail URL
+
               return ListTile(
+                leading: SizedBox(
+                  width: 100, // Fixed width for the thumbnail
+                  height: 56, // Fixed height for the thumbnail
+                  child: Image.network(
+                    thumbnailUrl,
+                    fit: BoxFit.cover, // Maintain aspect ratio
+                  ),
+                ),
                 title: Text(video['title']),
                 subtitle: Text(video['description']),
                 onTap: () {
@@ -110,4 +157,3 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
     super.dispose();
   }
 }
-
