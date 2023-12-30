@@ -1,6 +1,7 @@
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/activity/widgets/upcoming_workout_row.dart';
 import 'package:fitnessapp/view/activity/widgets/what_train_row.dart';
+import 'package:fitnessapp/view/tutorial_videos/user_watch_video.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -239,25 +240,25 @@ class _ActivityScreenState extends State<ActivityScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Daily Workout Schedule",
+                          "Explore more tutorial videos",
                           style: TextStyle(
                               color: AppColors.blackColor,
                               fontSize: 14,
                               fontWeight: FontWeight.w700),
                         ),
                         SizedBox(
-                          width: 70,
+                          width: 75,
                           height: 25,
                           child: RoundButton(
-                            title: "Check",
+                            title: "Search",
                             onPressed: () {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) =>
-                              //         const ActivityTrackerView(),
-                              //   ),
-                              // );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                       UserPage(),
+                                ),
+                              );
                             },
                           ),
                         )
