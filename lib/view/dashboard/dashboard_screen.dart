@@ -96,8 +96,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   }),
               const SizedBox(width: 30),
               TabButton(
-                  icon: "assets/icons/camera_icon.png",
-                  selectIcon: "assets/icons/camera_select_icon.png",
+                  icon: "assets/icons/chat.png",
+                  selectIcon: "assets/icons/chat_selected.png",
                   isActive: selectTab == 2,
                   onTap: () {
                     if (mounted) {
