@@ -43,7 +43,7 @@ class _CameraScreenState extends State<CameraScreen> {
         leadingWidth: 0,
         leading: const SizedBox(),
         title: Text(
-          "Progress Photo",
+          "Discussion Forum",
           style: TextStyle(
               color: AppColors.blackColor, fontSize: 16, fontWeight: FontWeight.w700),
         ),

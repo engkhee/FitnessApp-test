@@ -1,8 +1,12 @@
 import 'package:fitnessapp/routes.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
+import 'package:fitnessapp/view/auth/auth.dart';
+import 'package:fitnessapp/view/camera/camera_screen.dart';
 import 'package:fitnessapp/view/dashboard/dashboard_screen.dart';
 import 'package:fitnessapp/view/login/login_screen.dart';
 import 'package:fitnessapp/view/profile/complete_profile_screen.dart';
+import 'package:fitnessapp/view/profile/user_profile.dart';
+import 'package:fitnessapp/view/signup/signup_screen.dart';
 import 'package:fitnessapp/view/tutorial_videos/admin_add_video.dart';
 import 'package:fitnessapp/view/tutorial_videos/user_watch_video.dart';
 import 'package:fitnessapp/view/welcome/welcome_screen.dart';
@@ -15,7 +19,7 @@ import 'package:firebase_core/firebase_core.dart';
 //   runApp(const MyApp());
 // }
 
-  void main() async {
+  Future<void> main() async {
     WidgetsFlutterBinding.ensureInitialized();
     await FirebaseFunctions.initializeFirebase(); // Initialize Firebase
     await Firebase.initializeApp();
@@ -38,7 +42,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           fontFamily: "Poppins"
       ),
-      home: UserPage(),
+      home: Authpage(),
         //LoginScreen UserPage AddVideo
         //DashboardScreen
     );

@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
@@ -21,18 +22,12 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   Future<void> _login() async {
-    try {
-      final UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
-      );
-      // Navigate to next screen or home page
-      Navigator.pushNamed(context, CompleteProfileScreen.routeName);
-    } on FirebaseAuthException catch (e) {
-      // Handle errors (e.g., user not found, wrong password)
-      print(e.message);
-    }
+    );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: media.width*0.03,
+                      height: media.width*0.23,
                     ),
                     const Text(
                       "Hey there,",

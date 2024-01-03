@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../common_widgets/round_gradient_button.dart';
 import '../../common_widgets/round_textfield.dart';
+import '../login/login_screen.dart';
 import '../profile/complete_profile_screen.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -24,16 +25,12 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   Future<void> _register() async {
-    try {
-      final UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+    {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
       );
-      // Navigate to profile completion or other screen
-      Navigator.pushNamed(context, CompleteProfileScreen.routeName);
-    } on FirebaseAuthException catch (e) {
-      // Handle errors (e.g., email already in use, weak password)
-      print(e.message);
+
     }
   }
 
@@ -173,6 +170,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   title: "Register",
                   onPressed: () {
                     _register(); // Call the register function
+                    Navigator.pop(context);
                   },
                 ),
                 SizedBox(
