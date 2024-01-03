@@ -2,7 +2,6 @@ import 'package:fitnessapp/routes.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/auth/auth.dart';
 import 'package:fitnessapp/view/camera/camera_screen.dart';
-import 'package:fitnessapp/view/camera2/camera_screen.dart';
 import 'package:fitnessapp/view/dashboard/dashboard_screen.dart';
 import 'package:fitnessapp/view/login/login_screen.dart';
 import 'package:fitnessapp/view/profile/complete_profile_screen.dart';
