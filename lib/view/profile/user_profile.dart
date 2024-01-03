@@ -15,6 +15,10 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile> {
 
+  void signOut(){
+    FirebaseAuth.instance.signOut();
+  }
+
   bool positive = false;
   late User user; // Variable to hold the current user
   List accountArr = [
@@ -84,7 +88,7 @@ class _UserProfileState extends State<UserProfile> {
         ),
         actions: [
           InkWell(
-            onTap: () {},
+            onTap: signOut,
             child: Container(
               margin: const EdgeInsets.all(8),
               height: 40,
@@ -94,7 +98,7 @@ class _UserProfileState extends State<UserProfile> {
                   color: AppColors.lightGrayColor,
                   borderRadius: BorderRadius.circular(10)),
               child: Image.asset(
-                "assets/icons/more_icon.png",
+                "assets/icons/logout.png",
                 width: 12,
                 height: 12,
                 fit: BoxFit.contain,
