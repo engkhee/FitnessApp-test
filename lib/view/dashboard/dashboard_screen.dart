@@ -23,6 +23,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final List<Widget> _widgetOptions = <Widget>[
     const HomeScreen(),
     const ActivityScreen(),
+ //   const FoodHistory(),
     const ForumScreen(),
     const UserProfile()
   ];
@@ -46,11 +47,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 boxShadow: const [
                   BoxShadow(color: Colors.black12, blurRadius: 2)
                 ]),
-            child: const Icon(Icons.search_sharp,
-                color: AppColors.whiteColor, size: 32),
+            child: TabButton(
+                icon: "assets/icons/food.png",
+                selectIcon: "assets/icons/food_select.png",
+                isActive: selectTab == 4,
+                onTap: () {
+                  if (mounted) {
+                    setState(() {
+                      selectTab = 4;
+                    });
+                  }
+                }),
           ),
         ),
-      ),
+
+          ),
+
       body: IndexedStack(
         index: selectTab,
         children: _widgetOptions,
