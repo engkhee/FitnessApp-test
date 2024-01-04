@@ -129,7 +129,7 @@ class _PostState extends State<Post> {
         borderRadius: BorderRadius.circular(8),
       ),
       margin: EdgeInsets.only(top: 10, left: 20, right: 20),
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -151,11 +151,6 @@ class _PostState extends State<Post> {
                 // Forum Posts
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // message
-                  Text(widget.message),
-
-
-
                   // user
                   Row(
                     children: [
@@ -181,10 +176,24 @@ class _PostState extends State<Post> {
             ],
           ),
 
-          const SizedBox(height: 20,),
+          const SizedBox(height: 10,),
+          // message
+          Container(
+            margin: EdgeInsets.only(top: 8, left: 8),
+            child: Row(
+              children: [
+                Text(
+                  widget.message,
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 5,),
 
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               // LIKE
               Column(

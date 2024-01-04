@@ -51,7 +51,7 @@ class _CameraScreenState extends State<ForumScreen> {
         leadingWidth: 0,
         leading: const SizedBox(),
         title: Text(
-          "Discussion Forum",
+          "Discussion Forum ✎",
           style: TextStyle(
               color: AppColors.blackColor, fontSize: 16, fontWeight: FontWeight.w700),
         ),
@@ -59,10 +59,9 @@ class _CameraScreenState extends State<ForumScreen> {
       body: Center(
         child: Column(
           children: [
-
             //post message
             Padding(
-              padding: const EdgeInsets.all(17.0),
+              padding: const EdgeInsets.all(15.0),
               child: Row(
                 children: [
                   //text field
