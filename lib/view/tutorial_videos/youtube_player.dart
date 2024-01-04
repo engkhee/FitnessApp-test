@@ -49,7 +49,16 @@ class _YoutubePlayerWidgetState extends State<YoutubePlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return YoutubePlayer(controller: _controller);
+    return YoutubePlayer(
+      controller: _controller,
+      showVideoProgressIndicator: true,
+      progressIndicatorColor: Colors.indigoAccent,
+      progressColors: ProgressBarColors(
+        playedColor: Colors.purple,
+        handleColor: Colors.deepPurpleAccent,
+      ),
+
+    );
   }
 
   @override

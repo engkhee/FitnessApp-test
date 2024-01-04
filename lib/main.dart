@@ -3,7 +3,7 @@ import 'package:fitnessapp/routes.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/auth/auth.dart';
 import 'package:fitnessapp/view/camera/camera_screen.dart';
-import 'package:fitnessapp/view/camera2/camera_screen.dart';
+//import 'package:fitnessapp/view/camera2/camera_screen.dart';
 import 'package:fitnessapp/view/dashboard/dashboard_screen.dart';
 import 'package:fitnessapp/view/login/login_screen.dart';
 import 'package:fitnessapp/view/profile/complete_profile_screen.dart';
@@ -13,6 +13,7 @@ import 'package:fitnessapp/view/tutorial_videos/admin_add_video.dart';
 import 'package:fitnessapp/view/tutorial_videos/user_watch_video.dart';
 import 'package:fitnessapp/view/welcome/welcome_screen.dart';
 import 'package:fitnessapp/view/your_goal/your_goal_screen.dart';
+import 'package:fitnessapp/view/activity/activity_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/view/firebase/firebase_functions.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           fontFamily: "Poppins"
       ),
-      home: Authpage(),
+      home: AddVideo(),
         // Authpage
         //LoginScreen UserPage AddVideo
         //DashboardScreen

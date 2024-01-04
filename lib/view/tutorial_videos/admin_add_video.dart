@@ -135,6 +135,9 @@ class _AddVideoState extends State<AddVideo> {
                 );
                 if (success) {
                   showSnackBar(context, 'Video uploaded successfully');
+                  titleController.clear();
+                  descriptionController.clear();
+                  videoIdController.clear();
                 } else {
                   showSnackBar(context, 'Error uploading video');
                 }

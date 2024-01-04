@@ -17,18 +17,18 @@ class ActivityScreen extends StatefulWidget {
 
 class _ActivityScreenState extends State<ActivityScreen> {
 
-  List latestArr = [
-    {
-      "image": "assets/images/Workout1.png",
-      "title": "Fullbody Workout",
-      "time": "Today, 03:00pm"
-    },
-    {
-      "image": "assets/images/Workout2.png",
-      "title": "Upperbody Workout",
-      "time": "June 05, 02:00pm"
-    },
-  ];
+  // List latestArr = [
+  //   {
+  //     "image": "assets/images/Workout1.png",
+  //     "title": "Fullbody Workout",
+  //     "time": "Today, 03:00pm"
+  //   },
+  //   {
+  //     "image": "assets/images/Workout2.png",
+  //     "title": "Upperbody Workout",
+  //     "time": "June 05, 02:00pm"
+  //   },
+  // ];
 
   List whatArr = [
     {
@@ -42,6 +42,12 @@ class _ActivityScreenState extends State<ActivityScreen> {
       "title": "Lowebody Workout",
       "exercises": "12 Exercises",
       "time": "40mins"
+    },
+    {
+      "image": "assets/images/what_3.png",
+      "title": "AB Workout",
+      "exercises": "14 Exercises",
+      "time": "20mins"
     },
     {
       "image": "assets/images/what_3.png",
@@ -268,37 +274,37 @@ class _ActivityScreenState extends State<ActivityScreen> {
                   SizedBox(
                     height: media.width * 0.05,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Upcoming Workout",
-                        style: TextStyle(
-                            color: AppColors.blackColor,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          "See More",
-                          style: TextStyle(
-                              color: AppColors.grayColor,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700),
-                        ),
-                      )
-                    ],
-                  ),
-                  ListView.builder(
-                      padding: EdgeInsets.zero,
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: latestArr.length,
-                      itemBuilder: (context, index) {
-                        var wObj = latestArr[index] as Map? ?? {};
-                        return UpcomingWorkoutRow(wObj: wObj);
-                      }),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Text(
+                  //       "Upcoming Workout",
+                  //       style: TextStyle(
+                  //           color: AppColors.blackColor,
+                  //           fontSize: 16,
+                  //           fontWeight: FontWeight.w700),
+                  //     ),
+                  //     TextButton(
+                  //       onPressed: () {},
+                  //       child: Text(
+                  //         "See More",
+                  //         style: TextStyle(
+                  //             color: AppColors.grayColor,
+                  //             fontSize: 14,
+                  //             fontWeight: FontWeight.w700),
+                  //       ),
+                  //     )
+                  //   ],
+                  // ),
+                  // ListView.builder(
+                  //     padding: EdgeInsets.zero,
+                  //     physics: const NeverScrollableScrollPhysics(),
+                  //     shrinkWrap: true,
+                  //     itemCount: latestArr.length,
+                  //     itemBuilder: (context, index) {
+                  //       var wObj = latestArr[index] as Map? ?? {};
+                  //       return UpcomingWorkoutRow(wObj: wObj);
+                  //     }),
                   SizedBox(
                     height: media.width * 0.05,
                   ),
@@ -306,7 +312,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "What Do You Want to Train",
+                        "Fitness Plan",
                         style: TextStyle(
                             color: AppColors.blackColor,
                             fontSize: 16,
