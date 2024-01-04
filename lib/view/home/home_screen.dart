@@ -179,27 +179,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Welcome Back,",
-                          style: TextStyle(
-                            color: AppColors.midGrayColor,
-                            fontSize: 12,
-                          ),
-                        ),
-                        Text(
-                          "Stefani Wong",
-                          style: TextStyle(
-                            color: AppColors.blackColor,
-                            fontSize: 20,
-                            fontFamily: "Poppins",
-                            fontWeight: FontWeight.w700,
-                          ),
-                        )
-                      ],
-                    ),
                     IconButton(
                         onPressed: () {
                           Navigator.pushNamed(context, NotificationScreen.routeName);
@@ -209,7 +188,38 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: 25,
                           height: 25,
                           fit: BoxFit.fitHeight,
-                        ))
+                        )),
+                    Column(
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              child: const Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Welcome Back,",
+                                    style: TextStyle(
+                                      color: AppColors.midGrayColor,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                  Text(
+                                    "Stefani Wong",
+                                    style: TextStyle(
+                                      color: AppColors.blackColor,
+                                      fontSize: 20,
+                                      fontFamily: "Poppins",
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
                   ],
                 ),
                 SizedBox(height: media.width * 0.05),
@@ -221,11 +231,24 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      Image.asset(
-                        "assets/icons/bg_dots.png",
-                        height: media.width * 0.4,
-                        width: double.maxFinite,
-                        fit: BoxFit.fitHeight,
+                      Row(
+                        children: [
+                          Container(
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.asset(
+                                    "assets/icons/bg_dots.png",
+                                    height: media.width * 0.4,
+                                    width: double.maxFinite,
+                                    fit: BoxFit.fitHeight,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                       Padding(
                         padding:
