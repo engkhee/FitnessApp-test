@@ -312,7 +312,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Fitness Plan",
+                        "Fitness Workout",
                         style: TextStyle(
                             color: AppColors.blackColor,
                             fontSize: 16,

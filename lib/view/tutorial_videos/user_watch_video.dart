@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import 'package:fitnessapp/view/tutorial_videos/create_playlist.dart';
+//import 'package:fitnessapp/view/tutorial_videos/create_playlist.dart';
 
 class UserPage extends StatelessWidget {
   static String routeName = "/UserPage";
@@ -14,25 +14,31 @@ class UserPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(0xFFD1C4E9),
         //title: Text('Tutorial Videos'),
-        title: const Text(
-          "Tutorial Videos",
-          style: TextStyle(
-              color: AppColors.blackColor,
-              fontSize: 16,
-              fontWeight: FontWeight.w700),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Tutorial Videos",
+              style: TextStyle(
+                  color: AppColors.blackColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700),
+            ),
+          ],
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.playlist_add),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => PlaylistManagementPage()),
-              );
-            },
-          ),
-        ],
+        //actions: <Widget>[
+          // IconButton(
+          //   icon: Icon(Icons.playlist_add),
+          //   onPressed: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(builder: (context) => PlaylistManagementPage()),
+          //     );
+          //   },
+          // ),
+        //],
       ),
       body: Column(
         children: [
@@ -143,7 +149,7 @@ class VideoPlayerPage extends StatefulWidget {
 
 class _VideoPlayerPageState extends State<VideoPlayerPage> {
   late YoutubePlayerController _controller;
-
+  late Size size;
   @override
   void initState() {
     super.initState();
@@ -156,30 +162,73 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
     );
   }
 
+  void seekForward() {
+    _controller.seekTo(Duration(seconds: _controller.value.position.inSeconds + 5));
+  }
+
+  void seekBackward() {
+    _controller.seekTo(Duration(seconds: _controller.value.position.inSeconds - 5));
+  }
+
   @override
   Widget build(BuildContext context) {
+    size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
-
+        backgroundColor: Color(0xFF9575CD),
+        title: Text(widget.title,
+            style: TextStyle(
+            color: AppColors.whiteColor,
+            fontSize: 16,
+            fontWeight: FontWeight.w600),
+        ),
       ),
-      body: Column(
+      body: Stack(
         children: [
-          Expanded(
+          Container(
+            height: size.height,
+            width: size.width,
+            decoration: BoxDecoration(color: Color(0xFFD1C4E9)),
             child: Center(
-              child: YoutubePlayer(controller: _controller),
-            ),
-          ),
-          Padding(
-            // padding: EdgeInsets.all(8.0),
-            // child: Text(
-            //   widget.description,
-            //   style: TextStyle(fontSize: 16),
-            // ),
-            padding: const EdgeInsets.all(32),
-            child: Text(
-              widget.description,
-              softWrap: true,
+              child: ListView(
+                shrinkWrap: true,
+                children: [
+                  YoutubePlayer(controller: _controller,),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.replay_5),
+                              onPressed: seekBackward,
+                              color: Colors.purple,
+                            ),
+                            IconButton(
+                              icon: Icon(_controller.value.isPlaying? Icons.pause:Icons.play_arrow),
+                              onPressed: (){
+                                if(_controller.value.isPlaying)
+                                  _controller.pause();
+                                else
+                                  _controller.play();
+                              },
+                              color: Colors.purple,
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.forward_5),
+                              onPressed: seekForward,
+                              color: Colors.purple,
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              )
             ),
           ),
         ],
