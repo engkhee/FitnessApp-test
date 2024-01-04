@@ -133,45 +133,51 @@ class _PostState extends State<Post> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // // profile pic
-          // Container(
-          //   decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey[400]),
-          //   padding: EdgeInsets.all(10),
-          //   child: Icon(
-          //     Icons.person,
-          //     color: Colors.white,
-          //   ),
-          // ),
+          // profile pic
+
           //message and user email
-          Column(
-            // Forum Posts
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
             children: [
-              // message
-              Text(widget.message),
-
-              const SizedBox(height: 5),
-
-              // user
-              Row(
+              Container(
+                decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey[400]),
+                padding: EdgeInsets.all(5),
+                child: Icon(
+                  Icons.person,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Column(
+                // Forum Posts
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    widget.user,
-                    style: TextStyle(color: Colors.grey[400], fontSize: 12),
+                  // message
+                  Text(widget.message),
+
+
+
+                  // user
+                  Row(
+                    children: [
+                      Text(
+                        widget.user,
+                        style: TextStyle(color: Colors.grey[400], fontSize: 12),
+                      ),
+
+                      Text(
+                        " • ",
+                        style: TextStyle(color: Colors.grey[400], fontSize: 12),
+                      ),
+
+                      Text(
+                        widget.time,
+                        style: TextStyle(color: Colors.grey[400], fontSize: 12),
+                      ),
+                    ],
                   ),
 
-                  Text(
-                    " • ",
-                    style: TextStyle(color: Colors.grey[400], fontSize: 12),
-                  ),
-
-                  Text(
-                    widget.time,
-                    style: TextStyle(color: Colors.grey[400], fontSize: 12),
-                  ),
                 ],
               ),
-
             ],
           ),
 
