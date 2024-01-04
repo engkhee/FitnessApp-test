@@ -5,6 +5,8 @@ import 'package:fitnessapp/common_widgets/round_textfield.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
+import 'helper/helper_method.dart';
+
 class ForumScreen extends StatefulWidget {
   const ForumScreen({Key? key}) : super(key: key);
 
@@ -106,6 +108,7 @@ class _CameraScreenState extends State<ForumScreen> {
                           return Post(
                             message: post['Message'],
                             user: post['UserEmail'],
+                            time: formatDate(post["TimeStamp"]),
                             postId: post.id,
                             likes: List<String>.from(post['Likes'] ?? []),
                           );
