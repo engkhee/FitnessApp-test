@@ -4,6 +4,7 @@ import 'package:fitnessapp/view/forum/forum_screen.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/activity/activity_screen.dart';
 import 'package:fitnessapp/view/profile/user_profile.dart';
+import 'package:fitnessapp/view/food/food_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../home/home_screen.dart';
@@ -24,7 +25,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     const HomeScreen(),
     const ActivityScreen(),
     const ForumScreen(),
-    const UserProfile()
+    const UserProfile(),
+    const FoodIntake(),
   ];
 
   @override
@@ -46,11 +48,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 boxShadow: const [
                   BoxShadow(color: Colors.black12, blurRadius: 2)
                 ]),
-            child: const Icon(Icons.search_sharp,
-                color: AppColors.whiteColor, size: 32),
+            child: TabButton(
+                icon: "assets/icons/food.png",
+                selectIcon: "assets/icons/food_select.png",
+                isActive: selectTab == 4,
+                onTap: () {
+                  if (mounted) {
+                    setState(() {
+                      selectTab = 4;
+                    });
+                  }
+                }),
           ),
         ),
-      ),
+
+          ),
+
       body: IndexedStack(
         index: selectTab,
         children: _widgetOptions,

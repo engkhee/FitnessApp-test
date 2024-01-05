@@ -17,7 +17,7 @@ class Comment extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color:  Colors.purple[50],
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(8),
       ),
       margin: const EdgeInsets.only(bottom: 5),
       padding: const EdgeInsets.all(13),
@@ -32,6 +32,14 @@ class Comment extends StatelessWidget {
           // user, time
           Row(
             children: [
+              const Icon(
+                Icons.comment_bank_outlined,
+                color: Colors.grey,
+                size: 15,
+              ),
+
+              const SizedBox(width: 5,),
+
               Text(
                 user,
                 style: TextStyle(color: Colors.grey[400], fontSize: 11.5),
