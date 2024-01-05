@@ -24,8 +24,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _login() async {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
+      email: _emailController.text,
+      password: _passwordController.text,
     );
   }
 
@@ -73,9 +73,9 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: media.width*0.05),
               RoundTextField(
-                  // hintText: "Email",
-                  // icon: "assets/icons/message_icon.png",
-                  // textInputType: TextInputType.emailAddress),
+                // hintText: "Email",
+                // icon: "assets/icons/message_icon.png",
+                // textInputType: TextInputType.emailAddress),
                 controller: _emailController,
                 hintText: "Email",
                 icon: "assets/icons/message_icon.png",
@@ -114,11 +114,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   )),
               const Spacer(),
               RoundGradientButton(
-              //   title: "Login",
-              //   onPressed: () {
-              //     Navigator.pushNamed(context, CompleteProfileScreen.routeName);
-              //   },
-              // ),
+                //   title: "Login",
+                //   onPressed: () {
+                //     Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                //   },
+                // ),
                 title: "Login",
                 onPressed: () {
                   _login(); // Call the login function

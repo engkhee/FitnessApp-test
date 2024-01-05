@@ -66,9 +66,9 @@ class _SignupScreenState extends State<SignupScreen> {
                 Text(
                   "Welcome to fitness application",
                   style: TextStyle(
-                  color: AppColors.blackColor,
-                  fontSize: 16,
-                ),
+                    color: AppColors.blackColor,
+                    fontSize: 16,
+                  ),
                 ),
                 SizedBox(height: 5),
                 Text(
