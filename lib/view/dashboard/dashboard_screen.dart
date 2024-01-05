@@ -4,6 +4,7 @@ import 'package:fitnessapp/view/forum/forum_screen.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/activity/activity_screen.dart';
 import 'package:fitnessapp/view/profile/user_profile.dart';
+import 'package:fitnessapp/view/food/food_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../home/home_screen.dart';
@@ -23,9 +24,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final List<Widget> _widgetOptions = <Widget>[
     const HomeScreen(),
     const ActivityScreen(),
- //   const FoodHistory(),
     const ForumScreen(),
-    const UserProfile()
+    const UserProfile(),
+    const FoodIntake(),
   ];
 
   @override
