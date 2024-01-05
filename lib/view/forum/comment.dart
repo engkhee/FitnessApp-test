@@ -32,6 +32,14 @@ class Comment extends StatelessWidget {
           // user, time
           Row(
             children: [
+              const Icon(
+                Icons.comment_bank_outlined,
+                color: Colors.grey,
+                size: 15,
+              ),
+
+              const SizedBox(width: 5,),
+
               Text(
                 user,
                 style: TextStyle(color: Colors.grey[400], fontSize: 11.5),
