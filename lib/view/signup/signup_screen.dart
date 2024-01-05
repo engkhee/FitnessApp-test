@@ -1,5 +1,6 @@
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitnessapp/view/signup/auth_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../common_widgets/round_gradient_button.dart';
@@ -24,13 +25,26 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  // Future<void> _register() async {
+  //   {
+  //     await FirebaseAuth.instance.createUserWithEmailAndPassword(
+  //       email: _emailController.text,
+  //       password: _passwordController.text,
+  //     );
+  //
+  //   }
+  // }
+
   Future<void> _register() async {
-    {
+    try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
       );
-
+      print("Registration successful!");
+    } catch (error) {
+      print("Error during registration: $error");
+      // Handle the error (display a message, log, etc.)
     }
   }
 
@@ -50,11 +64,11 @@ class _SignupScreenState extends State<SignupScreen> {
                   height: 15,
                 ),
                 Text(
-                  "Hey there,",
+                  "Welcome to fitness application",
                   style: TextStyle(
-                    color: AppColors.blackColor,
-                    fontSize: 16,
-                  ),
+                  color: AppColors.blackColor,
+                  fontSize: 16,
+                ),
                 ),
                 SizedBox(height: 5),
                 Text(
@@ -160,19 +174,29 @@ class _SignupScreenState extends State<SignupScreen> {
                   height: 40,
                 ),
                 // RoundGradientButton(
-                //   title: "Register",
+                //   title: "Register as user",
                 //   onPressed: () {
                 //     Navigator.pushNamed(context, CompleteProfileScreen.routeName);
                 //   },
                 // ),
                 // Update the Register Button
                 RoundGradientButton(
-                  title: "Register",
+                  title: "Register as user",
                   onPressed: () {
                     _register(); // Call the register function
-                    Navigator.pop(context);
+                    Navigator.pushNamed(context,LoginScreen.routeName);
                   },
                 ),
+
+                RoundGradientButton(
+                  title: "Register as nutritionist",
+                  onPressed: () {
+                    _register(); // Call the register function
+                    Navigator.pushNamed(context, AuthService.routeName);
+                  },
+                ),
+
+
                 SizedBox(
                   height: 10,
                 ),
