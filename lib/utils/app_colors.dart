@@ -12,6 +12,9 @@ class AppColors{
   static const grayColor = Color(0xFF7B6F72);
   static const lightGrayColor = Color(0xFFF7F8F8);
   static const midGrayColor = Color(0xFFADA4A5);
+  static const CARBS_COLOR = 0xffD83027;
+  static const PROTEIN_COLOR = 0x9027D830;
+  static const FAT_COLOR = 0xFF0D47A1;
 
   static List<Color> get primaryG => [primaryColor1,primaryColor2];
   static List<Color> get secondaryG => [secondaryColor1,secondaryColor2];
