@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:fitnessapp/view/forum/comment.dart';
 import 'package:fitnessapp/view/forum/comment_button.dart';
+import 'package:fitnessapp/view/forum/delete_button.dart';
 import 'package:fitnessapp/view/forum/like_button.dart';
 import 'package:flutter/material.dart';
 
@@ -121,6 +123,61 @@ class _PostState extends State<Post> {
     );
   }
 
+  // delete a post
+  void deletePost(){
+    // show a dialog box asking for confirmation before deleting the post
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Delete Post"),
+          content: const Text("Are you sure you want to delete this post?"),
+          actions: [
+            // CANCEL BUTTON
+            TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("Cancel"),
+            ),
+
+            // DELETE BUTTON
+            TextButton(
+              onPressed: () async {
+                // delete the comments from firestore first
+                // (if delete the post, the comments will still be stored in fire base)
+                final commentDocs = await FirebaseFirestore.instance
+                    .collection("UserPosts")
+                    .doc(widget.postId)
+                    .collection("Comments")
+                    .get();
+
+                for(var doc in commentDocs.docs){
+                  await FirebaseFirestore.instance
+                    .collection("UserPosts")
+                    .doc(widget.postId)
+                    .collection("Comments")
+                    .doc(doc.id)
+                    .delete();
+                }
+
+                // Then delete the post
+                FirebaseFirestore.instance
+                    .collection("UserPosts")
+                    .doc(widget.postId)
+                    .delete()
+                    .then((value) => print("post deleted"))
+                    .catchError(
+                        (error) => print("failed to delte post: $error")
+                );
+
+                //dissmiss the dialog
+                Navigator.pop(context);
+              },
+              child: const Text("Delete"),
+            ),
+          ],
+        ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -173,6 +230,11 @@ class _PostState extends State<Post> {
 
                 ],
               ),
+              const SizedBox(width: 80,),
+
+              // delete button
+              if(widget.user == currentUser.email)
+                DeleteButton(onTap: deletePost),
             ],
           ),
 
