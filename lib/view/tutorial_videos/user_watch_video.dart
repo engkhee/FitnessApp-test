@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 //import 'package:fitnessapp/view/tutorial_videos/create_playlist.dart';
 
@@ -150,9 +151,11 @@ class VideoPlayerPage extends StatefulWidget {
 class _VideoPlayerPageState extends State<VideoPlayerPage> {
   late YoutubePlayerController _controller;
   late Size size;
+
   @override
   void initState() {
     super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     _controller = YoutubePlayerController(
       initialVideoId: YoutubePlayer.convertUrlToId(widget.videoId) ?? 'dQw4w9WgXcQ',
       flags: YoutubePlayerFlags(
@@ -170,9 +173,18 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
     _controller.seekTo(Duration(seconds: _controller.value.position.inSeconds - 5));
   }
 
+  void enterFullScreen() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+  }
+
+  void exitFullScreen() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
+  }
+
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF9575CD),
@@ -221,25 +233,34 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                               icon: const Icon(Icons.forward_5),
                               onPressed: seekForward,
                               color: Colors.purple,
+                            ),
+                            IconButton(
+                              icon: Icon(_controller.value.isFullScreen ? Icons.fullscreen_exit : Icons.fullscreen),
+                              onPressed: () async {
+                                if (_controller.value.isFullScreen) {
+                                  exitFullScreen();
+                                }
+                                else
+                                  enterFullScreen();
+                              })
+                              ],
                             )
                           ],
                         )
-                      ],
+                  )],
                     ),
                   ),
-                ],
+          )],
               )
-            ),
-          ),
-        ],
-      ),
-    );
+            );
   }
 
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: SystemUiOverlay.values);
   }
 }
 

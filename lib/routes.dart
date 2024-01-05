@@ -32,5 +32,5 @@ final Map<String, WidgetBuilder> routes = {
   WorkoutScheduleView.routeName: (context) => const WorkoutScheduleView(),
   AddVideo.routeName: (context) => AddVideo(),
   UserPage.routeName: (context) => UserPage(),
-  PlaylistManagementPage.routeName: (context) => PlaylistManagementPage(),
+  CreatePlaylist.routeName: (context) => CreatePlaylist(),
 };
