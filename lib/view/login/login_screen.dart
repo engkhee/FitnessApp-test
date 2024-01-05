@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../common_widgets/round_gradient_button.dart';
 import '../../common_widgets/round_textfield.dart';
+import '../dashboard/dashboard_screen.dart';
 import '../profile/complete_profile_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -121,6 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 title: "Login",
                 onPressed: () {
                   _login(); // Call the login function
+                  // Navigator.pushNamed(context,DashboardScreen.routeName);
                 },
               ),
               SizedBox(height: media.width*0.01),
