@@ -17,18 +17,21 @@ class ActivityScreen extends StatefulWidget {
 
 class _ActivityScreenState extends State<ActivityScreen> {
 
-  // List latestArr = [
-  //   {
-  //     "image": "assets/images/Workout1.png",
-  //     "title": "Fullbody Workout",
-  //     "time": "Today, 03:00pm"
-  //   },
-  //   {
-  //     "image": "assets/images/Workout2.png",
-  //     "title": "Upperbody Workout",
-  //     "time": "June 05, 02:00pm"
-  //   },
-  // ];
+  List latestArr = [
+    {
+      "title": "10 MIN BOOBS & BACK",
+      "thumbnail": "assets/images/pamela.jpg",
+      "description": "Pamela Reif",
+      "videoId": "xCOjXzJA5IM"
+    },
+
+    {
+      "title": "15 MIN HAPPY DANCE WORKOUT",
+      "thumbnail": "assets/images/pamela.jpg",
+      "description": "Pamela Reif",
+      "videoId": "https://youtu.be/Cw-Wt4xKD2s?si=8z3WEdiVh4wT4mA9"
+    },
+  ];
 
   List whatArr = [
     {
@@ -49,12 +52,12 @@ class _ActivityScreenState extends State<ActivityScreen> {
       "exercises": "14 Exercises",
       "time": "20mins"
     },
-    {
-      "image": "assets/images/what_3.png",
-      "title": "AB Workout",
-      "exercises": "14 Exercises",
-      "time": "20mins"
-    }
+    // {
+    //   "image": "assets/images/what_3.png",
+    //   "title": "AB Workout",
+    //   "exercises": "14 Exercises",
+    //   "time": "20mins"
+    // }
   ];
 
   @override
@@ -235,6 +238,48 @@ class _ActivityScreenState extends State<ActivityScreen> {
                   SizedBox(
                     height: media.width * 0.05,
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Suggested Workout Videos",
+                        style: TextStyle(
+                          color: AppColors.blackColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: media.width * 0.05,
+                  ),
+                  ListView.builder(
+                    padding: EdgeInsets.zero,
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: latestArr.length,
+                    itemBuilder: (context, index) {
+                      var videoData = latestArr[index];
+                      return ListTile(
+                        leading: Image.asset(videoData["thumbnail"]),
+                        title: Text(videoData["title"]),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => VideoPlayerPage(
+                                  videoId: videoData["videoId"],
+                                  title: videoData["title"],
+                                  description: videoData["description"],
+                                ),
+                              ));},
+                      );
+                    },
+                  ),
+                  SizedBox(
+                    height: media.width * 0.05,
+                  ),
                   Container(
                     padding: const EdgeInsets.symmetric(
                         vertical: 15, horizontal: 15),
@@ -262,7 +307,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                       UserPage(),
+                                      UserPage(),
                                 ),
                               );
                             },
@@ -271,40 +316,6 @@ class _ActivityScreenState extends State<ActivityScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: media.width * 0.05,
-                  ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  //     Text(
-                  //       "Upcoming Workout",
-                  //       style: TextStyle(
-                  //           color: AppColors.blackColor,
-                  //           fontSize: 16,
-                  //           fontWeight: FontWeight.w700),
-                  //     ),
-                  //     TextButton(
-                  //       onPressed: () {},
-                  //       child: Text(
-                  //         "See More",
-                  //         style: TextStyle(
-                  //             color: AppColors.grayColor,
-                  //             fontSize: 14,
-                  //             fontWeight: FontWeight.w700),
-                  //       ),
-                  //     )
-                  //   ],
-                  // ),
-                  // ListView.builder(
-                  //     padding: EdgeInsets.zero,
-                  //     physics: const NeverScrollableScrollPhysics(),
-                  //     shrinkWrap: true,
-                  //     itemCount: latestArr.length,
-                  //     itemBuilder: (context, index) {
-                  //       var wObj = latestArr[index] as Map? ?? {};
-                  //       return UpcomingWorkoutRow(wObj: wObj);
-                  //     }),
                   SizedBox(
                     height: media.width * 0.05,
                   ),
