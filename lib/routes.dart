@@ -15,6 +15,7 @@ import 'package:fitnessapp/view/your_goal/your_goal_screen.dart';
 import 'package:fitnessapp/view/tutorial_videos/admin_add_video.dart';
 import 'package:fitnessapp/view/tutorial_videos/user_watch_video.dart';
 import 'package:fitnessapp/view/tutorial_videos/create_playlist.dart';
+import 'package:fitnessapp/view/signup/auth_service.dart';
 import 'package:flutter/cupertino.dart';
 
 final Map<String, WidgetBuilder> routes = {
@@ -32,5 +33,6 @@ final Map<String, WidgetBuilder> routes = {
   WorkoutScheduleView.routeName: (context) => const WorkoutScheduleView(),
   AddVideo.routeName: (context) => AddVideo(),
   UserPage.routeName: (context) => UserPage(),
-  CreatePlaylist.routeName: (context) => CreatePlaylist(),
+  PlaylistManagementPage.routeName: (context) => PlaylistManagementPage(),
+  AuthService.routeName:(context) => AuthService(),
 };
