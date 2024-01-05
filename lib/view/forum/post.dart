@@ -224,13 +224,13 @@ class _PostState extends State<Post> {
                     onTap: showCommentDialog,
                   ),
 
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 25),
 
                   // comment count
-                  Text(
-                    '0',
-                    style: TextStyle(color: Colors.grey),
-                  ),
+                  // Text(
+                  //   '-',
+                  //   style: TextStyle(color: Colors.grey),
+                  // ),
                 ],
               ),
             ],
@@ -244,7 +244,7 @@ class _PostState extends State<Post> {
                   .collection("UserPosts")
                   .doc(widget.postId)
                   .collection("Comments")
-                  .orderBy("CommentTime", descending:true).snapshots(),
+                  .orderBy("CommentTime", descending:false).snapshots(),
               builder: (context, snapshot){
                 // show loading circle if no data yet
                 if(!snapshot.hasData){
