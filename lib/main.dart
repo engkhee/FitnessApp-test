@@ -15,6 +15,8 @@ import 'package:fitnessapp/view/tutorial_videos/user_watch_video.dart';
 import 'package:fitnessapp/view/welcome/welcome_screen.dart';
 import 'package:fitnessapp/view/your_goal/your_goal_screen.dart';
 import 'package:fitnessapp/view/activity/activity_screen.dart';
+import 'package:fitnessapp/view/Traning/training_home.dart';
+import 'package:fitnessapp/view/Traning/video_info.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/view/firebase/firebase_functions.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -46,10 +48,10 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           fontFamily: "Poppins"
       ),
-      home: Authpage(),
+      home: DashboardScreen(),
         // Authpage
         //LoginScreen UserPage AddVideo
-        //DashboardScreen
+        //DashboardScreen training VideoInfo ActivityScreen
     );
   }
 }

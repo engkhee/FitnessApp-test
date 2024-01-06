@@ -1,5 +1,5 @@
 import 'package:fitnessapp/utils/app_colors.dart';
-import 'package:fitnessapp/view/activity/widgets/upcoming_workout_row.dart';
+//import 'package:fitnessapp/view/activity/widgets/upcoming_workout_row.dart';
 import 'package:fitnessapp/view/activity/widgets/what_train_row.dart';
 import 'package:fitnessapp/view/tutorial_videos/user_watch_video.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -48,9 +48,9 @@ class _ActivityScreenState extends State<ActivityScreen> {
     },
     {
       "image": "assets/images/what_3.png",
-      "title": "AB Workout",
-      "exercises": "14 Exercises",
-      "time": "20mins"
+      "title": "Legs Toning and Glutes Workout",
+      "exercises": "11 Exercises",
+      "time": "23mins"
     },
     // {
     //   "image": "assets/images/what_3.png",
