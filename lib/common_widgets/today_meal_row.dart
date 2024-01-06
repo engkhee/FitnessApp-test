@@ -54,7 +54,7 @@ class TodayMealRow extends StatelessWidget {
             IconButton(
               onPressed: () {},
               icon: Image.asset(
-                "assets/img/bell.png",
+                "assets/icons/bell.png",
                 width: 25,
                 height: 25,
               ),
