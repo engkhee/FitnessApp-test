@@ -16,27 +16,27 @@ class MealPlannerView extends StatefulWidget {
 }
 
 class _MealPlannerViewState extends State<MealPlannerView> {
-  List todayMealArr = [
-    {
-      "name": "Salmon Nigiri",
-      "image": "assets/images/m_1.png",
-      "time": "28/05/2023 07:00 AM"
-    },
-    {
-      "name": "Lowfat Milk",
-      "image": "assets/images/m_2.png",
-      "time": "28/05/2023 08:00 AM"
-    },
-  ];
+    List todayMealArr = [
+      {
+        "name": "Salmon Nigiri",
+        "image": "assets/images/m_1.png",
+        "time": "28/05/2023 07:00 AM"
+      },
+      {
+        "name": "Lowfat Milk",
+        "image": "assets/images/m_2.png",
+        "time": "28/05/2023 08:00 AM"
+      },
+    ];
 
-  List findEatArr = [
-    {
-      "name": "Breakfast",
-      "image": "assets/images/m_3.png",
-      "number": "120+ Foods"
-    },
-    {"name": "Lunch", "image": "assets/images/m_4.png", "number": "130+ Foods"},
-  ];
+    List findEatArr = [
+      {
+        "name": "Breakfast",
+        "image": "assets/images/m_3.png",
+        "number": "120+ Foods"
+      },
+      {"name": "Lunch", "image": "assets/images/m_4.png", "number": "130+ Foods"},
+    ];
 
   @override
   Widget build(BuildContext context) {
