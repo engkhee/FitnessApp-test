@@ -23,61 +23,61 @@ class _MealScheduleViewState extends State<MealScheduleView> {
     {
       "name": "Honey Pancake",
       "time": "07:00am",
-      "image": "assets/img/honey_pan.png"
+      "image": "assets/images/honey_pan.png"
     },
-    {"name": "Coffee", "time": "07:30am", "image": "assets/img/coffee.png"},
+    {"name": "Coffee", "time": "07:30am", "image": "assets/images/coffee.png"},
   ];
 
   List lunchArr = [
     {
       "name": "Chicken Steak",
       "time": "01:00pm",
-      "image": "assets/img/chicken.png"
+      "image": "assets/images/chicken.png"
     },
     {
       "name": "Milk",
       "time": "01:20pm",
-      "image": "assets/img/glass-of-milk 1.png"
+      "image": "assets/images/glass_of_milk.png"
     },
   ];
   List snacksArr = [
-    {"name": "Orange", "time": "04:30pm", "image": "assets/img/orange.png"},
+    {"name": "Orange", "time": "04:30pm", "image": "assets/images/orange.png"},
     {
       "name": "Apple Pie",
       "time": "04:40pm",
-      "image": "assets/img/apple_pie.png"
+      "image": "assets/images/apple_pie.png"
     },
   ];
   List dinnerArr = [
-    {"name": "Salad", "time": "07:10pm", "image": "assets/img/salad.png"},
-    {"name": "Oatmeal", "time": "08:10pm", "image": "assets/img/oatmeal.png"},
+    {"name": "Salad", "time": "07:10pm", "image": "assets/images/salad.png"},
+    {"name": "Oatmeal", "time": "08:10pm", "image": "assets/images/oatmeal.png"},
   ];
 
   List nutritionArr = [
     {
       "title": "Calories",
-      "image": "assets/img/burn.png",
+      "image": "assets/images/burn.png",
       "unit_name": "kCal",
       "value": "350",
       "max_value": "500",
     },
     {
       "title": "Proteins",
-      "image": "assets/img/proteins.png",
+      "image": "assets/images/proteins.png",
       "unit_name": "g",
       "value": "300",
       "max_value": "1000",
     },
     {
       "title": "Fats",
-      "image": "assets/img/egg.png",
+      "image": "assets/images/egg.png",
       "unit_name": "g",
       "value": "140",
       "max_value": "1000",
     },
     {
       "title": "Carbo",
-      "image": "assets/img/carbo.png",
+      "image": "assets/images/carbo.png",
       "unit_name": "g",
       "value": "140",
       "max_value": "1000",

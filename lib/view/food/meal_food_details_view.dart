@@ -20,51 +20,51 @@ class _MealFoodDetailsViewState extends State<MealFoodDetailsView> {
   List categoryArr = [
     {
       "name": "Salad",
-      "image": "assets/img/c_1.png",
+      "image": "assets/images/c_1.png",
     },
     {
       "name": "Cake",
-      "image": "assets/img/c_2.png",
+      "image": "assets/images/c_2.png",
     },
     {
       "name": "Pie",
-      "image": "assets/img/c_3.png",
+      "image": "assets/images/c_3.png",
     },
     {
       "name": "Smoothies",
-      "image": "assets/img/c_4.png",
+      "image": "assets/images/c_4.png",
     },
-    {
-      "name": "Salad",
-      "image": "assets/img/c_1.png",
-    },
-    {
-      "name": "Cake",
-      "image": "assets/img/c_2.png",
-    },
-    {
-      "name": "Pie",
-      "image": "assets/img/c_3.png",
-    },
-    {
-      "name": "Smoothies",
-      "image": "assets/img/c_4.png",
-    },
+    // {
+    //   "name": "Salad",
+    //   "image": "assets/img/c_1.png",
+    // },
+    // {
+    //   "name": "Cake",
+    //   "image": "assets/images/c_2.png",
+    // },
+    // {
+    //   "name": "Pie",
+    //   "image": "assets/images/c_3.png",
+    // },
+    // {
+    //   "name": "Smoothies",
+    //   "image": "assets/images/c_4.png",
+    // },
   ];
 
   List popularArr = [
     {
       "name": "Blueberry Pancake",
-      "image": "assets/img/f_1.png",
-      "b_image":"assets/img/pancake_1.png",
+      "image": "assets/images/f_1.png",
+      "b_image":"assets/images/pancake_1.png",
       "size": "Medium",
       "time": "30mins",
       "kcal": "230kCal"
     },
     {
       "name": "Salmon Nigiri",
-      "image": "assets/img/f_2.png",
-      "b_image": "assets/img/nigiri.png",
+      "image": "assets/images/f_2.png",
+      "b_image": "assets/images/nigiri.png",
       "size": "Medium",
       "time": "20mins",
       "kcal": "120kCal"
@@ -74,14 +74,14 @@ class _MealFoodDetailsViewState extends State<MealFoodDetailsView> {
   List recommendArr = [
     {
       "name": "Honey Pancake",
-      "image": "assets/img/rd_1.png",
+      "image": "assets/images/rd_1.png",
       "size": "Easy",
       "time": "30mins",
       "kcal": "180kCal"
     },
     {
       "name": "Canai Bread",
-      "image": "assets/img/m_4.png",
+      "image": "assets/images/m_4.png",
       "size": "Easy",
       "time": "20mins",
       "kcal": "230kCal"
@@ -94,7 +94,7 @@ class _MealFoodDetailsViewState extends State<MealFoodDetailsView> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AddColors.white,
+        backgroundColor: AppColors.whiteColor,
         centerTitle: true,
         elevation: 0,
         leading: InkWell(
@@ -107,10 +107,10 @@ class _MealFoodDetailsViewState extends State<MealFoodDetailsView> {
             width: 40,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-                color: TColor.lightGray,
+                color: AppColors.lightGrayColor,
                 borderRadius: BorderRadius.circular(10)),
             child: Image.asset(
-              "assets/img/black_btn.png",
+              "assets/icons/back_icon.png",
               width: 15,
               height: 15,
               fit: BoxFit.contain,
@@ -119,8 +119,8 @@ class _MealFoodDetailsViewState extends State<MealFoodDetailsView> {
         ),
         title: Text(
           widget.eObj["name"].toString(),
-          style: TextStyle(
-              color: TColor.black, fontSize: 16, fontWeight: FontWeight.w700),
+          style: const TextStyle(
+              color: AppColors.blackColor, fontSize: 16, fontWeight: FontWeight.w700),
         ),
         actions: [
           InkWell(
@@ -131,10 +131,10 @@ class _MealFoodDetailsViewState extends State<MealFoodDetailsView> {
               width: 40,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                  color: TColor.lightGray,
+                  color: AppColors.lightGrayColor,
                   borderRadius: BorderRadius.circular(10)),
               child: Image.asset(
-                "assets/img/more_btn.png",
+                "assets/icons/more_icon.png",
                 width: 15,
                 height: 15,
                 fit: BoxFit.contain,
@@ -143,7 +143,7 @@ class _MealFoodDetailsViewState extends State<MealFoodDetailsView> {
           )
         ],
       ),
-      backgroundColor: TColor.white,
+      backgroundColor: AppColors.whiteColor,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,7 +152,7 @@ class _MealFoodDetailsViewState extends State<MealFoodDetailsView> {
               margin: const EdgeInsets.symmetric(horizontal: 20),
               padding: const EdgeInsets.symmetric(horizontal: 8),
               decoration: BoxDecoration(
-                  color: TColor.white,
+                  color: AppColors.whiteColor,
                   borderRadius: BorderRadius.circular(15),
                   boxShadow: const [
                     BoxShadow(
@@ -169,7 +169,7 @@ class _MealFoodDetailsViewState extends State<MealFoodDetailsView> {
                             focusedBorder: InputBorder.none,
                             enabledBorder: InputBorder.none,
                             prefixIcon: Image.asset(
-                              "assets/img/search.png",
+                              "assets/icons/search_icon.png",
                               width: 25,
                               height: 25,
                             ),
@@ -179,12 +179,12 @@ class _MealFoodDetailsViewState extends State<MealFoodDetailsView> {
                     margin: const EdgeInsets.symmetric(horizontal: 8),
                     width: 1,
                     height: 25,
-                    color: TColor.gray.withOpacity(0.3),
+                    color: AppColors.grayColor.withOpacity(0.3),
                   ),
                   InkWell(
                     onTap: () {},
                     child: Image.asset(
-                      "assets/img/Filter.png",
+                      "assets/icons/filter.png",
                       width: 25,
                       height: 25,
                     ),
@@ -195,15 +195,15 @@ class _MealFoodDetailsViewState extends State<MealFoodDetailsView> {
             SizedBox(
               height: media.width * 0.05,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     "Category",
                     style: TextStyle(
-                        color: TColor.black,
+                        color: AppColors.blackColor,
                         fontSize: 16,
                         fontWeight: FontWeight.w700),
                   ),
@@ -227,12 +227,12 @@ class _MealFoodDetailsViewState extends State<MealFoodDetailsView> {
             SizedBox(
               height: media.width * 0.05,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
                 "Recommendation\nfor Diet",
                 style: TextStyle(
-                    color: TColor.black,
+                    color: AppColors.blackColor,
                     fontSize: 16,
                     fontWeight: FontWeight.w700),
               ),
@@ -254,12 +254,12 @@ class _MealFoodDetailsViewState extends State<MealFoodDetailsView> {
             SizedBox(
               height: media.width * 0.05,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
                 "Popular",
                 style: TextStyle(
-                    color: TColor.black,
+                    color: AppColors.blackColor,
                     fontSize: 16,
                     fontWeight: FontWeight.w700),
               ),

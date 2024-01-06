@@ -19,12 +19,12 @@ class _MealPlannerViewState extends State<MealPlannerView> {
   List todayMealArr = [
     {
       "name": "Salmon Nigiri",
-      "image": "assets/img/m_1.png",
+      "image": "assets/images/m_1.png",
       "time": "28/05/2023 07:00 AM"
     },
     {
       "name": "Lowfat Milk",
-      "image": "assets/img/m_2.png",
+      "image": "assets/images/m_2.png",
       "time": "28/05/2023 08:00 AM"
     },
   ];
@@ -32,10 +32,10 @@ class _MealPlannerViewState extends State<MealPlannerView> {
   List findEatArr = [
     {
       "name": "Breakfast",
-      "image": "assets/img/m_3.png",
+      "image": "assets/images/m_3.png",
       "number": "120+ Foods"
     },
-    {"name": "Lunch", "image": "assets/img/m_4.png", "number": "130+ Foods"},
+    {"name": "Lunch", "image": "assets/images/m_4.png", "number": "130+ Foods"},
   ];
 
   @override
@@ -60,7 +60,7 @@ class _MealPlannerViewState extends State<MealPlannerView> {
                 color: AppColors.lightGrayColor,
                 borderRadius: BorderRadius.circular(10)),
             child: Image.asset(
-              "assets/img/black_btn.png",
+              "assets/icons/back_icon.png",
               width: 15,
               height: 15,
               fit: BoxFit.contain,
@@ -84,7 +84,7 @@ class _MealPlannerViewState extends State<MealPlannerView> {
                   color: AppColors.lightGrayColor,
                   borderRadius: BorderRadius.circular(10)),
               child: Image.asset(
-                "assets/img/more_btn.png",
+                "assets/icons/more_icon.png",
                 width: 15,
                 height: 15,
                 fit: BoxFit.contain,
@@ -106,8 +106,8 @@ class _MealPlannerViewState extends State<MealPlannerView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Meal Nutritions",
+                      const Text(
+                        "Meal Nutrition",
                         style: TextStyle(
                             color: AppColors.blackColor,
                             fontSize: 16,
@@ -134,8 +134,8 @@ class _MealPlannerViewState extends State<MealPlannerView> {
                                   .toList(),
                               onChanged: (value) {},
                               icon:
-                              Icon(Icons.expand_more, color: AppColors.whiteColor),
-                              hint: Text(
+                              const Icon(Icons.expand_more, color: AppColors.whiteColor),
+                              hint: const Text(
                                 "Weekly",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
@@ -309,9 +309,9 @@ class _MealPlannerViewState extends State<MealPlannerView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         "Today Meals",
-                        style: const TextStyle(
+                        style: TextStyle(
                             color: AppColors.blackColor,
                             fontSize: 16,
                             fontWeight: FontWeight.w700),
@@ -343,8 +343,8 @@ class _MealPlannerViewState extends State<MealPlannerView> {
                                   .toList(),
                               onChanged: (value) {},
                               icon:
-                              Icon(Icons.expand_more, color: AppColors.whiteColor),
-                              hint: Text(
+                              const Icon(Icons.expand_more, color: AppColors.whiteColor),
+                              hint: const Text(
                                 "Breakfast",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
@@ -475,7 +475,7 @@ class _MealPlannerViewState extends State<MealPlannerView> {
     }
 
     return Text(text,
-        style: TextStyle(
+        style: const TextStyle(
           color: AppColors.grayColor,
           fontSize: 12,
         ),
@@ -490,7 +490,7 @@ class _MealPlannerViewState extends State<MealPlannerView> {
   );
 
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
-    var style = TextStyle(
+    var style = const TextStyle(
       color: AppColors.grayColor,
       fontSize: 12,
     );

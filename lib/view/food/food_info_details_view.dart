@@ -26,7 +26,7 @@ class _FoodInfoDetailsViewState extends State<FoodInfoDetailsView> {
 
   List ingredientsArr = [
     {
-      "image": "assets/img/flour.png",
+      "image": "assets/images/flour.png",
       "title": "Wheat Flour",
       "value": "100grm"
     },
@@ -100,7 +100,7 @@ class _FoodInfoDetailsViewState extends State<FoodInfoDetailsView> {
                         color: AppColors.lightGrayColor,
                         borderRadius: BorderRadius.circular(10)),
                     child: Image.asset(
-                      "assets/img/more_btn.png",
+                      "assets/icons/more_icon.png",
                       width: 15,
                       height: 15,
                       fit: BoxFit.contain,
@@ -151,9 +151,9 @@ class _FoodInfoDetailsViewState extends State<FoodInfoDetailsView> {
           ];
         },
         body: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               color: AppColors.whiteColor,
-              borderRadius: const BorderRadius.only(
+              borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(25), topRight: Radius.circular(25))),
           child: Scaffold(
             backgroundColor: Colors.transparent,
@@ -208,7 +208,7 @@ class _FoodInfoDetailsViewState extends State<FoodInfoDetailsView> {
                             TextButton(
                               onPressed: () {},
                               child: Image.asset(
-                                "assets/img/fav.png",
+                                "assets/icons/fav_icon.png",
                                 width: 15,
                                 height: 15,
                                 fit: BoxFit.contain,
@@ -280,7 +280,7 @@ class _FoodInfoDetailsViewState extends State<FoodInfoDetailsView> {
                         height: media.width * 0.05,
                       ),
                       const Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        padding: EdgeInsets.symmetric(horizontal: 15),
                         child: Text(
                           "Descriptions",
                           style: TextStyle(
@@ -293,7 +293,7 @@ class _FoodInfoDetailsViewState extends State<FoodInfoDetailsView> {
                         height: 4,
                       ),
                       const Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        padding: EdgeInsets.symmetric(horizontal: 15),
                         child: ReadMoreText(
                           'Pancakes are some people\'s favorite breakfast, who doesn\'t like pancakes? Especially with the real honey splash on top of the pancakes, of course everyone loves that! besides being Pancakes are some people\'s favorite breakfast, who doesn\'t like pancakes? Especially with the real honey splash on top of the pancakes, of course everyone loves that! besides being',
                           trimLines: 4,
@@ -305,7 +305,7 @@ class _FoodInfoDetailsViewState extends State<FoodInfoDetailsView> {
                             color: AppColors.grayColor,
                             fontSize: 12,
                           ),
-                          moreStyle: const TextStyle(
+                          moreStyle: TextStyle(
                               fontSize: 12, fontWeight: FontWeight.w700),
                         ),
                       ),
@@ -329,7 +329,7 @@ class _FoodInfoDetailsViewState extends State<FoodInfoDetailsView> {
                               child: Text(
                                 "${stepArr.length} Items",
                                 style:
-                                TextStyle(color: AppColors.grayColor, fontSize: 12),
+                                const TextStyle(color: AppColors.grayColor, fontSize: 12),
                               ),
                             )
                           ],
