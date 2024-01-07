@@ -22,6 +22,8 @@ import 'package:flutter/material.dart';
 import 'package:fitnessapp/view/firebase/firebase_functions.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'view/admin/admin_page.dart';
+
 // void main() {
 //   runApp(const MyApp());
 // }
@@ -49,10 +51,11 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           fontFamily: "Poppins"
       ),
-      home: DashboardScreen(),
+      home: Authpage(),
         // Authpage
         //LoginScreen UserPage AddVideo
         //DashboardScreen training VideoInfo ActivityScreen
+        // AdminPage
     );
   }
 }
