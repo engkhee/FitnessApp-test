@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'package:fitnessapp/view/Traning/fitnesss_list.dart';
 import 'package:fitnessapp/view/Traning/video_info.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:get/get.dart';
+
+import '../activity/activity_screen.dart';
 
 class training extends StatefulWidget {
   static String routeName = "/training";
@@ -49,20 +52,18 @@ class _trainingState extends State<training> {
                   ),
                 ),
                 Expanded(child: Container()),
-                Icon(
+                InkWell(
+                  onTap: (){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => FitnessList()));
+                  },
+                  child: Icon(
                     Icons.arrow_back_ios,
                     size: 20,
                     color: Colors.black,
-                ),
-                SizedBox(width: 10,),
-                Icon(Icons.calendar_today_outlined,
-                size:20,
-                color: Colors.black,),
-                SizedBox(width: 15,),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: 20,
-                  color: Colors.black,
+                  ),
                 ),
 
               ],
@@ -164,7 +165,7 @@ class _trainingState extends State<training> {
                               Icon(Icons.timer, size: 20, color: Colors.black,),
                               SizedBox(width: 5,),
                               Text(
-                                "60 min",
+                                "23 min",
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.black,
@@ -274,8 +275,8 @@ class _trainingState extends State<training> {
                       return Row(
                         children: [
                           Container(
-                            height: 160,
-                            width: 200,
+                            height: 100,
+                            width: 150,
                             margin: EdgeInsets.only(bottom: 25, top: 25),
                             padding: EdgeInsets.only(bottom: 5),
                             decoration: BoxDecoration(

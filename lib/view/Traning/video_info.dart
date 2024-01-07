@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:fitnessapp/view/Traning/training_home.dart';
 
+import '../../common_widgets/round_button.dart';
+
 class VideoInfo extends StatefulWidget{
   const VideoInfo({Key? key}) : super(key:key);
 
@@ -14,20 +16,40 @@ class VideoInfo extends StatefulWidget{
 class _VideoInfoState extends State<VideoInfo>{
   List videoinfo = [];
   bool _playArea = false;
+  int _currentVideoIndex = 0;
   late YoutubePlayerController _youtubeController;
 
   @override
   void initState() {
     super.initState();
     _initData();
+    _initYoutubePlayer();
+  }
+
+  void _initYoutubePlayer() {
+    if (videoinfo.isNotEmpty) {
+      final videoUrl = videoinfo[_currentVideoIndex]["videoUrl"];
+      final videoId = YoutubePlayer.convertUrlToId(videoUrl);
+
+      _youtubeController = YoutubePlayerController(
+        initialVideoId: videoId!,
+        flags: YoutubePlayerFlags(
+          autoPlay: false,
+          mute: false,
+        ),
+      );
+    }
   }
 
   Future<void> _initData() async {
-    await DefaultAssetBundle.of(context).loadString("json/videoinfo.json").then((value) {
+    String data = await DefaultAssetBundle.of(context).loadString("json/videoinfo.json");
+    List<dynamic> jsonResult = jsonDecode(data);
+    if (jsonResult.isNotEmpty) {
       setState(() {
-        videoinfo = jsonDecode(value);
+        videoinfo = jsonResult;
+        _initYoutubePlayer(); // Initialize the player after data is loaded
       });
-    });
+    }
   }
 
   @override
@@ -204,7 +226,7 @@ class _VideoInfoState extends State<VideoInfo>{
                           children: [
                             Icon(Icons.loop, size: 20, color: Colors.black,),
                             SizedBox(width: 5,),
-                            Text("3 sets",
+                            Text("1 set",
                             style: TextStyle(
                               fontSize: 15,
                               color: Colors.black,
@@ -226,11 +248,95 @@ class _VideoInfoState extends State<VideoInfo>{
   }
 
   _playView(BuildContext context) {
-    return YoutubePlayer(
-      controller: _youtubeController,
-      showVideoProgressIndicator: true,
-      progressIndicatorColor: Colors.blueAccent,
+    return Column(
+      children: [
+        YoutubePlayer(
+          controller: _youtubeController,
+          showVideoProgressIndicator: true,
+          progressIndicatorColor: Colors.blueAccent,
+        ),
+        _videoControls(), // Add this line
+      ],
     );
+  }
+
+  Widget _videoControls() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        IconButton(
+          icon: Icon(Icons.skip_previous),
+          onPressed: _playPrevious,
+        ),
+        IconButton(
+          icon: Icon(
+            _youtubeController.value.isPlaying ? Icons.pause : Icons.play_arrow,
+          ),
+          onPressed: _playPause,
+        ),
+        IconButton(
+          icon: Icon(Icons.skip_next),
+          onPressed: _playNext,
+        ),
+      ],
+    );
+  }
+
+  void _playPause() {
+    if (_youtubeController.value.isPlaying) {
+      _youtubeController.pause();
+    } else {
+      _youtubeController.play();
+    }
+    setState(() {});
+  }
+
+  void _playNext() {
+    if (_currentVideoIndex < videoinfo.length - 1) {
+      _currentVideoIndex++;
+      _loadVideo(_currentVideoIndex);
+    } else {
+      // User has finished watching all videos
+      _showCongratulationsMessage();
+    }
+  }
+
+  void _showCongratulationsMessage() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Congratulations!"),
+          content: Text("Well done! You've finished this workout!"),
+          actions: <Widget>[
+            RoundButton(
+              onPressed: () {
+                _youtubeController.pause(); // Pause the video
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => training())); // Navigate to the training page
+              },
+              title: 'OK',
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _playPrevious() {
+    if (_currentVideoIndex > 0) {
+      _currentVideoIndex--;
+      _loadVideo(_currentVideoIndex);
+    }
+  }
+
+  void _loadVideo(int index) {
+    final videoUrl = videoinfo[index]["videoUrl"];
+    final videoId = YoutubePlayer.convertUrlToId(videoUrl);
+    _youtubeController.load(videoId!);
+    setState(() {});
   }
 
   _onTapVideo(int index) {
@@ -345,7 +451,7 @@ class _VideoInfoState extends State<VideoInfo>{
               ),
               Row(
                 children: [
-                  for(int i=0; i<90; i++)
+                  for(int i=0; i<80; i++)
                     i.isEven? Container(
                       width: 3,
                       height: 1,
@@ -366,6 +472,7 @@ class _VideoInfoState extends State<VideoInfo>{
       ),
     );
   }
+
   @override
   void dispose() {
     _youtubeController.dispose();
