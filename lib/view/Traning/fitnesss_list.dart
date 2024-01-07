@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:fitnessapp/utils/app_colors.dart';
+import 'package:fitnessapp/view/Traning/train2.dart';
 import 'package:fitnessapp/view/Traning/training_home.dart';
-import 'package:fitnessapp/view/activity/activity_screen.dart';
 import 'package:fitnessapp/view/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import '../../common_widgets/round_button.dart';
@@ -17,9 +17,9 @@ class _FitnessListState extends State<FitnessList> {
   List workout_info = [];
 
   final Map<String, Widget Function(BuildContext)> pageRoutes = {
-    'training': (context) => training(), // Replace with actual page
+    'training': (context) => training(),
     // Add more entries for different workouts
-    // 'anotherFilename': (context) => AnotherPage(),
+    'train2': (context) => train2(),
     // 'yetAnotherFilename': (context) => YetAnotherPage(),
   };
 

@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Round 1",
+    "time": "10 min",
+    "thumbnail":"assets/images/workout_images/pulses.png",
+    "videoUrl":"https://youtu.be/720ozeTT-3Y"
+  },
+  {
+    "title": "Round 2",
+    "time": "10 min",
+    "thumbnail":"assets/images/workout_images/reverse_lunge.png",
+    "videoUrl":"https://youtu.be/1b3gOZkwWM4"
+  },
+  {
+    "title": "Round 3",
+    "time": "10 min",
+    "thumbnail":"assets/images/workout_images/fitness pose2.png",
+    "videoUrl":"https://youtu.be/CnyrCl9Xkzk"
+  },
+  {
+    "title": "Round 4",
+    "time": "10 min",
+    "thumbnail":"assets/images/workout_images/lying fitness pose.png",
+    "videoUrl":"https://youtu.be/qLitzEDhbD8"
+  },
+  {
+    "title": "Round 5",
+    "time": "10 min",
+    "thumbnail":"assets/images/workout_images/side lunges.png",
+    "videoUrl":"https://youtu.be/xeVGH0IWmtg"
+  }
+]

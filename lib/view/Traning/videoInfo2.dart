@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:fitnessapp/view/Traning/train2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -6,14 +7,14 @@ import 'package:fitnessapp/view/Traning/training_home.dart';
 
 import '../../common_widgets/round_button.dart';
 
-class VideoInfo extends StatefulWidget{
-  const VideoInfo({Key? key}) : super(key:key);
+class VideoInfo2 extends StatefulWidget{
+  const VideoInfo2({Key? key}) : super(key:key);
 
   @override
-  _VideoInfoState createState() => _VideoInfoState();
+  _VideoInfo2State createState() => _VideoInfo2State();
 }
 
-class _VideoInfoState extends State<VideoInfo>{
+class _VideoInfo2State extends State<VideoInfo2>{
   List videoinfo = [];
   bool _playArea = false;
   int _currentVideoIndex = 0;
@@ -42,7 +43,7 @@ class _VideoInfoState extends State<VideoInfo>{
   }
 
   Future<void> _initData() async {
-    String data = await DefaultAssetBundle.of(context).loadString("json/videoinfo.json");
+    String data = await DefaultAssetBundle.of(context).loadString("json/videoinfo2.json");
     List<dynamic> jsonResult = jsonDecode(data);
     if (jsonResult.isNotEmpty) {
       setState(() {
@@ -55,67 +56,67 @@ class _VideoInfoState extends State<VideoInfo>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-          decoration: _playArea==false? BoxDecoration(
+      body: Container(
+        decoration: _playArea==false? BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color(0xFFFFA000),
-                Color(0xFFFFE082).withOpacity(0.5),
+                Color(0xFF009688).withOpacity(0.6),
+                Color(0xFF80CBC4).withOpacity(0.5),
               ],
               begin: const FractionalOffset(0.0, 0.4),
               end: Alignment.topRight,
             )
-          ): BoxDecoration(
-            color: Color(0xffffcdd2),
-          ),
-          child: Column(
-            children: [
-              _playArea==false? Container(
-                padding: const EdgeInsets.only(top: 70, left: 30, right: 30),
-                width: MediaQuery.of(context).size.width,
-                height: 300,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: (){
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>training()));
-                          },
-                          child: Icon(Icons.arrow_back_ios, size: 20,
+        ): BoxDecoration(
+          color: Color(0xffffcdd2),
+        ),
+        child: Column(
+          children: [
+            _playArea==false? Container(
+              padding: const EdgeInsets.only(top: 70, left: 30, right: 30),
+              width: MediaQuery.of(context).size.width,
+              height: 300,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      InkWell(
+                        onTap: (){
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>train2()));
+                        },
+                        child: Icon(Icons.arrow_back_ios, size: 20,
                           color: Colors.black,),
-                        ),
-                        Expanded(child: Container()),
-                        Icon(Icons.info_outline, size: 20,
-                          color: Colors.black,),
-                      ],
-                    ),
-                    SizedBox(height: 30,),
-                    Text(
-                      "Legs Toning",
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: Colors.black,
                       ),
+                      Expanded(child: Container()),
+                      Icon(Icons.info_outline, size: 20,
+                        color: Colors.black,),
+                    ],
+                  ),
+                  SizedBox(height: 30,),
+                  Text(
+                    "HIIT",
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.black,
                     ),
-                    Text(
-                      "and Glutes Workout",
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: Colors.black,
-                      ),
+                  ),
+                  Text(
+                    "Fullbody Workout",
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.black,
                     ),
-                    SizedBox(height: 50,),
-                    Row(
-                      children: [
-                        Container(
-                          width: 90,
-                          height: 30,
-                          decoration: BoxDecoration(
+                  ),
+                  SizedBox(height: 50,),
+                  Row(
+                    children: [
+                      Container(
+                        width: 90,
+                        height: 30,
+                        decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             gradient: LinearGradient(
                               colors: [
@@ -125,128 +126,128 @@ class _VideoInfoState extends State<VideoInfo>{
                               begin: Alignment.bottomLeft,
                               end: Alignment.topRight,
                             )
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.timer, size: 20, color: Colors.black,),
-                              SizedBox(width: 5,),
-                              Text(
-                                "23 min",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ],
-                          ),
-
                         ),
-                        SizedBox(width: 20,),
-                        Container(
-                          width: 220,
-                          height: 30,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              gradient: LinearGradient(
-                                colors: [
-                                  Colors.white70,
-                                  Colors.white12,
-                                ],
-                                begin: Alignment.bottomLeft,
-                                end: Alignment.topRight,
-                              )
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.handyman_outlined, size: 20, color: Colors.black,),
-                              SizedBox(width: 5,),
-                              Text(
-                                "Resistent band",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w700,
-                                ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.timer, size: 20, color: Colors.black,),
+                            SizedBox(width: 5,),
+                            Text(
+                              "50 min",
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w700,
                               ),
-                            ],
-                          ),
-
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ],
-                ),
-              ): Container(
-                child: Column(
-                  children: [
-                    Container(
-                      height: 100,
-                      padding: const EdgeInsets.only(top: 50, left: 30, right: 30),
-                      child: Row(
-                        children: [
-                          InkWell(
-                            onTap: (){
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>VideoInfo()));
-                            },
-                            child: Icon(Icons.arrow_back_ios, size: 20, color: Colors.black,),
-                          ),
-                          Expanded(child: Container()),
-                          Icon(Icons.info_outline, size: 20, color: Colors.black,),
-                        ],
+
                       ),
-                    ),
-                    _playView(context),
-                  ],
-                ),
+                      SizedBox(width: 20,),
+                      Container(
+                        width: 220,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.white70,
+                                Colors.white12,
+                              ],
+                              begin: Alignment.bottomLeft,
+                              end: Alignment.topRight,
+                            )
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.handyman_outlined, size: 20, color: Colors.black,),
+                            SizedBox(width: 5,),
+                            Text(
+                              "No equipment needed",
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
+
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              Expanded(child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(topRight: Radius.circular(70)),
-                  color: Colors.white,
-                ),
-                child: Column(
-                  children: [
-                    SizedBox(height: 30,),
-                    Row(
+            ): Container(
+              child: Column(
+                children: [
+                  Container(
+                    height: 100,
+                    padding: const EdgeInsets.only(top: 50, left: 30, right: 30),
+                    child: Row(
                       children: [
-                        SizedBox(width: 30,),
-                        Text(
-                          "Credit to: MadFit",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
+                        InkWell(
+                          onTap: (){
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>VideoInfo2()));
+                          },
+                          child: Icon(Icons.arrow_back_ios, size: 20, color: Colors.black,),
                         ),
                         Expanded(child: Container()),
-                        Row(
-                          children: [
-                            Icon(Icons.loop, size: 20, color: Colors.black,),
-                            SizedBox(width: 5,),
-                            Text("1 set",
+                        Icon(Icons.info_outline, size: 20, color: Colors.black,),
+                      ],
+                    ),
+                  ),
+                  _playView(context),
+                ],
+              ),
+            ),
+            Expanded(child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(topRight: Radius.circular(70)),
+                color: Colors.white,
+              ),
+              child: Column(
+                children: [
+                  SizedBox(height: 30,),
+                  Row(
+                    children: [
+                      SizedBox(width: 30,),
+                      Text(
+                        "Credit to: Oliver Sjostrom",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Expanded(child: Container()),
+                      Row(
+                        children: [
+                          Icon(Icons.loop, size: 20, color: Colors.black,),
+                          SizedBox(width: 5,),
+                          Text("1 set",
                             style: TextStyle(
                               fontSize: 15,
                               color: Colors.black,
                               fontWeight: FontWeight.normal,
                             ),)
-                          ],
-                        ),
-                        SizedBox(width: 20,),
-                      ],
-                    ),
-                    Expanded(child: _listView())
-                  ],
-                ),
-              ))
-            ],
-          ),
+                        ],
+                      ),
+                      SizedBox(width: 20,),
+                    ],
+                  ),
+                  Expanded(child: _listView())
+                ],
+              ),
+            ))
+          ],
         ),
+      ),
     );
   }
 
@@ -318,7 +319,7 @@ class _VideoInfoState extends State<VideoInfo>{
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => training())); // Navigate to the training page
+                        builder: (context) => train2())); // Navigate to the training page
               },
               title: 'OK',
             ),
@@ -439,15 +440,15 @@ class _VideoInfoState extends State<VideoInfo>{
                 width: 80,
                 height: 20,
                 decoration: BoxDecoration(
-                  color: Color(0xFFFFD180).withOpacity(0.5),
+                  color: Color(0xFF009688).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Center(
                   child: Text(
-                    "15s rest",
+                    "30s rest",
                     style: TextStyle(
                       fontSize: 15,
-                      color: Color(0xffff9100),
+                      color: Color(0xFF009688),
                     ),
                   ),
                 ),
@@ -459,7 +460,7 @@ class _VideoInfoState extends State<VideoInfo>{
                       width: 3,
                       height: 1,
                       decoration: BoxDecoration(
-                        color: Color(0xffff9800),
+                        color: Color(0xFF009688),
                         borderRadius: BorderRadius.circular(2),
                       ),
                     ):Container(
