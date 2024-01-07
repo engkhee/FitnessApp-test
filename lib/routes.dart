@@ -1,6 +1,7 @@
 //import 'dart:js';
 
 import 'package:fitnessapp/view/activity_tracker/activity_tracker_screen.dart';
+import 'package:fitnessapp/view/admin/admin_page.dart';
 import 'package:fitnessapp/view/dashboard/dashboard_screen.dart';
 import 'package:fitnessapp/view/finish_workout/finish_workout_screen.dart';
 import 'package:fitnessapp/view/login/login_screen.dart';
@@ -37,5 +38,6 @@ final Map<String, WidgetBuilder> routes = {
   PlaylistManagementPage.routeName: (context) => PlaylistManagementPage(),
   AuthService.routeName:(context) => AuthService(),
   training.routeName:(context) => training(),
+  AdminPage.routeName: (context) => AdminPage(),
 
 };
