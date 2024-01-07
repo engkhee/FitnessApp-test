@@ -1,7 +1,6 @@
 import 'package:fitnessapp/view/Traning/fitnesss_list.dart';
 import 'package:fitnessapp/view/Traning/train2.dart';
 import 'package:fitnessapp/view/forum/forum_screen.dart';
-//import 'package:fitnessapp/view/food/food_screen.dart';
 import 'package:fitnessapp/routes.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/auth/auth.dart';
