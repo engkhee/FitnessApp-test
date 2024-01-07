@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           fontFamily: "Poppins"
       ),
-      home: Authpage(),
+      home: AdminPage(),
         // Authpage
         //LoginScreen UserPage AddVideo
         //DashboardScreen training VideoInfo ActivityScreen
