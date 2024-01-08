@@ -35,7 +35,7 @@ class FoodDetailPage extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Calories: ${foodItem.calories}',
+              'Description: ${foodItem.description}',
               style: const TextStyle(
                 fontSize: 18,
                 color: AppColors.grayColor,
@@ -44,6 +44,14 @@ class FoodDetailPage extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               'Category: ${foodItem.category}',
+              style: const TextStyle(
+                fontSize: 18,
+                color: AppColors.grayColor,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Calories: ${foodItem.calories}',
               style: const TextStyle(
                 fontSize: 18,
                 color: AppColors.grayColor,

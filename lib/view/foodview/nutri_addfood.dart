@@ -9,12 +9,17 @@ class AddFood extends StatelessWidget {
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController imageController = TextEditingController();
   final TextEditingController caloriesController = TextEditingController();
+  final FocusNode nameFocusNode = FocusNode();
   String selectedCategory = 'Breakfast'; // Default category
 
   final List<String> categories = ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      nameFocusNode.requestFocus();
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Meal'),
@@ -22,140 +27,86 @@ class AddFood extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              children: [
-                const Text(
-                  'Meal Name: ',
-                  style: TextStyle(
-                    color: AppColors.grayColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Expanded(
-                  child: TextField(
-                    controller: nameController,
-                    decoration: const InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: AppColors.secondaryColor1),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                const Text(
-                  'Description: ',
-                  style: TextStyle(
-                    color: AppColors.grayColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Expanded(
-                  child: TextField(
-                    controller: descriptionController,
-                    maxLines: 3, // Allowing for 3 lines in the description
-                    decoration: const InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: AppColors.secondaryColor1),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                const Text(
-                  'Image URL: ',
-                  style: TextStyle(
-                    color: AppColors.grayColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Expanded(
-                  child: TextField(
-                    controller: imageController,
-                    decoration: const InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: AppColors.secondaryColor1),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                const Text(
-                  'Category: ',
-                  style: TextStyle(
-                    color: AppColors.grayColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                DropdownButton<String>(
-                  value: selectedCategory,
-                  onChanged: (String? newValue) {
-                    if (newValue != null) {
-                      selectedCategory = newValue;
-                    }
-                  },
-                  items: categories.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                const Text(
-                  'Calories: ',
-                  style: TextStyle(
-                    color: AppColors.grayColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Expanded(
-                  child: TextField(
-                    controller: caloriesController,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: AppColors.secondaryColor1),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            RoundButton(
-              title: 'Add Meal',
-              onPressed: () {
-                _addFoodItem(context);
-              },
-              type: RoundButtonType.primaryBG,
-            ),
-          ],
+        child: Form(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildInputField('Meal Name', nameController, nameFocusNode),
+              const SizedBox(height: 12),
+              _buildInputField('Description', descriptionController, null),
+              const SizedBox(height: 12),
+              _buildInputField('Image URL', imageController, null),
+              const SizedBox(height: 12),
+              _buildDropdownField('Category', selectedCategory),
+              const SizedBox(height: 12),
+              _buildInputField('Calories', caloriesController, null),
+              const SizedBox(height: 12),
+              RoundButton(
+                title: 'Add Meal',
+                onPressed: () {
+                  _addFoodItem(context);
+                },
+                type: RoundButtonType.primaryBG,
+              ),
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  Widget _buildInputField(String labelText, TextEditingController controller, FocusNode? focusNode) {
+    return Row(
+      children: [
+        Text(
+          '$labelText: ',
+          style: const TextStyle(
+            color: AppColors.grayColor,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Expanded(
+          child: TextFormField(
+            controller: controller,
+            focusNode: focusNode,
+            decoration: const InputDecoration(
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: AppColors.secondaryColor1),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDropdownField(String labelText, String value) {
+    return Row(
+      children: [
+        Text(
+          '$labelText: ',
+          style: const TextStyle(
+            color: AppColors.grayColor,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        DropdownButton<String>(
+          value: value,
+          onChanged: (String? newValue) {
+            if (newValue != null) {
+              selectedCategory = newValue;
+            }
+          },
+          items: categories.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      ],
     );
   }
 
@@ -186,7 +137,6 @@ class AddFood extends StatelessWidget {
 
         // Navigate back to FoodViewPage
         Navigator.pop(context);
-
       } catch (e) {
         print('Error adding food item: $e');
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

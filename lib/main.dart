@@ -1,5 +1,5 @@
-import 'package:fitnessapp/view/food/food_view.dart';
 import 'package:fitnessapp/view/foodview/food_viewpage.dart';
+import 'package:fitnessapp/view/foodview/user_viewfood.dart';
 import 'package:fitnessapp/view/forum/forum_screen.dart';
 //import 'package:fitnessapp/view/food/food_screen.dart';
 import 'package:fitnessapp/routes.dart';
@@ -48,8 +48,9 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           fontFamily: "Poppins"
       ),
-      home:  FoodViewPage(),
-      // MealPlannerView(),
+       home:  UserFoodViewPage(),
+       //FoodViewPage(),
+
       // Authpage(),
         // Authpage
         //LoginScreen UserPage AddVideo

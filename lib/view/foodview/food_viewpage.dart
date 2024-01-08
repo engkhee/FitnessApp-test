@@ -4,8 +4,14 @@ import 'database_helper.dart';
 import 'fooditem.dart';
 import 'nutri_addfood.dart';
 import 'fooddetails.dart';
+import 'editfooditem.dart';
 
-class FoodViewPage extends StatelessWidget {
+class FoodViewPage extends StatefulWidget {
+  @override
+  _FoodViewPageState createState() => _FoodViewPageState();
+}
+
+class _FoodViewPageState extends State<FoodViewPage> {
   final DatabaseHelper dbHelper = DatabaseHelper();
 
   @override
@@ -14,6 +20,15 @@ class FoodViewPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(' '),
         backgroundColor: AppColors.primaryColor1,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: () {
+              setState(() {
+              });
+            },
+          ),
+        ],
       ),
       body: Container(
         padding: const EdgeInsets.all(10),
@@ -50,13 +65,15 @@ class FoodViewPage extends StatelessWidget {
                           children: [
                             Expanded(
                               child: index1 < snapshot.data!.length
-                                  ? _buildFoodItemBox(context, snapshot.data![index1])
+                                  ? _buildFoodItemBox(
+                                  context, snapshot.data![index1])
                                   : Container(),
                             ),
                             const SizedBox(width: 16),
                             Expanded(
                               child: index2 < snapshot.data!.length
-                                  ? _buildFoodItemBox(context, snapshot.data![index2])
+                                  ? _buildFoodItemBox(
+                                  context, snapshot.data![index2])
                                   : Container(),
                             ),
                           ],
@@ -81,7 +98,7 @@ class FoodViewPage extends StatelessWidget {
         backgroundColor: AppColors.primaryColor1,
         child: const Icon(Icons.add),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
@@ -104,34 +121,64 @@ class FoodViewPage extends StatelessWidget {
               MaterialPageRoute(builder: (context) => FoodDetailPage(foodItem)),
             );
           },
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Stack(
             children: [
-              Image.network(
-                foodItem.image,
-                width: double.infinity,
-                height: 120,
-                fit: BoxFit.cover,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      foodItem.name,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image.network(
+                    foodItem.image,
+                    width: double.infinity,
+                    height: 120,
+                    fit: BoxFit.cover,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          foodItem.name,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Calories: ${foodItem.calories}',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: AppColors.grayColor,
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'Calories: ${foodItem.calories}',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: AppColors.grayColor,
-                      ),
+                  ),
+                ],
+              ),
+              // Kebab menu button for deletion
+              Positioned(
+                top: 0,
+                right: 0,
+                child: PopupMenuButton<String>(
+                  onSelected: (value) {
+                    if (value == 'delete') {
+                      _deleteFoodItem(context, foodItem);
+                    } else if (value=='edit'){
+                      _editFoodItem(context,foodItem);
+                    }
+                  },
+                  itemBuilder: (BuildContext context) =>
+                  [
+                    const PopupMenuItem<String>(
+                      value: 'edit',
+                      child: Text('Edit'),
+                    ),
+
+                    const PopupMenuItem<String>(
+                      value: 'delete',
+                      child: Text('Delete'),
                     ),
                   ],
                 ),
@@ -142,6 +189,42 @@ class FoodViewPage extends StatelessWidget {
       ),
     );
   }
+
+  void _editFoodItem(BuildContext context, FoodItem foodItem) {
+    // Navigate to the Edit Food Item Page
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => EditFoodItem(foodItem)),
+    );
+  }
+
+
+  void _deleteFoodItem(BuildContext context, FoodItem foodItem) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Delete Food Item'),
+          content: const Text(
+              'Are you sure you want to delete this food item?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () async {
+                // Perform the deletion
+                await dbHelper.deleteFoodItem(foodItem.id);
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
-
-
