@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:fitnessapp/view/admin/verify_nutritionist.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
+
 
 class AdminPage extends StatelessWidget {
   static String routeName = "/AdminPage";
@@ -40,7 +42,7 @@ class AdminPage extends StatelessWidget {
                 padding: const EdgeInsets.all(10.0),
               child: ElevatedButton(
                 onPressed: () {
-                  // Navigator.pushNamed(context, xx.routeName);
+                  Navigator.pushNamed(context, NutritionistList.routeName);
                 },
                 style: ElevatedButton.styleFrom(
                   primary: AppColors.adminpageColor2, // Background color

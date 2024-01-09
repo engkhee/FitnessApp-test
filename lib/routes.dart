@@ -19,6 +19,7 @@ import 'package:fitnessapp/view/tutorial_videos/create_playlist.dart';
 import 'package:fitnessapp/view/signup/auth_service.dart';
 import 'package:fitnessapp/view/Traning/training_home.dart';
 import 'package:flutter/cupertino.dart';
+import 'view/admin/verify_nutritionist.dart';
 
 final Map<String, WidgetBuilder> routes = {
   OnBoardingScreen.routeName: (context) => const OnBoardingScreen(),
@@ -39,5 +40,6 @@ final Map<String, WidgetBuilder> routes = {
   AuthService.routeName:(context) => AuthService(),
   training.routeName:(context) => training(),
   AdminPage.routeName: (context) => AdminPage(),
+  NutritionistList.routeName: (context) => NutritionistList(),
 
 };

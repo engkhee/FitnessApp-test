@@ -12,6 +12,10 @@ class AppColors{
   static const adminpageColor3 = Color (0xFFEDE7F6);
   static const adminpageColor4 = Color (0xFF9575CD);
 
+  static const verifyNut1 = Color (0xFFE0F2F1);
+  static const verifyNut2 = Color (0xFFB2DFDB);
+  static const verifyNut3 = Color (0xFF80CBC4);
+
   static const whiteColor = Color(0xFFFFFFFF);
   static const blackColor = Color(0xFF1D1617);
   static const grayColor = Color(0xFF7B6F72);
