@@ -45,10 +45,10 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           fontFamily: "Poppins"
       ),
-      home: Authpage(),
+      home: //Authpage(),
         // Authpage
         //LoginScreen UserPage AddVideo
-        //DashboardScreen
+        DashboardScreen(),
     );
   }
 }
