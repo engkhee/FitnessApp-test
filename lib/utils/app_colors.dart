@@ -7,6 +7,11 @@ class AppColors{
   static const secondaryColor1 =  Color(0xFFC58BF2);
   static const secondaryColor2 =  Color(0xFFEEA4CE);
 
+  static const adminpageColor1 = Color(0xFFD1C4E9);
+  static const adminpageColor2 = Color(0xFFB39DDB);
+  static const adminpageColor3 = Color (0xFFEDE7F6);
+  static const adminpageColor4 = Color (0xFF9575CD);
+
   static const whiteColor = Color(0xFFFFFFFF);
   static const blackColor = Color(0xFF1D1617);
   static const grayColor = Color(0xFF7B6F72);
