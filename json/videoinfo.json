@@ -1,0 +1,68 @@
+[
+  {
+    "title": "Double Pulse Squat",
+    "time": "60 seconds",
+    "thumbnail":"assets/images/workout_images/double_pulse_squat.png",
+    "videoUrl":"https://youtu.be/afweUJyvwNU"
+  },
+  {
+    "title": "Squat Walk",
+    "time": "60 seconds",
+    "thumbnail":"assets/images/workout_images/squat_walk.png",
+    "videoUrl":"https://youtu.be/MgbedqSyq9I"
+  },
+  {
+    "title": "Reverse Lunge",
+    "time": "60 seconds",
+    "thumbnail":"assets/images/workout_images/reverse_lunge.png",
+    "videoUrl":"https://youtu.be/SQAgll3WIVs"
+  },
+  {
+    "title": "One Leg Bridge",
+    "time": "120 seconds",
+    "thumbnail":"assets/images/workout_images/one_leg_bridge.png",
+    "videoUrl":"https://youtu.be/Q-F8oI2HxFw"
+  },
+  {
+    "title": "Donkey Kicks",
+    "time": "120 seconds",
+    "thumbnail":"assets/images/workout_images/donkey_kicks.png",
+    "videoUrl":"https://youtu.be/FfuJ4_NQ4oI"
+  },
+  {
+    "title": "Fire Hydrants",
+    "time": "60 seconds",
+    "thumbnail":"assets/images/workout_images/fire_hydrants.png",
+    "videoUrl":"https://youtu.be/_IJUU6tNVnc"
+  },
+  {
+    "title": "Frog Pumps",
+    "time": "60 seconds",
+    "thumbnail":"assets/images/workout_images/frog_pumps.png",
+    "videoUrl":"https://youtu.be/ZwuRAjIRfSQ"
+  },
+  {
+    "title": "Rainbow Legs",
+    "time": "120 seconds",
+    "thumbnail":"assets/images/workout_images/rainbow leg stretch.png",
+    "videoUrl":"https://youtu.be/vE-Ah9g19H8"
+  },
+  {
+    "title": "Ban Ban",
+    "time": "180 seconds",
+    "thumbnail":"assets/images/workout_images/ban ban.png",
+    "videoUrl":"https://youtu.be/ZVN7T8D1Ftw"
+  },
+  {
+    "title": "Side Lunges",
+    "time": "60 seconds",
+    "thumbnail":"assets/images/workout_images/side lunges.png",
+    "videoUrl":"https://youtu.be/CjjvPH-6Ycs"
+  },
+  {
+    "title": "Sumo Squat",
+    "time": "60 seconds",
+    "thumbnail":"assets/images/workout_images/sumo squat.png",
+    "videoUrl":"https://youtu.be/shkb6P_T5E8"
+  }
+]

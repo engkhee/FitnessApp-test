@@ -1,5 +1,3 @@
-import 'package:fitnessapp/view/foodview/food_viewpage.dart';
-import 'package:fitnessapp/view/foodview/user_viewfood.dart';
 import 'package:fitnessapp/view/forum/forum_screen.dart';
 //import 'package:fitnessapp/view/food/food_screen.dart';
 import 'package:fitnessapp/routes.dart';
@@ -19,7 +17,6 @@ import 'package:fitnessapp/view/your_goal/your_goal_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/view/firebase/firebase_functions.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 
 // void main() {
 //   runApp(const MyApp());
@@ -48,13 +45,10 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           fontFamily: "Poppins"
       ),
-       home:  //UserFoodViewPage(),
-       // FoodViewPage(),
-
-      // Authpage(),
+      home: Authpage(),
         // Authpage
         //LoginScreen UserPage AddVideo
-        DashboardScreen(),
+        //DashboardScreen
     );
   }
 }

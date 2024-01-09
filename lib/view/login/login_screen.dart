@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../common_widgets/round_gradient_button.dart';
 import '../../common_widgets/round_textfield.dart';
+import '../admin/admin_page.dart';
 import '../dashboard/dashboard_screen.dart';
 import '../profile/complete_profile_screen.dart';
 
@@ -27,6 +28,12 @@ class _LoginScreenState extends State<LoginScreen> {
       email: _emailController.text,
       password: _passwordController.text,
     );
+
+    // Check if the logged-in user is the admin
+    if (_emailController.text == 'admin@fitness.com' && _passwordController.text == 'admin123') {
+      Navigator.pushNamed(context, AdminPage.routeName);
+    }
+
   }
 
 
