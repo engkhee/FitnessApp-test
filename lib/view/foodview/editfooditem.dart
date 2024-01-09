@@ -3,7 +3,6 @@ import 'database_helper.dart';
 import 'fooditem.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 
-
 class EditFoodItem extends StatefulWidget {
   final FoodItem originalFoodItem;
 
@@ -18,7 +17,7 @@ class _EditFoodItemState extends State<EditFoodItem> {
   final TextEditingController imageController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController caloriesController = TextEditingController();
-  final TextEditingController categoryController = TextEditingController();
+  List<String> selectedCategories =[] ;
 
   @override
   void initState() {
@@ -28,14 +27,14 @@ class _EditFoodItemState extends State<EditFoodItem> {
     imageController.text = widget.originalFoodItem.image;
     descriptionController.text = widget.originalFoodItem.description;
     caloriesController.text = widget.originalFoodItem.calories.toString();
-    categoryController.text = widget.originalFoodItem.category;
+    selectedCategories = widget.originalFoodItem.category.split(',');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Meal'),
+        title: const Text('Edit Meal'),
         backgroundColor: AppColors.primaryColor1,
       ),
       body: Padding(
@@ -47,7 +46,7 @@ class _EditFoodItemState extends State<EditFoodItem> {
             _buildTextField('Image URL', imageController),
             _buildTextField('Description', descriptionController),
             _buildTextField('Calories', caloriesController, keyboardType: TextInputType.number),
-            _buildDropdownField('Category', categoryController, categoryOptions: ['Breakfast', 'Lunch', 'Dinner', 'Snack']),
+            _buildMultiselectDropdownField('Category', selectedCategories, categoryOptions: ['Breakfast', 'Lunch', 'Dinner', 'Snack']),            const SizedBox(height: 16),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
@@ -71,10 +70,31 @@ class _EditFoodItemState extends State<EditFoodItem> {
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController controller, {TextInputType keyboardType = TextInputType.text}) {
+  Widget _buildTextField(String label, TextEditingController controller, {TextInputType keyboardType = TextInputType.text, List<String>? categoryOptions}) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 6.0),
-      child: TextFormField(
+      child: categoryOptions != null
+          ? DropdownButtonFormField<String>(
+        value: controller.text,
+        onChanged: (String? newValue) {
+          if (newValue != null) {
+            controller.text = newValue;
+          }
+        },
+        items: categoryOptions.map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        decoration: InputDecoration(
+          labelText: label,
+          border: OutlineInputBorder(),
+          filled: true,
+          fillColor: AppColors.lightGrayColor,
+        ),
+      )
+          : TextFormField(
         controller: controller,
         decoration: InputDecoration(
           labelText: label,
@@ -87,43 +107,71 @@ class _EditFoodItemState extends State<EditFoodItem> {
     );
   }
 
-  Widget _buildDropdownField(String labelText, TextEditingController controller, {List<String>? categoryOptions}) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 6.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '$labelText: ',
-            style: const TextStyle(
-              color: AppColors.grayColor,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
+  Widget _buildMultiselectDropdownField(String labelText, List<String> selectedCategories, {List<String>? categoryOptions}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '$labelText: ',
+          style: const TextStyle(
+            color: AppColors.grayColor,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
           ),
-          DropdownButtonFormField<String>(
-            value: controller.text,
-            onChanged: (String? newValue) {
-              if (newValue != null) {
+        ),
+        DropdownButtonFormField<String>(
+          onChanged: (String? newValue) {
+            if (newValue != null) {
+              setState(() {
+                if (selectedCategories.contains(newValue)) {
+                  selectedCategories.remove(newValue);
+                } else {
+                  selectedCategories.add(newValue);
+                }
+              });
+            }
+          },
+          value: null, // DropdownButtonFormField requires a value, but we handle it in onChanged
+          items: categoryOptions?.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: selectedCategories.contains(value),
+                    onChanged: (bool? isChecked) {
+                      setState(() {
+                        if (isChecked != null) {
+                          if (isChecked) {
+                            selectedCategories.add(value);
+                          } else {
+                            selectedCategories.remove(value);
+                          }
+                        }
+                      });
+                    },
+                  ),
+                  Text(value),
+                ],
+              ),
+            );
+          }).toList(),
+        ),
+        const SizedBox(height: 8),
+        Wrap(
+          spacing: 8,
+          children: selectedCategories.map((category) {
+            return Chip(
+              label: Text(category),
+              onDeleted: () {
                 setState(() {
-                  controller.text = newValue;
+                  selectedCategories.remove(category);
                 });
-              }
-            },
-            items: categoryOptions?.map<DropdownMenuItem<String>>((String option) {
-              return DropdownMenuItem<String>(
-                value: option,
-                child: Text(option),
-              );
-            }).toList() ?? [],
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              filled: true,
-              fillColor: AppColors.lightGrayColor,
-            ),
-          ),
-        ],
-      ),
+              },
+            );
+          }).toList(),
+        ),
+      ],
     );
   }
 
@@ -141,7 +189,7 @@ class _EditFoodItemState extends State<EditFoodItem> {
       image: imageController.text,
       description: descriptionController.text,
       calories: int.parse(caloriesController.text),
-      category: categoryController.text,
+      category: selectedCategories.join(', ') ,
     );
 
     DatabaseHelper dbHelper = DatabaseHelper();

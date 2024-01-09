@@ -11,7 +11,7 @@ class FoodDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Food Detail: ${foodItem.name}'),
+        title: Text('Meal Detail: ${foodItem.name}'),
         backgroundColor: AppColors.primaryColor1,
       ),
       body: Padding(

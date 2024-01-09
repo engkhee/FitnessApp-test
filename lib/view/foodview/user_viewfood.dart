@@ -41,64 +41,54 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
             const SizedBox(height: 10), // Add some spacing if needed
             _buildCategoryFilterDropdown(),
             const SizedBox(height: 18),
-            FutureBuilder<List<FoodItem>>(
-              future: dbHelper.getFoodItems(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Text('No food items available.');
-                } else {
-                  List<FoodItem> filteredItems = snapshot.data!;
-                  if (selectedCategory != 'All') {
-                    filteredItems = snapshot.data!
-                        .where((foodItem) => foodItem.category == selectedCategory)
-                        .toList();
-                  }
-
-                  // Sort the items based on the selected sorting option
-                  filteredItems.sort((a, b) {
-                    switch (selectedSortingOption) {
-                      case SortingOption.Name:
-                        return a.name.compareTo(b.name);
-                      case SortingOption.Calories:
-                        return a.calories.compareTo(b.calories);
-                      case SortingOption.Favorite:
-                        return a.isFavorite ?-1:1;
+            Expanded(
+              child: FutureBuilder<List<FoodItem>>(
+                future: dbHelper.getFoodItems(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Text('No food items available.');
+                  } else {
+                    // Filter and sort the items
+                    List<FoodItem> filteredItems = snapshot.data!;
+                    if (selectedCategory != 'All') {
+                      filteredItems = filteredItems
+                          .where((foodItem) =>
+                          foodItem.category.contains(selectedCategory))
+                          .toList();
                     }
-                  });
 
-                  return Expanded(
-                    child: ListView.builder(
-                      itemCount: (snapshot.data!.length / 2).ceil(),
-                      itemBuilder: (context, rowIndex) {
-                        final index1 = rowIndex * 2;
-                        final index2 = index1 + 1;
+                    // Sort the items based on the selected sorting option
+                    filteredItems.sort((a, b) {
+                      switch (selectedSortingOption) {
+                        case SortingOption.Name:
+                          return a.name.compareTo(b.name);
+                        case SortingOption.Calories:
+                          return a.calories.compareTo(b.calories);
+                        case SortingOption.Favorite:
+                          return a.isFavorite ? -1 : 1;
+                      }
+                    });
 
-                        return Row(
-                          children: [
-                            Expanded(
-                              child: index1 < snapshot.data!.length
-                                  ? _buildFoodItemBox(
-                                  context, snapshot.data![index1])
-                                  : Container(),
-                            ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: index2 < snapshot.data!.length
-                                  ? _buildFoodItemBox(
-                                  context, snapshot.data![index2])
-                                  : Container(),
-                            ),
-                          ],
-                        );
+                    return GridView.builder(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 16.0,
+                        mainAxisSpacing: 16.0,
+                        childAspectRatio: 0.75, // Adjust the aspect ratio as needed
+                      ),
+                      itemCount: filteredItems.length,
+                      itemBuilder: (context, index) {
+                        return _buildFoodItemBox(
+                            context, filteredItems[index]);
                       },
-                    ),
-                  );
-                }
-              },
+                    );
+                  }
+                },
+              ),
             ),
           ],
         ),
@@ -192,83 +182,102 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
   }
 
   Widget _buildFoodItemBox(BuildContext context, FoodItem foodItem) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: const [
-          BoxShadow(color: Colors.black26, blurRadius: 2, offset: Offset(0, 2)),
-        ],
-      ),
-      child: Material(
-        borderRadius: BorderRadius.circular(15),
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: () {
-            // Navigate to the detailed food information page
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => FoodDetailPage(foodItem)),
-            );
-          },
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image.network(
-                foodItem.image,
-                width: double.infinity,
-                height: 120,
-                fit: BoxFit.cover,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
+    List<String> itemCategories =
+    foodItem.category.split(', ').map((category) => category.trim()).toList();
+
+    // Check if the selected category is 'All' or if the food item contains any of the selected categories
+    if (selectedCategory == 'All' || itemCategories.contains(selectedCategory)) {
+      return Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: const [
+            BoxShadow(color: Colors.black26, blurRadius: 2, offset: Offset(0, 2)),
+          ],
+        ),
+        child: Material(
+          borderRadius: BorderRadius.circular(15),
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            onTap: () {
+              // Navigate to the detailed food information page
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FoodDetailPage(foodItem)),
+              );
+            },
+            child: Stack(
+              children: [
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      foodItem.name,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Image.network(
+                      foodItem.image,
+                      width: double.infinity,
+                      height: 120,
+                      fit: BoxFit.cover,
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'Calories: ${foodItem.calories}',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: AppColors.grayColor,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            foodItem.name,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'Calories: ${foodItem.calories}',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: AppColors.grayColor,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    icon: Icon(
-                      foodItem.isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: foodItem.isFavorite ? Colors.red : null,
-                    ),
-                    onPressed: () {
-                      _toggleFavorite(foodItem);
-                    },
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        icon: Icon(
+                          foodItem.isFavorite
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          color: foodItem.isFavorite ? Colors.red : null,
+                        ),
+                        onPressed: () {
+                          _toggleFavorite(foodItem);
+                        },
+                      ),
+                      Text(
+                        '${foodItem.likes}',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: AppColors.grayColor,
+                        ),
+                      ),
+                    ],
                   ),
-                  // const SizedBox(width: 5),
-                  Text(
-                    '${foodItem.likes}',
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: AppColors.grayColor,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    } else {
+      // If the item doesn't match the selected categories, return an empty container
+      return Container();
+    }
   }
 
   void _toggleFavorite(FoodItem foodItem) async {

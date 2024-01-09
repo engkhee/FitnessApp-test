@@ -30,7 +30,7 @@ class FoodItem {
       description: map['description'] ?? '',
       calories: map['calories'] ?? 0,
       category: map['category'] ?? '',
-      isFavorite: map['isFavorite']==1,
+      isFavorite: map['isFavorite']==true ,
     );
   }
 
@@ -42,7 +42,7 @@ class FoodItem {
       'description': description,
       'calories': calories,
       'category': category,
-      'isFavorite':isFavorite ?1:0,
+      'isFavorite':isFavorite,
     };
   }
 }
