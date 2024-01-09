@@ -37,9 +37,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
       floatingActionButton: InkWell(
         onTap: () {
           if (mounted) {
-            setState(() {
-              selectTab = 4;
-            });
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => UserFoodViewPage()),
