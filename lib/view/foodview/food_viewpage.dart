@@ -18,7 +18,7 @@ class _FoodViewPageState extends State<FoodViewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(' '),
+        //title: const Text(' '),
         backgroundColor: AppColors.primaryColor1,
         actions: [
           IconButton(

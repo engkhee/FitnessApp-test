@@ -27,6 +27,8 @@ class DatabaseHelper {
           calories: doc['calories'],
           category: doc['category'],
           isFavorite: doc['isFavorite'] ?? false,
+          likes: doc['likes'],
+
         );
       }).toList();
     } catch (e) {
@@ -56,6 +58,18 @@ class DatabaseHelper {
   Future<void> updateFavoriteStatus(String id, bool isFavorite) async {
     try {
       await foodCollection.doc(id).update({'isFavorite': isFavorite});
+    } catch (e) {
+      print('Error updating favorite status: $e');
+      rethrow;
+    }
+  }
+
+  Future<void> updateLikes(String id, bool isFavorite, int likes) async {
+    try {
+      await foodCollection.doc(id).update({
+        'isFavorite': isFavorite,
+        'likes': likes,
+      });
     } catch (e) {
       print('Error updating favorite status: $e');
       rethrow;

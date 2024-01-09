@@ -6,6 +6,7 @@ class FoodItem {
   final int calories;
   final String category;
   bool isFavorite;
+  int likes;
 
 
   // Constructor with named parameters
@@ -17,6 +18,7 @@ class FoodItem {
     required this.calories,
     required this.category,
     this.isFavorite = false,
+    this.likes=0,
   });
 
   // Factory method to create a FoodItem from a map
@@ -40,6 +42,7 @@ class FoodItem {
       'description': description,
       'calories': calories,
       'category': category,
+      'isFavorite':isFavorite ?1:0,
     };
   }
 }

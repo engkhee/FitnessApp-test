@@ -9,7 +9,7 @@ class UserFoodViewPage extends StatefulWidget {
   _UserFoodViewPageState createState() => _UserFoodViewPageState();
 }
 
-enum SortingOption { Name, Calories }
+enum SortingOption { Name, Calories, Favorite }
 
 class _UserFoodViewPageState extends State<UserFoodViewPage> {
   final DatabaseHelper dbHelper = DatabaseHelper();
@@ -65,19 +65,35 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
                         return a.name.compareTo(b.name);
                       case SortingOption.Calories:
                         return a.calories.compareTo(b.calories);
+                      case SortingOption.Favorite:
+                        return a.isFavorite ?-1:1;
                     }
                   });
 
                   return Expanded(
-                    child: GridView.builder(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 15,
-                        mainAxisSpacing: 25,
-                      ),
-                      itemCount: filteredItems.length,
-                      itemBuilder: (context, index) {
-                        return _buildFoodItemBox(context, filteredItems[index]);
+                    child: ListView.builder(
+                      itemCount: (snapshot.data!.length / 2).ceil(),
+                      itemBuilder: (context, rowIndex) {
+                        final index1 = rowIndex * 2;
+                        final index2 = index1 + 1;
+
+                        return Row(
+                          children: [
+                            Expanded(
+                              child: index1 < snapshot.data!.length
+                                  ? _buildFoodItemBox(
+                                  context, snapshot.data![index1])
+                                  : Container(),
+                            ),
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: index2 < snapshot.data!.length
+                                  ? _buildFoodItemBox(
+                                  context, snapshot.data![index2])
+                                  : Container(),
+                            ),
+                          ],
+                        );
                       },
                     ),
                   );
@@ -124,7 +140,7 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
 
   Widget _buildSortingButton() {
     return IconButton(
-      icon: Icon(Icons.sort),
+      icon: const Icon(Icons.sort),
       onPressed: () {
         _showSortingOptions(context);
       },
@@ -139,8 +155,8 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
           child: Wrap(
             children: [
               ListTile(
-                leading: Icon(Icons.sort_by_alpha),
-                title: Text('Sort by Meals Name'),
+                leading: const Icon(Icons.sort_by_alpha),
+                title: const Text('Sort by Meals Name'),
                 onTap: () {
                   setState(() {
                     selectedSortingOption = SortingOption.Name;
@@ -149,11 +165,21 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.sort),
-                title: Text('Sort by Calories'),
+                leading: const Icon(Icons.sort),
+                title: const Text('Sort by Calories'),
                 onTap: () {
                   setState(() {
                     selectedSortingOption = SortingOption.Calories;
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.favorite),
+                title: const Text('Sort by Favorite'),
+                onTap: () {
+                  setState(() {
+                    selectedSortingOption = SortingOption.Favorite;
                   });
                   Navigator.pop(context);
                 },
@@ -173,7 +199,6 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
           BoxShadow(color: Colors.black26, blurRadius: 2, offset: Offset(0, 2)),
         ],
       ),
-      height: 1000, // Set your desired height here
       child: Material(
         borderRadius: BorderRadius.circular(15),
         clipBehavior: Clip.antiAlias,
@@ -229,6 +254,14 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
                       _toggleFavorite(foodItem);
                     },
                   ),
+                  // const SizedBox(width: 5),
+                  Text(
+                    '${foodItem.likes}',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: AppColors.grayColor,
+                    ),
+                  ),
                 ],
               ),
             ],
@@ -238,13 +271,16 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
     );
   }
 
-  void _toggleFavorite(FoodItem foodItem) {
+  void _toggleFavorite(FoodItem foodItem) async {
     // Toggle the 'isFavorite' status in Firestore
     dbHelper.updateFavoriteStatus(foodItem.id, !foodItem.isFavorite);
 
     // Update the UI to reflect the new 'isFavorite' status
     setState(() {
       foodItem.isFavorite = !foodItem.isFavorite;
+      foodItem.likes += foodItem.isFavorite ? 1 : -1;
     });
+
+    await dbHelper.updateLikes(foodItem.id, foodItem.isFavorite, foodItem.likes);
   }
 }

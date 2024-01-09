@@ -3,6 +3,7 @@ import 'database_helper.dart';
 import 'fooditem.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 
+
 class EditFoodItem extends StatefulWidget {
   final FoodItem originalFoodItem;
 
@@ -46,7 +47,7 @@ class _EditFoodItemState extends State<EditFoodItem> {
             _buildTextField('Image URL', imageController),
             _buildTextField('Description', descriptionController),
             _buildTextField('Calories', caloriesController, keyboardType: TextInputType.number),
-            _buildTextField('Category', categoryController, categoryOptions: ['Breakfast', 'Lunch', 'Dinner', 'Snack']),
+            _buildDropdownField('Category', categoryController, categoryOptions: ['Breakfast', 'Lunch', 'Dinner', 'Snack']),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
@@ -70,31 +71,10 @@ class _EditFoodItemState extends State<EditFoodItem> {
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController controller, {TextInputType keyboardType = TextInputType.text, List<String>? categoryOptions}) {
+  Widget _buildTextField(String label, TextEditingController controller, {TextInputType keyboardType = TextInputType.text}) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 6.0),
-      child: categoryOptions != null
-          ? DropdownButtonFormField<String>(
-        value: controller.text,
-        onChanged: (String? newValue) {
-          if (newValue != null) {
-            controller.text = newValue;
-          }
-        },
-        items: categoryOptions.map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
-        decoration: InputDecoration(
-          labelText: label,
-          border: OutlineInputBorder(),
-          filled: true,
-          fillColor: AppColors.lightGrayColor,
-        ),
-      )
-          : TextFormField(
+      child: TextFormField(
         controller: controller,
         decoration: InputDecoration(
           labelText: label,
@@ -103,6 +83,46 @@ class _EditFoodItemState extends State<EditFoodItem> {
           fillColor: AppColors.lightGrayColor,
         ),
         keyboardType: keyboardType,
+      ),
+    );
+  }
+
+  Widget _buildDropdownField(String labelText, TextEditingController controller, {List<String>? categoryOptions}) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 6.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '$labelText: ',
+            style: const TextStyle(
+              color: AppColors.grayColor,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          DropdownButtonFormField<String>(
+            value: controller.text,
+            onChanged: (String? newValue) {
+              if (newValue != null) {
+                setState(() {
+                  controller.text = newValue;
+                });
+              }
+            },
+            items: categoryOptions?.map<DropdownMenuItem<String>>((String option) {
+              return DropdownMenuItem<String>(
+                value: option,
+                child: Text(option),
+              );
+            }).toList() ?? [],
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              filled: true,
+              fillColor: AppColors.lightGrayColor,
+            ),
+          ),
+        ],
       ),
     );
   }
