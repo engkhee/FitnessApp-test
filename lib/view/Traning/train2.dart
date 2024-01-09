@@ -1,19 +1,20 @@
 import 'dart:convert';
 import 'package:fitnessapp/view/Traning/fitnesss_list.dart';
-import 'package:fitnessapp/view/Traning/video_info.dart';
+import 'package:fitnessapp/view/Traning/videoInfo2.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 
-class training extends StatefulWidget {
-  static String routeName = "/training";
 
-  training({Key? key}) : super(key: key);
+class train2 extends StatefulWidget {
+  static String routeName = "/train2";
+
+  train2({Key? key}) : super(key: key);
 
   @override
-  _trainingState createState() => _trainingState();
+  _train2State createState() => _train2State();
 }
 
-class _trainingState extends State<training> {
+class _train2State extends State<train2> {
   List info = [];
 
   @override
@@ -23,7 +24,7 @@ class _trainingState extends State<training> {
   }
 
   void _initData() {
-    DefaultAssetBundle.of(context).loadString("json/info.json").then((value) {
+    DefaultAssetBundle.of(context).loadString("json/info2.json").then((value) {
       setState(() {
         info = jsonDecode(value);
       });
@@ -69,7 +70,7 @@ class _trainingState extends State<training> {
             Row(
               children: [
                 Text(
-                  "P0001",
+                  "P0002",
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.black,
@@ -90,11 +91,11 @@ class _trainingState extends State<training> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                        builder: (context) =>VideoInfo()));
+                            builder: (context) =>VideoInfo2()));
                   },
                   child: Icon(Icons.arrow_forward,
-                  size: 20,
-                  color: Colors.black,),
+                    size: 20,
+                    color: Colors.black,),
                 ),
               ],
             ),
@@ -103,27 +104,27 @@ class _trainingState extends State<training> {
               width: MediaQuery.of(context).size.width,
               height: 220,
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color(0xFFF8BBD0).withOpacity(0.9),
-                    Color(0xFFFCE4EC).withOpacity(0.9),
-                  ],
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.centerRight,
-                ),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10),
-                  topRight: Radius.circular(80),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    offset: Offset(5,10),
-                    blurRadius: 5,
-                    color:AppColors.lightGrayColor,
-                  )
-                ]
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xFF00BCD4).withOpacity(0.4),
+                      Color(0xFFB2EBF2).withOpacity(0.5),
+                    ],
+                    begin: Alignment.bottomLeft,
+                    end: Alignment.centerRight,
+                  ),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                    topRight: Radius.circular(80),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(5,10),
+                      blurRadius: 5,
+                      color:AppColors.lightGrayColor,
+                    )
+                  ]
               ),
               child: Container(
                 padding: const EdgeInsets.only(left: 20, top: 15, right: 20),
@@ -140,14 +141,14 @@ class _trainingState extends State<training> {
                     ),
                     SizedBox(height: 5,),
                     Text(
-                      "Legs Toning",
+                      "HIIT",
                       style: TextStyle(
                         fontSize: 25,
                         color: Colors.black,
                       ),
                     ),
                     Text(
-                      "and Glutes Workout",
+                      "Fullbody Workout",
                       style: TextStyle(
                         fontSize: 25,
                         color: Colors.black,
@@ -157,35 +158,35 @@ class _trainingState extends State<training> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                          Row(
-                            children: [
-                              Icon(Icons.timer, size: 20, color: Colors.black,),
-                              SizedBox(width: 5,),
-                              Text(
-                                "23 min",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                ),
+                        Row(
+                          children: [
+                            Icon(Icons.timer, size: 20, color: Colors.black,),
+                            SizedBox(width: 5,),
+                            Text(
+                              "50 min",
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
+                        ),
                         Expanded(child: Container()),
                         Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(60),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.white,
-                                blurRadius: 10,
-                                offset: Offset(4,8),
-                              )
-                            ]
-                          ),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(60),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.white,
+                                    blurRadius: 10,
+                                    offset: Offset(4,8),
+                                  )
+                                ]
+                            ),
                             child: Icon(
-                                Icons.play_circle_fill,
-                                color: Colors.pink,
-                                size: 60,
+                              Icons.play_circle_fill,
+                              color: Colors.blue.withOpacity(0.3),
+                              size: 60,
                             )
                         )
                       ],
@@ -205,25 +206,25 @@ class _trainingState extends State<training> {
                     margin: const EdgeInsets.only(top: 20),
                     height: 100,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      image: DecorationImage(
-                        image: AssetImage(
-                          "assets/images/card.png"
+                        borderRadius: BorderRadius.circular(25),
+                        image: DecorationImage(
+                          image: AssetImage(
+                              "assets/images/card.png"
+                          ),
+                          fit: BoxFit.fill,
                         ),
-                        fit: BoxFit.fill,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius:10,
-                          offset: Offset(8,10),
-                          color: Colors.black12,
-                        ),
-                        BoxShadow(
-                          blurRadius:10,
-                          offset: Offset(-1,-5),
-                          color: Colors.black12,
-                        )
-                      ]
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius:10,
+                            offset: Offset(8,10),
+                            color: Colors.black12,
+                          ),
+                          BoxShadow(
+                            blurRadius:10,
+                            offset: Offset(-1,-5),
+                            color: Colors.black12,
+                          )
+                        ]
                     ),
                   ),
                   Container(
@@ -233,18 +234,18 @@ class _trainingState extends State<training> {
                     child: Column(
                       children: [
                         Text("Keep moving!",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),),
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),),
                         SizedBox(height: 10,),
                         RichText(text: TextSpan(
-                          text: "You are doing great!",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                          )
+                            text: "You are doing great!",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                            )
                         ))
                       ],
                     ),
@@ -255,11 +256,11 @@ class _trainingState extends State<training> {
             Row(
               children: [
                 Text("Area of focus",textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 25,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w700,
-                ),)
+                  style: TextStyle(
+                    fontSize: 25,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700,
+                  ),)
               ],
             ),
             Expanded(child: OverflowBox(
@@ -277,25 +278,25 @@ class _trainingState extends State<training> {
                             margin: EdgeInsets.only(bottom: 25, top: 25),
                             padding: EdgeInsets.only(bottom: 5),
                             decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(
-                                image: AssetImage(
-                                  info[i]['img']
-                                )
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 4,
-                                  offset: Offset(1,5),
-                                  color: Color(0xFFBBDEFB).withOpacity(0.1),
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15),
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        info[i]['img']
+                                    )
                                 ),
-                                BoxShadow(
-                                  blurRadius: 4,
-                                  offset: Offset(-1,-5),
-                                  color: Color(0xFFBBDEFB).withOpacity(0.3),
-                                )
-                              ]
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 4,
+                                    offset: Offset(1,5),
+                                    color: Color(0xFFBBDEFB).withOpacity(0.1),
+                                  ),
+                                  BoxShadow(
+                                    blurRadius: 4,
+                                    offset: Offset(-1,-5),
+                                    color: Color(0xFFBBDEFB).withOpacity(0.3),
+                                  )
+                                ]
                             ),
                           ),
                           SizedBox(width: 25,),
@@ -304,8 +305,8 @@ class _trainingState extends State<training> {
                             style: TextStyle(
                               fontSize: 15,
                               color: Colors.black,
-                                ),
-                              ),
+                            ),
+                          ),
                         ],
                       );
                     }

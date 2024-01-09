@@ -1,0 +1,30 @@
+[
+  {
+    "title": "Glutes",
+    "img": "assets/images/butt.png"
+  },
+  {
+    "title": "Shoulder",
+    "img": "assets/images/shoulder area.png"
+  },
+  {
+    "title": "Chest",
+    "img": "assets/images/chest.png"
+  },
+  {
+    "title": "Back",
+    "img": "assets/images/back muscles.png"
+  },
+  {
+    "title": "Abs",
+    "img": "assets/images/abs.png"
+  },
+  {
+    "title": "Legs",
+    "img": "assets/images/leg.png"
+  },
+  {
+    "title": "Arms",
+    "img": "assets/images/arm.png"
+  }
+]
