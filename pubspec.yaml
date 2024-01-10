@@ -67,8 +67,12 @@ flutter_native_splash:
   ios: true
 
 dev_dependencies:
+  url_launcher: ^6.2.3
+  cloud_functions: ^4.6.0
   flutter_test:
     sdk: flutter
+
+
 #  firebase_core: ^1.10.6  # Replace with the latest version available
 #  firebase_storage: ^11.6.0  # Replace with the latest version available
 #  path_provider: ^2.0.4  # Replace with the latest version available
