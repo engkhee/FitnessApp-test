@@ -1,6 +1,6 @@
-import 'dart:io';
 import 'dart:ui';
 import 'package:fitnessapp/view/admin/verify_nutritionist.dart';
+import 'package:fitnessapp/view/admin/view_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 
@@ -26,7 +26,7 @@ class AdminPage extends StatelessWidget {
     body: Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-        image: AssetImage("background_for_adminpage.png"),
+        image: AssetImage("assets/images/background_for_adminpage.png"),
         fit: BoxFit.cover,
       ),
     ),
@@ -80,7 +80,7 @@ class AdminPage extends StatelessWidget {
                 padding: const EdgeInsets.all(10.0),
               child: ElevatedButton(
                 onPressed: () {
-                  // Navigator.pushNamed(context, xx.routeName);
+                  Navigator.pushNamed(context, ViewDatabase.routeName);
                 },
                 style: ElevatedButton.styleFrom(
                   primary: AppColors.adminpageColor1, // Background color

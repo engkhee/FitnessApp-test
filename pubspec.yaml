@@ -66,6 +66,7 @@ flutter_native_splash:
   ios: true
 
 dev_dependencies:
+  url_launcher: ^6.2.3
   cloud_functions: ^4.6.0
   flutter_test:
     sdk: flutter

@@ -99,7 +99,7 @@ class NutritionistList extends StatelessWidget {
                   ),
                   child: Image.asset(
                     'assets/icons/date.png',
-                    color: AppColors.verifyNut3,
+                    color: AppColors.white,
                     height: 25,
                   ),
                 ),
