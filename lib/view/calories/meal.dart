@@ -1,6 +1,7 @@
 class Meal {
   final String mealType;
   final String mealName;
+  final String description;
   final double protein;
   final double carbohydrate;
   final double fat;
@@ -10,6 +11,7 @@ class Meal {
   Meal({
     required this.mealType,
     required this.mealName,
+    required this.description,
     required this.protein,
     required this.carbohydrate,
     required this.fat,
@@ -21,6 +23,7 @@ class Meal {
     return Meal(
       mealType: map['mealType'] ?? '',
       mealName: map['mealName'] ?? '',
+      description: map['description']?? '',
       protein: map['protein'] ?? 0.0,
       carbohydrate: map['carbohydrate'] ?? 0.0,
       fat: map['fat'] ?? 0.0,
@@ -33,6 +36,7 @@ class Meal {
     return {
       'mealType': mealType,
       'mealName': mealName,
+      'description': description,
       'protein': protein,
       'carbohydrate': carbohydrate,
       'fat': fat,

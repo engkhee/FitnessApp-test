@@ -14,6 +14,7 @@ class _AddCaloriesPageState extends State<AddCaloriesPage> {
   final _formKey = GlobalKey<FormState>();
   String? mealType;
   String? mealName;
+  String? description;
   double? protein;
   double? carbohydrate;
   double? fat;
@@ -21,7 +22,6 @@ class _AddCaloriesPageState extends State<AddCaloriesPage> {
   DateTime? date;
 
   DateTime _selectedDate = DateTime.now();
-
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +74,13 @@ class _AddCaloriesPageState extends State<AddCaloriesPage> {
                   ),
                   const SizedBox(height: 10),
                   TextFormField(
+                    decoration: const InputDecoration(labelText: 'Description: '),
+                    onSaved: (value) {
+                      description = value;
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  TextFormField(
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(labelText: 'Protein (g): '),
                     onSaved: (value) {
@@ -109,13 +116,16 @@ class _AddCaloriesPageState extends State<AddCaloriesPage> {
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
 
-                        if (date != null) {
+                        if (_selectedDate != null) {
+                          date = _selectedDate; // Update the date variable with the selected date
+
                           print('Meal Type: $mealType');
                           print('Meal Name: $mealName');
+                          print('Description: $description');
                           print('Protein: $protein');
                           print('Carbohydrate: $carbohydrate');
                           print('Fat: $fat');
@@ -126,6 +136,7 @@ class _AddCaloriesPageState extends State<AddCaloriesPage> {
                           Meal meal = Meal(
                             mealType: mealType!,
                             mealName: mealName!,
+                            description: description!,
                             protein: protein!,
                             carbohydrate: carbohydrate!,
                             fat: fat!,
@@ -133,7 +144,15 @@ class _AddCaloriesPageState extends State<AddCaloriesPage> {
                             date: date!,
                           );
 
-                          addMeal(meal);
+                          // Add the await keyword to wait for the asynchronous operation to complete
+                          await addMeal(meal);
+
+                          // Provide feedback to the user
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Meal added successfully!'),
+                            ),
+                          );
                         }
                       }
                     },
@@ -163,5 +182,18 @@ class _AddCaloriesPageState extends State<AddCaloriesPage> {
 }
 
 Future<void> addMeal(Meal meal) async {
-  await FirebaseFirestore.instance.collection('meals').add(meal.toMap());
+  try {
+    // Get a reference to the 'meals' collection
+    CollectionReference mealsCollection = FirebaseFirestore.instance.collection('meals');
+
+    // Add the meal document
+    await mealsCollection.add({
+      ...meal.toMap(),
+      'date': Timestamp.fromDate(meal.date), // Convert DateTime to Firestore Timestamp
+    });
+
+    print('Meal added successfully!');
+  } catch (e) {
+    print('Error adding meal: $e');
+  }
 }
