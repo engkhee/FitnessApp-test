@@ -2,6 +2,8 @@
 
 import 'package:fitnessapp/view/activity_tracker/activity_tracker_screen.dart';
 import 'package:fitnessapp/view/admin/admin_page.dart';
+import 'package:fitnessapp/view/admin/verify_nutritionist.dart';
+import 'package:fitnessapp/view/admin/view_database.dart';
 import 'package:fitnessapp/view/dashboard/dashboard_screen.dart';
 import 'package:fitnessapp/view/finish_workout/finish_workout_screen.dart';
 import 'package:fitnessapp/view/login/login_screen.dart';
@@ -19,6 +21,7 @@ import 'package:fitnessapp/view/tutorial_videos/create_playlist.dart';
 import 'package:fitnessapp/view/signup/auth_service.dart';
 import 'package:fitnessapp/view/Traning/training_home.dart';
 import 'package:flutter/cupertino.dart';
+
 
 final Map<String, WidgetBuilder> routes = {
   OnBoardingScreen.routeName: (context) => const OnBoardingScreen(),
@@ -39,5 +42,6 @@ final Map<String, WidgetBuilder> routes = {
   AuthService.routeName:(context) => AuthService(),
   training.routeName:(context) => training(),
   AdminPage.routeName: (context) => AdminPage(),
-
+  NutritionistList.routeName: (context) => NutritionistList(),
+  ViewDatabase.routeName: (context) => ViewDatabase(),
 };
