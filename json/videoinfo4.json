@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Round 1",
+    "time": "10 min",
+    "thumbnail":"assets/images/workout_images/fitness pose2.png",
+    "videoUrl":"https://youtu.be/jXm0y-csiuE?si=KlXK_bnltCo2Cryq"
+  },
+  {
+    "title": "Round 2",
+    "time": "10 min",
+    "thumbnail":"assets/images/workout_images/swan.png",
+    "videoUrl":"https://youtu.be/uNILu4KSHQM?si=f003qUz4nEEws1V_"
+  }
+]
