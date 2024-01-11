@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Easy",
+    "time": "10 min",
+    "thumbnail":"assets/images/workout_images/pulses.png",
+    "videoUrl":"https://youtu.be/AnYl6Nk9GOA?si=6h7DJgInk3jKlaDV"
+  },
+  {
+    "title": "Hard",
+    "time": "10 min",
+    "thumbnail":"assets/images/workout_images/side lunges.png",
+    "videoUrl":"https://youtu.be/vOiP3kfFlrE?si=ccu8jp1CwUQE0Zjn"
+  }
+]
