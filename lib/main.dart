@@ -1,6 +1,7 @@
 import 'package:fitnessapp/view/Traning/fitnesss_list.dart';
 import 'package:fitnessapp/view/Traning/train2.dart';
 import 'package:fitnessapp/view/forum/forum_screen.dart';
+import 'package:fitnessapp/view/calories/addcalories.dart';
 import 'package:fitnessapp/routes.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/auth/auth.dart';
@@ -45,8 +46,9 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           fontFamily: "Poppins"
       ),
-      home: train2(),
-        // Authpage
+      home: //train2(),
+      // CaloriesTrackerPage(),
+      Authpage(),
         //LoginScreen UserPage AddVideo
         //DashboardScreen training VideoInfo ActivityScreen
         // AdminPage
