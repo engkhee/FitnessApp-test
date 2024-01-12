@@ -38,6 +38,13 @@ class _ContactDeveloperState extends State<ContactDeveloper> {
       appBar: AppBar(
         title: Text('Contact Developer'),
         backgroundColor: AppColors.adminpageColor2,
+        leadingWidth: 40,
+        leading: TextButton(
+          onPressed: () {Navigator.pop(context);},
+          child: Image.asset(
+            'assets/icons/back_icon.png',
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
