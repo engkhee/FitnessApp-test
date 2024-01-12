@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:fitnessapp/view/admin/contact_developer.dart';
 import 'package:fitnessapp/view/admin/verify_nutritionist.dart';
 import 'package:fitnessapp/view/admin/view_database.dart';
 import 'package:flutter/material.dart';
@@ -118,7 +119,7 @@ class AdminPage extends StatelessWidget {
                 padding: const EdgeInsets.all(10.0),
               child: ElevatedButton(
                 onPressed: () {
-                  // Navigator.pushNamed(context, xx.routeName);
+                  Navigator.pushNamed(context, ContactDeveloper.routeName);
                 },
                 style: ElevatedButton.styleFrom(
                   primary: AppColors.adminpageColor3, // Background color
