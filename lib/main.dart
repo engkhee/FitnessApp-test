@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           fontFamily: "Poppins"
       ),
-      home: train2(),
+      home: DashboardScreen(),
         // Authpage
         //LoginScreen UserPage AddVideo
         //DashboardScreen training VideoInfo ActivityScreen

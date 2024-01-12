@@ -7,31 +7,31 @@
     "filename": "training"
   },
   {
-    "image": "assets/images/what_3.png",
+    "image": "assets/images/what_1.png",
     "title": "Fullbody Workout",
     "exercises": "5 Exercises",
     "time": "50 mins",
     "filename": "train2"
   },
   {
+    "image": "assets/images/what_3.png",
+    "title": "Abs Workout",
+    "exercises": "2 Exercises",
+    "time": "20 mins",
+    "filename": "train3"
+  },
+  {
     "image": "assets/images/what_1.png",
-    "title": "x Workout",
-    "exercises": "x Exercises",
-    "time": "x mins",
-    "filename": "training"
+    "title": "Arms and Shoulder Workout",
+    "exercises": "2 Exercises",
+    "time": "20 mins",
+    "filename": "train4"
   },
   {
-    "image": "assets/images/what_3.png",
-    "title": "x Workout",
-    "exercises": "x Exercises",
-    "time": "x mins",
-    "filename": "training"
-  },
-  {
-    "image": "assets/images/what_3.png",
-    "title": "x Workout",
-    "exercises": "x Exercises",
-    "time": "x mins",
-    "filename": "training"
+    "image": "assets/images/what_2.png",
+    "title": "Chest Workout",
+    "exercises": "2 Exercises",
+    "time": "20 mins",
+    "filename": "train5"
   }
 ]
