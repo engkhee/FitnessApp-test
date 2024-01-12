@@ -19,8 +19,8 @@ class _CaloriesTrackerPageState extends State<CaloriesTrackerPage> {
   void initState() {
     super.initState();
     _selectedDate = DateTime.now();
-    _firstDay = DateTime(2022, 1, 1);  // Replace with your desired start date
-    _lastDay = DateTime(2022, 12, 31);  // Replace with your desired end date
+    _firstDay = DateTime(2023, 1, 1);  // Replace with your desired start date
+    _lastDay = DateTime(2025, 12, 31);  // Replace with your desired end date
   }
 
   @override
