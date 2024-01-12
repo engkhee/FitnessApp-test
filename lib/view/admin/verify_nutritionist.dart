@@ -13,7 +13,7 @@ class NutritionistList extends StatelessWidget {
       appBar: AppBar(
         title: Text('Nutritionists List'),
         elevation: 0,
-        backgroundColor: AppColors.verifyNut2,
+        backgroundColor: AppColors.adminpageColor2,
         automaticallyImplyLeading: false,
         leadingWidth: 40,
         leading: TextButton(
@@ -28,7 +28,7 @@ class NutritionistList extends StatelessWidget {
             width: 40.0,
             margin: const EdgeInsets.only(right: 20, top: 10, bottom: 5),
             decoration: BoxDecoration(
-              color: AppColors.verifyNut3,
+              color: AppColors.adminpageColor4,
               boxShadow: [
                 BoxShadow(
                   color: AppColors.grayColor.withOpacity(0.3),
@@ -55,8 +55,8 @@ class NutritionistList extends StatelessWidget {
                     height: 45.0,
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     decoration: BoxDecoration(
-                      color: AppColors.verifyNut1,
-                      border: Border.all(color: AppColors.verifyNut3),
+                      color: AppColors.adminpageColor1,
+                      border: Border.all(color: AppColors.adminpageColor2),
                       boxShadow: [
                         BoxShadow(
                           color: AppColors.adminpageColor4.withOpacity(0.15),
@@ -87,10 +87,10 @@ class NutritionistList extends StatelessWidget {
                   width: 45.0,
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   decoration: BoxDecoration(
-                    color: AppColors.verifyNut2,
+                    color: AppColors.adminpageColor2,
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.verifyNut3.withOpacity(0.5),
+                        color: AppColors.adminpageColor4.withOpacity(0.5),
                         blurRadius: 10,
                         offset: const Offset(0, 0),
                       ),
@@ -146,7 +146,7 @@ class NutritionistList extends StatelessWidget {
                             );
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: AppColors.verifyNut1, // Background color
+                            primary: AppColors.adminpageColor3, // Background color
                             onPrimary: AppColors.blackColor, // Text color
                             elevation: 8, // Elevation (shadow)
                             shape: RoundedRectangleBorder(
@@ -156,7 +156,7 @@ class NutritionistList extends StatelessWidget {
                                 bottomRight: Radius.circular(80),
                                 topRight: Radius.circular(80),
                               ),
-                              side: BorderSide(color: AppColors.verifyNut3), // Border color
+                              side: BorderSide(color: AppColors.adminpageColor4), // Border color
                             ),
                           ),
                           child: Row(

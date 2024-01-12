@@ -2,6 +2,8 @@
 
 import 'package:fitnessapp/view/activity_tracker/activity_tracker_screen.dart';
 import 'package:fitnessapp/view/admin/admin_page.dart';
+import 'package:fitnessapp/view/admin/contact_developer.dart';
+import 'package:fitnessapp/view/admin/developer_chat_room.dart';
 import 'package:fitnessapp/view/admin/verify_nutritionist.dart';
 import 'package:fitnessapp/view/admin/view_database.dart';
 import 'package:fitnessapp/view/dashboard/dashboard_screen.dart';
@@ -44,4 +46,7 @@ final Map<String, WidgetBuilder> routes = {
   AdminPage.routeName: (context) => AdminPage(),
   NutritionistList.routeName: (context) => NutritionistList(),
   ViewDatabase.routeName: (context) => ViewDatabase(),
+  ContactDeveloper.routeName: (context) => ContactDeveloper(),
+  DeveloperChatRoom.routeName:(context) => DeveloperChatRoom(),
+
 };

@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:fitnessapp/view/admin/contact_developer.dart';
 import 'package:fitnessapp/view/admin/verify_nutritionist.dart';
 import 'package:fitnessapp/view/admin/view_database.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,13 @@ class AdminPage extends StatelessWidget {
           ),
         ),
         backgroundColor: AppColors.adminpageColor1,
+        leadingWidth: 40,
+        leading: TextButton(
+          onPressed: () {Navigator.pop(context);},
+          child: Image.asset(
+            'assets/icons/back_icon.png',
+          ),
+        ),
       ),
     body: Container(
       decoration: BoxDecoration(
@@ -30,8 +38,6 @@ class AdminPage extends StatelessWidget {
         fit: BoxFit.cover,
       ),
     ),
-    // Image.asset(
-    // "assets/icons/verify_logo.png",
       child :ListView(
           children: [
             SizedBox(height: 10),
@@ -62,7 +68,7 @@ class AdminPage extends StatelessWidget {
                       height: 150,
                     ),
                     Text(
-                      'Verify Nutrition',
+                      'Verify Nutritionist',
                       style: TextStyle(fontSize: 18),
                     ),
                   ],
@@ -118,7 +124,7 @@ class AdminPage extends StatelessWidget {
                 padding: const EdgeInsets.all(10.0),
               child: ElevatedButton(
                 onPressed: () {
-                  // Navigator.pushNamed(context, xx.routeName);
+                  Navigator.pushNamed(context, ContactDeveloper.routeName);
                 },
                 style: ElevatedButton.styleFrom(
                   primary: AppColors.adminpageColor3, // Background color

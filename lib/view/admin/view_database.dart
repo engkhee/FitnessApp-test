@@ -41,8 +41,15 @@ class _ViewDatabaseState extends State<ViewDatabase> {
     return Scaffold(
       backgroundColor: AppColors.verifyNut1,
       appBar: AppBar(
-        title: Text('View Database'),
+        title: Text('Database Center'),
         backgroundColor: AppColors.verifyNut2,
+        leadingWidth: 40,
+        leading: TextButton(
+          onPressed: () {Navigator.pop(context);},
+          child: Image.asset(
+            'assets/icons/back_icon.png',
+          ),
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

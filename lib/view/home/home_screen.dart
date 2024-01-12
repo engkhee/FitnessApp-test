@@ -261,7 +261,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   "BMI (Body Mass Index)",
                                   style: TextStyle(
                                       color: AppColors.whiteColor,
@@ -323,7 +323,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         "Today Target",
                         style: TextStyle(
                           color: AppColors.blackColor,
@@ -346,7 +346,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(height: media.width * 0.05),
-                Text(
+                const Text(
                   "Activity Status",
                   style: TextStyle(
                     color: AppColors.blackColor,
@@ -373,7 +373,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 "Heart Rate",
                                 style: TextStyle(
                                     color: AppColors.blackColor,
@@ -391,7 +391,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       .createShader(Rect.fromLTRB(
                                           0, 0, bounds.width, bounds.height));
                                 },
-                                child: Text(
+                                child: const Text(
                                   "78 BPM",
                                   style: TextStyle(
                                     color: AppColors.blackColor,
@@ -516,7 +516,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       decoration: BoxDecoration(
                           color: AppColors.whiteColor,
                           borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(color: Colors.black12, blurRadius: 2)
                           ]),
                       child: Row(children: [
@@ -535,14 +535,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               begin: Alignment.bottomCenter,
                               end: Alignment.topCenter),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Expanded(
                             child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               "Water Intake",
                               style: TextStyle(
                                   color: AppColors.blackColor,
@@ -560,7 +560,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     .createShader(Rect.fromLTRB(
                                         0, 0, bounds.width, bounds.height));
                               },
-                              child: Text(
+                              child: const Text(
                                 "4 Liters",
                                 style: TextStyle(
                                   color: AppColors.blackColor,
@@ -570,7 +570,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             SizedBox(height: media.width * 0.03),
-                            Text(
+                            const Text(
                               "Real time updates",
                               style: TextStyle(
                                   color: AppColors.blackColor,
@@ -591,7 +591,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             CrossAxisAlignment.center,
                                         children: [
                                           Container(
-                                            margin: EdgeInsets.symmetric(
+                                            margin: const EdgeInsets.symmetric(
                                                 vertical: 6),
                                             width: 10,
                                             height: 10,
@@ -611,7 +611,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   .withOpacity(0.5),
                                             )
                                         ]),
-                                    SizedBox(width: 10),
+                                    const SizedBox(width: 10),
                                     Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
@@ -621,7 +621,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         SizedBox(height: media.width * 0.01),
                                         Text(
                                           obj["title"].toString(),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               color: AppColors.blackColor,
                                               fontSize: 11,
                                               fontWeight: FontWeight.w400),
@@ -643,7 +643,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           },
                                           child: Text(
                                             obj["subtitle"].toString(),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               color: AppColors.blackColor,
                                               fontSize: 12,
                                               fontWeight: FontWeight.w500,
@@ -669,18 +669,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         Container(
                           width: double.maxFinite,
                           height: media.width * 0.45,
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               vertical: 25, horizontal: 20),
                           decoration: BoxDecoration(
                               color: AppColors.whiteColor,
                               borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(color: Colors.black12, blurRadius: 2)
                               ]),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 "Sleep",
                                 style: TextStyle(
                                     color: AppColors.blackColor,
@@ -698,7 +698,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       .createShader(Rect.fromLTRB(
                                           0, 0, bounds.width, bounds.height));
                                 },
-                                child: Text(
+                                child: const Text(
                                   "8h 20m",
                                   style: TextStyle(
                                     color: AppColors.blackColor,
@@ -720,18 +720,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         Container(
                           width: double.maxFinite,
                           height: media.width * 0.45,
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               vertical: 25, horizontal: 20),
                           decoration: BoxDecoration(
                               color: AppColors.whiteColor,
                               borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(color: Colors.black12, blurRadius: 2)
                               ]),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 "Calories",
                                 style: TextStyle(
                                     color: AppColors.blackColor,
@@ -749,7 +749,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       .createShader(Rect.fromLTRB(
                                           0, 0, bounds.width, bounds.height));
                                 },
-                                child: Text(
+                                child: const Text(
                                   "760 kCal",
                                   style: TextStyle(
                                     color: AppColors.blackColor,
@@ -758,7 +758,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Container(
                                 alignment: Alignment.center,
                                 child: SizedBox(
@@ -776,7 +776,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 colors: AppColors.primaryG),
                                             borderRadius: BorderRadius.circular(
                                                 media.width * 0.075)),
-                                        child: Text("230kCal\nleft",
+                                        child: const Text("230kCal\nleft",
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               color: AppColors.whiteColor,
