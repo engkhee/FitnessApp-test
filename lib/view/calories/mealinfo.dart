@@ -2,9 +2,12 @@ import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'meal.dart';
+import 'dbhelper.dart';
+import 'editcalories.dart';
 
 class MealInformationWidget extends StatelessWidget {
   final DateTime selectedDate;
+  final DatabaseHelper dbHelper = DatabaseHelper();
 
   MealInformationWidget({required this.selectedDate});
 
@@ -12,7 +15,7 @@ class MealInformationWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: FutureBuilder<List<Meal>>(
-        future: getMealsForDate(selectedDate),
+        future: dbHelper.getMealsForDate(selectedDate),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -42,9 +45,9 @@ class MealInformationWidget extends StatelessWidget {
                 boxColor = AppColors.verifyNut2;
               } else if (mealType == 'Dinner') {
                 boxColor = AppColors.lightyellowColor;
-              }else if (mealType == 'Supper') {
+              } else if (mealType == 'Supper') {
                 boxColor = AppColors.lightgreenColor;
-              }else if (mealType == 'Teatime') {
+              } else if (mealType == 'Teatime') {
                 boxColor = AppColors.lightorangeColor;
               } else {
                 // Default color
@@ -85,14 +88,13 @@ class MealInformationWidget extends StatelessWidget {
                             trailing: PopupMenuButton<String>(
                               onSelected: (value) {
                                 if (value == 'edit') {
-                                  // Handle Edit action
-                                  // You can navigate to the edit screen or show a dialog
+                                  editMeal(context, meal);
                                 } else if (value == 'delete') {
-                                  // Handle Delete action
-                                  // You can show a confirmation dialog and delete the meal if confirmed
+                                  deleteMeal(context, meal);
                                 }
                               },
-                              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                              itemBuilder: (BuildContext context) =>
+                              [
                                 const PopupMenuItem<String>(
                                   value: 'edit',
                                   child: ListTile(
@@ -128,6 +130,13 @@ class MealInformationWidget extends StatelessWidget {
     );
   }
 
+  void editMeal (BuildContext context, Meal meal) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => EditCalories(meal)),
+    );
+  }
+
   Map<String, List<Meal>> groupMealsByType(List<Meal> meals) {
     Map<String, List<Meal>> mealsByType = {};
 
@@ -142,27 +151,37 @@ class MealInformationWidget extends StatelessWidget {
     return mealsByType;
   }
 
-// Inside MealInformationWidget
-  Future<List<Meal>> getMealsForDate(DateTime date) async {
-    try {
-      DateTime startDate = DateTime(date.year, date.month, date.day);
-      DateTime endDate = DateTime(date.year, date.month, date.day + 1);
-
-      Timestamp startTimestamp = Timestamp.fromDate(startDate);
-      Timestamp endTimestamp = Timestamp.fromDate(endDate);
-
-      QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
-          .collection('meals')
-          .where('date', isGreaterThanOrEqualTo: startTimestamp, isLessThan: endTimestamp)
-          .get() as QuerySnapshot<Map<String, dynamic>>;
-
-      return snapshot.docs.map((DocumentSnapshot<Map<String, dynamic>> doc) {
-        return Meal.fromMap(doc.data()!);
-      }).toList();
-    } catch (e) {
-      print('Error getting meals for date: $e');
-      return [];
-    }
+  void deleteMeal(BuildContext context, Meal meal) {
+    print('Deleting meal with ID: ${meal.id}');
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Delete Food Item'),
+          content: const Text(
+            'Are you sure you want to delete this meal record?',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () async {
+                // Print debug information
+                print('Deleting meal with ID: ${meal.id}');
+                // Perform the deletion using dbHelper
+                await dbHelper.deleteMeal(meal.id);
+                print('Meal deleted successfully.');
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
   }
-
 }

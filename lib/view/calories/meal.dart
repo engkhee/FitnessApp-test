@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Meal {
+  final String id;
   final String mealType;
   final String mealName;
   final String description;
@@ -12,6 +13,7 @@ class Meal {
   final DateTime date;
 
   Meal({
+    this.id='',
     required this.mealType,
     required this.mealName,
     required this.description,
@@ -24,6 +26,7 @@ class Meal {
 
   factory Meal.fromMap(Map<String, dynamic> map) {
     return Meal(
+      id: map['id'] ?? '',
       mealType: map['mealType'] ?? '',
       mealName: map['mealName'] ?? '',
       description: map['description'] ?? '',
