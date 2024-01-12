@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Meal {
   final String id;
+  String userId;
   final String mealType;
   final String mealName;
   final String description;
@@ -14,6 +15,7 @@ class Meal {
 
   Meal({
     this.id='',
+    this.userId = '',
     required this.mealType,
     required this.mealName,
     required this.description,

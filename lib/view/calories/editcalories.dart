@@ -243,24 +243,39 @@ class _EditCaloriesState extends State<EditCalories> {
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () async {
+                      print('Update button pressed!');
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
+                        print('Form saved!');
+                        print('mealType: $mealType');
+                        print('mealName: $mealName');
+                        print('description: $description');
+                        print('protein: $protein');
+                        print('carbohydrate: $carbohydrate');
+                        print('fat: $fat');
+                        print('totalCalories: $totalCalories');
+                        print('date: $date');
 
                         // Create a new Meal object with updated calorie information
                         Meal updatedMeal = Meal(
                           id: widget.originalMeal.id,
-                          mealType: widget.originalMeal.mealType,
-                          mealName: widget.originalMeal.mealName,
-                          description: widget.originalMeal.description,
+                          mealType: mealType!,
+                          mealName: mealName!,
+                          description: description!,
                           protein: protein!,
                           carbohydrate: carbohydrate!,
                           fat: fat!,
                           totalCalories: totalCalories!,
-                          date: widget.originalMeal.date,
+                          date: date!,
                         );
+
+                        // Update logic
+                        print('Updating meal...');
 
                         // Update the meal in Firebase using DatabaseHelper
                         await _dbHelper.updateMeal(updatedMeal);
+
+                        print('Meal updated successfully!');
 
                         // Provide feedback to the user
                         ScaffoldMessenger.of(context).showSnackBar(

@@ -8,6 +8,7 @@ class DatabaseHelper {
 
   Future<void> insertMeal(Meal meal) async {
     try {
+      //meal.userId = userId;
       await mealsCollection.add(meal.toMap());
     } catch (e) {
       print('Error inserting meal record: $e');
@@ -17,6 +18,9 @@ class DatabaseHelper {
 
   Future<List<Meal>> getMeals() async {
     try {
+      // QuerySnapshot<Map<String, dynamic>> snapshot =
+      // await mealsCollection.where('userId', isEqualTo: userId).get()
+      // as QuerySnapshot<Map<String, dynamic>>;
       QuerySnapshot<Map<String, dynamic>> snapshot =
       await mealsCollection.get() as QuerySnapshot<Map<String, dynamic>>;
       return snapshot.docs.map((DocumentSnapshot<Map<String, dynamic>> doc) {
@@ -70,12 +74,22 @@ class DatabaseHelper {
 
   Future<void> updateMeal(Meal meal) async {
     try {
-      await mealsCollection.doc(meal.id).update(meal.toMap());
+      await mealsCollection.doc(meal.id).update({
+        'mealType': meal.mealType,
+        'mealName': meal.mealName,
+        'description': meal.description,
+        'protein': meal.protein,
+        'carbohydrate': meal.carbohydrate,
+        'fat': meal.fat,
+        'totalCalories': meal.totalCalories,
+        'date': Timestamp.fromDate(meal.date),
+      });
     } catch (e) {
       print('Error updating food item: $e');
       rethrow;
     }
   }
+
 
   Future<void> deleteMeal(String id) async {
     try {
