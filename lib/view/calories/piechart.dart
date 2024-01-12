@@ -1,7 +1,6 @@
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'meal.dart';
 import 'dbhelper.dart';
 
@@ -14,7 +13,7 @@ class DailyPieChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
         color: Colors.white,
@@ -23,7 +22,7 @@ class DailyPieChart extends StatelessWidget {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 2,
             blurRadius: 4,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -33,16 +32,16 @@ class DailyPieChart extends StatelessWidget {
             'Daily Nutrition',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 6),
           FutureBuilder<List<Meal>>(
             future: dbHelper.getMealsForDate(date),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return Text('No data available for this date.');
+                return const Text('No data available for this date.');
               } else {
                 // Calculate total protein, carbohydrate, fat, and calories for the day
                 double totalProtein = snapshot.data!.map((meal) => meal.protein).reduce((a, b) => a + b);
@@ -105,7 +104,7 @@ class DailyPieChart extends StatelessWidget {
                     const SizedBox(height: 8),
                     Text(
                       'Total Calories: $totalCalories',
-                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                   ],
                 );

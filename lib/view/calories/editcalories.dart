@@ -1,9 +1,8 @@
-import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:fitnessapp/utils/app_colors.dart';
+import 'package:intl/intl.dart';
 import 'meal.dart';
 import 'dbhelper.dart';
-import 'package:intl/intl.dart';
-
 
 class EditCalories extends StatefulWidget {
   final Meal originalMeal;
@@ -29,6 +28,14 @@ class _EditCaloriesState extends State<EditCalories> {
   DatabaseHelper _dbHelper = DatabaseHelper();
 
   @override
+  void initState() {
+    super.initState();
+    // Set the original date in the date controller
+    _dateController.text = DateFormat('yyyy-MM-dd').format(widget.originalMeal.date);
+    date = widget.originalMeal.date;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.adminpageColor3,
@@ -46,200 +53,26 @@ class _EditCaloriesState extends State<EditCalories> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.lightorangeColor,
-                      border: Border.all(color: AppColors.grayColor),
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    child: DropdownButtonFormField<String>(
-                      value: widget.originalMeal.mealType,
-                      onChanged: (value) {
-                        setState(() {
-                          mealType = value;
-                        });
-                      },
-                      items: [
-                        'Breakfast',
-                        'Lunch',
-                        'Dinner',
-                        'Supper',
-                        'Teatime',
-                        'Snack',
-                      ].map((type) {
-                        return DropdownMenuItem<String>(
-                          value: type,
-                          child: Text(type),
-                        );
-                      }).toList(),
-                      decoration: const InputDecoration(
-                        labelText: 'Meal Type: ',
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.lightorangeColor,
-                      border: Border.all(color: AppColors.grayColor),
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    child: TextFormField(
-                      initialValue: widget.originalMeal.mealName,
-                      keyboardType: TextInputType.text,
-                      decoration: const InputDecoration(
-                        labelText: 'Meal Name: ',
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
-                      ),
-                      onSaved: (value) {
-                        mealName = value;
-                      },
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.lightorangeColor,
-                      border: Border.all(color: AppColors.grayColor),
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    child: TextFormField(
-                      initialValue: widget.originalMeal.description,
-                      keyboardType: TextInputType.text,
-                      decoration: const InputDecoration(
-                        labelText: 'Description: ',
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
-                      ),
-                      onSaved: (value) {
-                        mealName = value;
-                      },
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.lightorangeColor,
-                      border: Border.all(color: AppColors.grayColor),
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    child: TextFormField(
-                      initialValue: widget.originalMeal.protein.toString(),
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Protein (g):',
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
-                      ),
-                      onSaved: (value) {
-                        protein = double.parse(value!);
-                      },
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.lightorangeColor,
-                      border: Border.all(color: AppColors.grayColor),
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    child: TextFormField(
-                      initialValue: widget.originalMeal.carbohydrate.toString(),
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Carbohydrate (g):',
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
-                      ),
-                      onSaved: (value) {
-                        carbohydrate = double.parse(value!);
-                      },
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.lightorangeColor,
-                      border: Border.all(color: AppColors.grayColor),
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    child: TextFormField(
-                      initialValue: widget.originalMeal.fat.toString(),
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Fat (g):',
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
-                      ),
-                      onSaved: (value) {
-                        fat = double.parse(value!);
-                      },
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.lightorangeColor,
-                      border: Border.all(color: AppColors.grayColor),
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    child: TextFormField(
-                      initialValue: widget.originalMeal.totalCalories.toString(),
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Calories:',
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter Calories!';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                        totalCalories = double.parse(value!);
-                      },
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.lightorangeColor,
-                      border: Border.all(color: AppColors.grayColor),
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    child: TextFormField(
-                      controller: _dateController,
-                      readOnly: true,
-                      onTap: () async {
-                        DateTime? selectedDate = await showDatePicker(
-                          context: context,
-                          initialDate: widget.originalMeal.date,
-                          firstDate: DateTime(2000),
-                          lastDate: DateTime(2101),
-                        );
-
-                        if (selectedDate != null && selectedDate != widget.originalMeal.date) {
-                          setState(() {
-                            _dateController.text = DateFormat('yyyy-MM-dd').format(selectedDate);
-                            date = selectedDate;
-                          });
-                        }
-                      },
-                      decoration: const InputDecoration(
-                        labelText: 'Date: ',
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please select a date!';
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                        date = DateTime.parse(value!);
-                      },
-                    ),
-                  ),
-
+                  _buildDropdown('Meal Type:', widget.originalMeal.mealType),
+                  _buildTextField('Meal Name:', widget.originalMeal.mealName, (value) {
+                    mealName = value;
+                  }),
+                  _buildTextField('Description:', widget.originalMeal.description, (value) {
+                    description = value;
+                  }),
+                  _buildTextField('Protein (g):', widget.originalMeal.protein.toString(), (value) {
+                    protein = double.parse(value!);
+                  }),
+                  _buildTextField('Carbohydrate (g):', widget.originalMeal.carbohydrate.toString(), (value) {
+                    carbohydrate = double.parse(value!);
+                  }),
+                  _buildTextField('Fat (g):', widget.originalMeal.fat.toString(), (value) {
+                    fat = double.parse(value!);
+                  }),
+                  _buildTextField('Calories:', widget.originalMeal.totalCalories.toString(), (value) {
+                    totalCalories = double.parse(value!);
+                  }),
+                  _buildDateField(),
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () async {
@@ -297,6 +130,103 @@ class _EditCaloriesState extends State<EditCalories> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildDropdown(String label, String initialValue) {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.lightorangeColor,
+        border: Border.all(color: AppColors.grayColor),
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      child: DropdownButtonFormField<String>(
+        value: initialValue,
+        onChanged: (value) {
+          setState(() {
+            mealType = value;
+          });
+        },
+        items: [
+          'Breakfast',
+          'Lunch',
+          'Dinner',
+          'Supper',
+          'Teatime',
+          'Snack',
+        ].map((type) {
+          return DropdownMenuItem<String>(
+            value: type,
+            child: Text(type),
+          );
+        }).toList(),
+        decoration: InputDecoration(
+          labelText: label,
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextField(String label, String? initialValue, void Function(String?)? onSaved) {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.lightorangeColor,
+        border: Border.all(color: AppColors.grayColor),
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      child: TextFormField(
+        initialValue: initialValue ?? '', // Provide a default value when initialValue is null
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          labelText: label,
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
+        ),
+        onSaved: onSaved,
+      ),
+    );
+  }
+
+
+  Widget _buildDateField() {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.lightorangeColor,
+        border: Border.all(color: AppColors.grayColor),
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      child: TextFormField(
+        controller: _dateController,
+        readOnly: true,
+        onTap: () async {
+          DateTime? selectedDate = await showDatePicker(
+            context: context,
+            initialDate: widget.originalMeal.date,
+            firstDate: DateTime(2000),
+            lastDate: DateTime(2101),
+          );
+
+          if (selectedDate != null && selectedDate != widget.originalMeal.date) {
+            setState(() {
+              _dateController.text = DateFormat('yyyy-MM-dd').format(selectedDate);
+              date = selectedDate;
+            });
+          }
+        },
+        decoration: InputDecoration(
+          labelText: 'Date:',
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
+        ),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Please select a date!';
+          }
+          return null;
+        },
       ),
     );
   }

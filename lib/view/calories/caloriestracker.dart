@@ -59,7 +59,7 @@ class _CaloriesTrackerPageState extends State<CaloriesTrackerPage> {
                 titleCentered: true,
                 formatButtonVisible: true,
                 formatButtonShowsNext: false,
-                titleTextStyle: TextStyle(fontSize: 20),
+                titleTextStyle: TextStyle(fontSize: 16),
               ),
               headerVisible: true,
               startingDayOfWeek: StartingDayOfWeek.sunday,
