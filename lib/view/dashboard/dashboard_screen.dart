@@ -4,7 +4,7 @@ import 'package:fitnessapp/view/forum/forum_screen.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/activity/activity_screen.dart';
 import 'package:fitnessapp/view/profile/user_profile.dart';
-// import 'package:fitnessapp/view/food/food_screen.dart';
+import 'package:fitnessapp/view/foodview/user_viewfood.dart';
 import 'package:flutter/material.dart';
 
 import '../home/home_screen.dart';
@@ -26,7 +26,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     const ActivityScreen(),
     const ForumScreen(),
     const UserProfile(),
-    // const FoodIntake(),
+    UserFoodViewPage(),
   ];
 
   @override
@@ -35,7 +35,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
       backgroundColor: AppColors.whiteColor,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: InkWell(
-        onTap: () {},
+        onTap: () {
+          if (mounted) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => UserFoodViewPage()),
+            );
+          }
+        },
         child: SizedBox(
           width: 70,
           height: 70,
@@ -48,20 +55,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 boxShadow: const [
                   BoxShadow(color: Colors.black12, blurRadius: 2)
                 ]),
-            child: TabButton(
-                icon: "assets/icons/food.png",
-                selectIcon: "assets/icons/food_select.png",
-                isActive: selectTab == 4,
-                onTap: () {
-                  if (mounted) {
-                    setState(() {
-                      selectTab = 4;
-                    });
-                  }
-                }),
+            child: const Icon(Icons.fastfood,
+                color: AppColors.whiteColor, size: 36),
           ),
         ),
-
       ),
 
       body: IndexedStack(
