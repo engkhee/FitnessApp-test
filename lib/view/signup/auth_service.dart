@@ -82,7 +82,7 @@ class _AuthService extends State<AuthService> {
     String cert = _certController.text;
 
     // Send data to Firebase
-    FirebaseFirestore.instance.collection('users').add({
+    FirebaseFirestore.instance.collection('nutritionist_registeration').add({
       'name': name,
       'Ic': Ic,
       'phone': phone,
