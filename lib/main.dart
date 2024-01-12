@@ -1,5 +1,6 @@
 import 'package:fitnessapp/view/forum/forum_screen.dart';
 import 'package:fitnessapp/view/calories/addcalories.dart';
+import 'package:fitnessapp/view/calories/caloriestracker.dart';
 import 'package:fitnessapp/routes.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/auth/auth.dart';
@@ -49,7 +50,8 @@ class MyApp extends StatelessWidget {
         // Authpage
         //LoginScreen UserPage AddVideo
         //DashboardScreen(),
-        AddCaloriesPage(),
+        // AddCaloriesPage(),
+        CaloriesTrackerPage(),
     );
   }
 }
