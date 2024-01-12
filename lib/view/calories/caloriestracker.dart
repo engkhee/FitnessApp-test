@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'piechart.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'addcalories.dart';  // Import the AddCaloriesPage
+import 'addcalories.dart';
+import 'mealinfo.dart';
 
 class CaloriesTrackerPage extends StatefulWidget {
   @override
@@ -20,7 +21,7 @@ class _CaloriesTrackerPageState extends State<CaloriesTrackerPage> {
     super.initState();
     _selectedDate = DateTime.now();
     _firstDay = DateTime(2023, 1, 1);  // Replace with your desired start date
-    _lastDay = DateTime(2025, 12, 31);  // Replace with your desired end date
+    _lastDay = DateTime(2050, 12, 31);  // Replace with your desired end date
   }
 
   @override
@@ -54,7 +55,7 @@ class _CaloriesTrackerPageState extends State<CaloriesTrackerPage> {
             ),
 
             // TODO: Add Meal Information
-            // MealInformationWidget(),
+            MealInformationWidget(selectedDate: _selectedDate),
           ],
         ),
       ),

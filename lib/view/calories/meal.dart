@@ -1,3 +1,6 @@
+// meal.dart
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Meal {
   final String mealType;
   final String mealName;
@@ -23,12 +26,12 @@ class Meal {
     return Meal(
       mealType: map['mealType'] ?? '',
       mealName: map['mealName'] ?? '',
-      description: map['description']?? '',
+      description: map['description'] ?? '',
       protein: map['protein'] ?? 0.0,
       carbohydrate: map['carbohydrate'] ?? 0.0,
       fat: map['fat'] ?? 0.0,
       totalCalories: map['totalCalories'] ?? 0.0,
-      date: map['date'].toDate(), // Convert Firestore Timestamp to DateTime
+      date: (map['date'] as Timestamp).toDate(),
     );
   }
 
@@ -41,7 +44,7 @@ class Meal {
       'carbohydrate': carbohydrate,
       'fat': fat,
       'totalCalories': totalCalories,
-      'date': date, // Save DateTime directly
+      'date': Timestamp.fromDate(date),
     };
   }
 }
