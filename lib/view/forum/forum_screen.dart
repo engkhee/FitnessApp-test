@@ -45,7 +45,7 @@ class _CameraScreenState extends State<ForumScreen> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          gradient: LinearGradient(colors: AppColors.primaryG)),
+          gradient: LinearGradient(colors: AppColors.secondaryG)),
       child:
         Scaffold(
           backgroundColor: Colors.transparent,
