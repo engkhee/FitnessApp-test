@@ -96,7 +96,7 @@ class _UserProfileState extends State<UserProfile> {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                   color: AppColors.lightGrayColor,
-                  borderRadius: BorderRadius.circular(10)),
+                  borderRadius: BorderRadius.circular(15)),
               child: Image.asset(
                 "assets/icons/logout.png",
                 width: 12,
