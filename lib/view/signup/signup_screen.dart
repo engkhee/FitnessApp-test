@@ -1,8 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitnessapp/view/signup/auth_service.dart';
 import 'package:flutter/material.dart';
-
 import '../../common_widgets/round_gradient_button.dart';
 import '../../common_widgets/round_textfield.dart';
 import '../login/login_screen.dart';
@@ -24,6 +24,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _icNumberController = TextEditingController();
 
   // Future<void> _register() async {
   //   {
@@ -37,10 +38,23 @@ class _SignupScreenState extends State<SignupScreen> {
 
   Future<void> _register() async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      // Create user with email and password
+      await _auth.createUserWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
       );
+
+      // Get the current user
+      User? user = _auth.currentUser;
+
+      // Store user data in Firestore
+      await FirebaseFirestore.instance.collection('Users').doc(user!.uid).set({
+        'firstName': _firstNameController.text,
+        'lastName': _lastNameController.text,
+        'email': _emailController.text,
+        'icNumber': _icNumberController.text,
+      });
+
       print("Registration successful!");
     } catch (error) {
       print("Error during registration: $error");
@@ -100,7 +114,15 @@ class _SignupScreenState extends State<SignupScreen> {
                 SizedBox(
                   height: 15,
                 ),
-
+                RoundTextField(
+                  controller: _icNumberController,
+                  hintText: "IC Number",
+                  icon: "assets/icons/ic_number_icon.png",
+                  textInputType: TextInputType.number, // Assuming IC number is numeric
+                ),
+                SizedBox(
+                  height: 15,
+                ),
                 // RoundTextField(
                 //     hintText: "Email",
                 //     icon: "assets/icons/message_icon.png",
@@ -184,7 +206,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   title: "Register as user",
                   onPressed: () {
                     _register(); // Call the register function
-                    Navigator.pushNamed(context,LoginScreen.routeName);
+                    Navigator.pushNamed(context, LoginScreen.routeName);
                   },
                 ),
 
@@ -294,3 +316,5 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 }
+
+

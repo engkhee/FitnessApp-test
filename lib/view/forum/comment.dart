@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Comment extends StatelessWidget {
@@ -16,7 +17,7 @@ class Comment extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color:  Colors.purple[50],
+        color:  CupertinoColors.systemGrey6,
         borderRadius: BorderRadius.circular(8),
       ),
       margin: const EdgeInsets.only(bottom: 5),
@@ -42,7 +43,7 @@ class Comment extends StatelessWidget {
 
               Text(
                 user,
-                style: TextStyle(color: Colors.grey[400], fontSize: 11.5),
+                style: TextStyle(color: Colors.grey[500], fontSize: 11.5),
               ),
 
               Text(

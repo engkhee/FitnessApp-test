@@ -7,6 +7,7 @@ import 'package:fitnessapp/view/forum/delete_button.dart';
 import 'package:fitnessapp/view/forum/like_button.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/app_colors.dart';
 import 'helper/helper_method.dart';
 
 class Post extends StatefulWidget{
@@ -183,10 +184,10 @@ class _PostState extends State<Post> {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(15),
       ),
       margin: EdgeInsets.only(top: 10, left: 20, right: 20),
-      padding: EdgeInsets.all(15),
+      padding: EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -196,7 +197,7 @@ class _PostState extends State<Post> {
           Row(
             children: [
               Container(
-                decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey[400]),
+                decoration: BoxDecoration(shape: BoxShape.circle, gradient: LinearGradient(colors: AppColors.primaryG)),
                 padding: EdgeInsets.all(5),
                 child: Icon(
                   Icons.person,
@@ -213,24 +214,24 @@ class _PostState extends State<Post> {
                     children: [
                       Text(
                         widget.user,
-                        style: TextStyle(color: Colors.grey[400], fontSize: 12),
+                        style: TextStyle(color: Colors.black87, fontSize: 12),
                       ),
 
                       Text(
                         " • ",
-                        style: TextStyle(color: Colors.grey[400], fontSize: 12),
+                        style: TextStyle(color: Colors.black87, fontSize: 12),
                       ),
 
                       Text(
                         widget.time,
-                        style: TextStyle(color: Colors.grey[400], fontSize: 12),
+                        style: TextStyle(color: Colors.black87, fontSize: 12),
                       ),
                     ],
                   ),
 
                 ],
               ),
-              const SizedBox(width: 80,),
+              const SizedBox(width: 10,),
 
               // delete button
               if(widget.user == currentUser.email)
@@ -246,7 +247,7 @@ class _PostState extends State<Post> {
               children: [
                 Text(
                   widget.message,
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 18),
                 ),
               ],
             ),

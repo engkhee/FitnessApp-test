@@ -43,96 +43,103 @@ class _CameraScreenState extends State<ForumScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.purple[50],
-        centerTitle: true,
-        elevation: 0,
-        leadingWidth: 0,
-        leading: const SizedBox(),
-        title: Text(
-          "Discussion Forum ✎",
-          style: TextStyle(
-              color: AppColors.blackColor, fontSize: 16, fontWeight: FontWeight.w700),
-        ),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            //post message
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Row(
-                children: [
-                  //text field
-                  Expanded(
-                      child: RoundTextField(
-                        controller: textController,
-                        hintText: "Write something...",
-                        icon: "assets/icons/write.png",
-                        textInputType: TextInputType.text,
+    return Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(colors: AppColors.secondaryG)),
+      child:
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            centerTitle: true,
+            elevation: 0,
+            leadingWidth: 0,
+            leading: const SizedBox(),
+            title: Text(
+              "Discussion Forum ✎",
+              style: TextStyle(
+                  color: AppColors.whiteColor, fontSize: 16, fontWeight: FontWeight.w700),
+            ),
+          ),
+          body: Center(
+            child: Column(
+              children: [
+                //post message
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Row(
+                    children: [
+                      //text field
+                      Expanded(
+                          child: RoundTextField(
+                            controller: textController,
+                            hintText: "Write something...",
+                            icon: "assets/icons/write.png",
+                            textInputType: TextInputType.text,
+                          )
+                      ),
+                      // post button
+                      IconButton(
+                        onPressed: postMessage,
+                        icon: const Icon(Icons.arrow_circle_right_outlined),
+                        color: Colors.white70,
                       )
+                    ],
                   ),
-                  // post button
-                  IconButton(
-                    onPressed: postMessage,
-                    icon: const Icon(Icons.arrow_circle_right_outlined),
-                  )
-                ],
-              ),
-            ),
-
-            // log in as
-            Text(
-              "Logged in as: " + currentUser.email!,
-              style: TextStyle(color: Colors.grey),
-            ),
-
-            // the wall
-            Expanded(
-                child: StreamBuilder(
-                  stream: FirebaseFirestore.instance
-                    .collection("UserPosts").orderBy(
-                      "TimeStamp",
-                      descending:false,
-                  )
-                  .snapshots(),
-                  builder: (context, snapshot){
-                    if(snapshot.hasData){
-                      return ListView.builder(
-                        itemCount: snapshot.data!.docs.length,
-                        itemBuilder: (context, index){
-                          // get the message
-                          final post = snapshot.data!.docs[index];
-                          return Post(
-                            message: post['Message'],
-                            user: post['UserEmail'],
-                            time: formatDate(post["TimeStamp"]),
-                            postId: post.id,
-                            likes: List<String>.from(post['Likes'] ?? []),
-                          );
-                        },
-                      );
-                    }else if(snapshot.hasError){
-                      return Center(
-                        child: Text('Error${snapshot.error}'),
-                      );
-                    }
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
                 ),
+
+                // log in as
+                Text(
+                  "Logged in as: " + currentUser.email!,
+                  style: TextStyle(color: Colors.white),
+                ),
+
+                // the wall
+                Expanded(
+                    child: StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                        .collection("UserPosts").orderBy(
+                          "TimeStamp",
+                          descending:false,
+                      )
+                      .snapshots(),
+                      builder: (context, snapshot){
+                        if(snapshot.hasData){
+                          return ListView.builder(
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (context, index){
+                              // get the message
+                              final post = snapshot.data!.docs[index];
+                              return Post(
+                                message: post['Message'],
+                                user: post['UserEmail'],
+                                time: formatDate(post["TimeStamp"]),
+                                postId: post.id,
+                                likes: List<String>.from(post['Likes'] ?? []),
+                              );
+                            },
+                          );
+                        }else if(snapshot.hasError){
+                          return Center(
+                            child: Text('Error${snapshot.error}'),
+                          );
+                        }
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
+                    ),
+                ),
+
+
+
+                const SizedBox(
+                  height: 20,
+                ),
+              ],
             ),
-
-
-
-            const SizedBox(
-              height: 20,
-            ),
-          ],
+          ),
         ),
-      ),
     );
   }
 }
