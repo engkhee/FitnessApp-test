@@ -65,7 +65,11 @@ class _CaloriesTrackerPageState extends State<CaloriesTrackerPage> {
               startingDayOfWeek: StartingDayOfWeek.sunday,
             ),
 
-            MealInformationWidget(selectedDate: _selectedDate),
+            MealInformationWidget(
+              selectedDate: _selectedDate,
+              updateSelectedDate: updateSelectedDate,
+            ),
+
           ],
         ),
       ),
@@ -88,5 +92,12 @@ class _CaloriesTrackerPageState extends State<CaloriesTrackerPage> {
         child: Icon(Icons.add),
       ),
     );
+  }
+
+  // A method to handle the state update
+  void updateSelectedDate(DateTime updatedDate) {
+    setState(() {
+      _selectedDate = updatedDate;
+    });
   }
 }

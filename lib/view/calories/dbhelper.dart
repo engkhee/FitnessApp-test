@@ -1,4 +1,4 @@
-// dbhelper.dart
+//// dbhelper.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'meal.dart';
 
@@ -8,19 +8,19 @@ class DatabaseHelper {
 
   Future<void> insertMeal(Meal meal) async {
     try {
-      //meal.userId = userId;
-      await mealsCollection.add(meal.toMap());
+      meal.id = FirebaseFirestore.instance.collection('meals').doc().id;
+
+      DocumentReference<Object?> docRef = await mealsCollection.add(meal.toMap());
+      print('Meal added with ID: ${docRef.id}');
     } catch (e) {
       print('Error inserting meal record: $e');
       rethrow;
     }
   }
 
+
   Future<List<Meal>> getMeals() async {
     try {
-      // QuerySnapshot<Map<String, dynamic>> snapshot =
-      // await mealsCollection.where('userId', isEqualTo: userId).get()
-      // as QuerySnapshot<Map<String, dynamic>>;
       QuerySnapshot<Map<String, dynamic>> snapshot =
       await mealsCollection.get() as QuerySnapshot<Map<String, dynamic>>;
       return snapshot.docs.map((DocumentSnapshot<Map<String, dynamic>> doc) {
@@ -56,6 +56,7 @@ class DatabaseHelper {
 
       return snapshot.docs.map((DocumentSnapshot<Map<String, dynamic>> doc) {
         return Meal(
+          id: doc.id,
           mealType: doc['mealType'],
           mealName: doc['mealName'],
           description: doc['description'],
@@ -72,18 +73,17 @@ class DatabaseHelper {
     }
   }
 
-  Future<void> updateMeal(Meal meal) async {
+  Future<void> updateMeal(String mealId, Meal meal) async {
     try {
-      await mealsCollection.doc(meal.id).update({
-        'mealType': meal.mealType,
-        'mealName': meal.mealName,
-        'description': meal.description,
-        'protein': meal.protein,
-        'carbohydrate': meal.carbohydrate,
-        'fat': meal.fat,
-        'totalCalories': meal.totalCalories,
-        'date': Timestamp.fromDate(meal.date),
-      });
+      print('Updating meal...');
+      print('Meal data: ${meal.toMap()}');
+
+      if (mealId.isNotEmpty) {
+        await mealsCollection.doc(mealId).update(meal.toMap());
+        print('Meal updated successfully!');
+      } else {
+        print('Error updating food item: Meal ID is empty or null.');
+      }
     } catch (e) {
       print('Error updating food item: $e');
       rethrow;
@@ -91,15 +91,20 @@ class DatabaseHelper {
   }
 
 
-  Future<void> deleteMeal(String id) async {
+
+  Future<void> deleteMeal(String? id) async {
     try {
-      print('Deleting meal with ID: $id');
-      await mealsCollection.doc(id).delete();
-      print('Deletion successful.');
+      if (id != null && id.isNotEmpty) {
+        print('Deleting meal with ID: $id');
+        await mealsCollection.doc(id).delete();
+        print('Deletion successful.');
+      } else {
+        print('Error deleting meal: Meal ID is null or empty.');
+      }
     } catch (e) {
       print('Error deleting meal: $e');
       rethrow;
     }
   }
-
 }
+

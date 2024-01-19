@@ -1,6 +1,5 @@
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'meal.dart';
 import 'dbhelper.dart';
 import 'editcalories.dart';
@@ -8,8 +7,12 @@ import 'editcalories.dart';
 class MealInformationWidget extends StatelessWidget {
   final DateTime selectedDate;
   final DatabaseHelper dbHelper = DatabaseHelper();
+  final Function(DateTime) updateSelectedDate;
 
-  MealInformationWidget({required this.selectedDate});
+  MealInformationWidget({
+    required this.selectedDate,
+    required this.updateSelectedDate,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -130,12 +133,21 @@ class MealInformationWidget extends StatelessWidget {
     );
   }
 
-  void editMeal (BuildContext context, Meal meal) {
-    Navigator.push(
+  void editMeal(BuildContext context, Meal meal) async {
+    final updatedMeal = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => EditCalories(meal)),
     );
+
+    // Check if the result is not null, and refresh the widget
+    if (updatedMeal != null) {
+      // Assuming that `updatedMeal` is the updated meal object
+      print('Meal updated: $updatedMeal');
+      // Call the callback to update the selected date
+      updateSelectedDate(updatedMeal.date);
+    }
   }
+
 
   Map<String, List<Meal>> groupMealsByType(List<Meal> meals) {
     Map<String, List<Meal>> mealsByType = {};

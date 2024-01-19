@@ -33,6 +33,9 @@ class _EditCaloriesState extends State<EditCalories> {
     // Set the original date in the date controller
     _dateController.text = DateFormat('yyyy-MM-dd').format(widget.originalMeal.date);
     date = widget.originalMeal.date;
+
+    // Print the original meal's ID
+    print('Original Meal ID: ${widget.originalMeal.id}');
   }
 
   @override
@@ -40,10 +43,10 @@ class _EditCaloriesState extends State<EditCalories> {
     return Scaffold(
       backgroundColor: AppColors.adminpageColor3,
       appBar: AppBar(
-        title: Text('Edit Meal Record'),
+        title: const Text('Edit Meal Record'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Card(
           elevation: 4.0,
           child: Padding(
@@ -77,6 +80,7 @@ class _EditCaloriesState extends State<EditCalories> {
                   ElevatedButton(
                     onPressed: () async {
                       print('Update button pressed!');
+
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
                         print('Form saved!');
@@ -105,20 +109,36 @@ class _EditCaloriesState extends State<EditCalories> {
                         // Update logic
                         print('Updating meal...');
 
-                        // Update the meal in Firebase using DatabaseHelper
-                        await _dbHelper.updateMeal(updatedMeal);
+                        try {
+                          // // Update the meal in Firebase using DatabaseHelper
+                          // await _dbHelper.updateMeal(widget.originalMeal.id, updatedMeal);
+                          // print('Meal updated successfully!');
+                          // Check if the meal ID is not null and not empty using null-aware operators
+                          if (widget.originalMeal.id?.isNotEmpty == true) {
+                            // Pass the non-nullable String to the updateMeal method
+                            await _dbHelper.updateMeal(widget.originalMeal.id!, updatedMeal);
+                          } else {
+                            print('Error: Meal ID is empty or null');
+                          }
 
-                        print('Meal updated successfully!');
-
-                        // Provide feedback to the user
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Calories updated successfully!'),
-                          ),
-                        );
-
-                        // Update the UI or navigate back
-                        Navigator.pop(context, widget.originalMeal.date);
+                          // Provide feedback to the user
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Calories updated successfully!'),
+                            ),
+                          );
+                          // Update the UI or navigate back
+                          Navigator.pop(context, widget.originalMeal.date);
+                        } catch (e) {
+                          print('Error updating meal: $e');
+                          // Provide feedback to the user about the error
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Error updating meal: $e'),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        }
 
                         setState(() {});
                       }
@@ -183,13 +203,12 @@ class _EditCaloriesState extends State<EditCalories> {
         decoration: InputDecoration(
           labelText: label,
           border: InputBorder.none,
-          contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 10.0),
         ),
         onSaved: onSaved,
       ),
     );
   }
-
 
   Widget _buildDateField() {
     return Container(
@@ -216,7 +235,7 @@ class _EditCaloriesState extends State<EditCalories> {
             });
           }
         },
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           labelText: 'Date:',
           border: InputBorder.none,
           contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
@@ -226,6 +245,9 @@ class _EditCaloriesState extends State<EditCalories> {
             return 'Please select a date!';
           }
           return null;
+        },
+        onSaved: (value) {
+          date = DateTime.parse(value!);
         },
       ),
     );
