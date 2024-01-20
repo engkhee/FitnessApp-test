@@ -1,5 +1,6 @@
+import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:fitnessapp/view/firebase/firebase_service.dart';
+import 'package:fitnessapp/view/firebase/firebase_service2.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class AddVideo extends StatefulWidget {
@@ -32,9 +33,22 @@ class _AddVideoState extends State<AddVideo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Tutorial Videos'),
+        backgroundColor: AppColors.primaryColor1,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Add Tutorial Videos",
+              style: TextStyle(
+                  color: AppColors.blackColor,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700),
+            ),
+          ],
+        ),
       ),
-      body: Padding(
+
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,11 +68,21 @@ class _AddVideoState extends State<AddVideo> {
             ),
             if (thumbnailUrl != null) ...[
               SizedBox(height: 16),
-              Image.network(thumbnailUrl!),
-            ],
+              // Limit the height of the image to avoid overflow
+                FractionallySizedBox(
+                  widthFactor: 1.0,
+                  child: Image.network(thumbnailUrl!),
+                ),
+              ],
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: () async {
+                if (titleController.text.isEmpty ||
+                    descriptionController.text.isEmpty ||
+                    videoIdController.text.isEmpty) {
+                  showSnackBar(context, 'Please fill in all fields');
+                  return;
+                }
                 bool success = await _firebaseService.addTutorialVideo(
                   titleController.text,
                   descriptionController.text,
@@ -71,8 +95,7 @@ class _AddVideoState extends State<AddVideo> {
                   videoIdController.clear();
                 } else {
                   showSnackBar(context, 'Error uploading video');
-                }
-              },
+                }},
               child: Text('Upload Video'),
             ),
           ],
@@ -90,3 +113,4 @@ void showSnackBar(BuildContext context, String message) {
     ),
   );
 }
+

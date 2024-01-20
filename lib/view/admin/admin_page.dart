@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:fitnessapp/view/admin/contact_developer.dart';
+import 'package:fitnessapp/view/admin/manage_fitness.dart';
 import 'package:fitnessapp/view/admin/verify_nutritionist.dart';
 import 'package:fitnessapp/view/admin/view_database.dart';
 import 'package:flutter/material.dart';
@@ -161,7 +162,7 @@ class AdminPage extends StatelessWidget {
                 padding: const EdgeInsets.all(10.0),
               child: ElevatedButton(
                 onPressed: () {
-                  // Navigator.pushNamed(context, xx.routeName);
+                  Navigator.pushNamed(context, ManageFitness.routeName);
                 },
                 style: ElevatedButton.styleFrom(
                   primary: AppColors.whiteColor, // Background color
@@ -176,7 +177,7 @@ class AdminPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      'Manage Fitness \n Plan',
+                      'Manage Fitness \n ',
                       style: TextStyle(fontSize: 18),
                     ),
                     Image.asset(
