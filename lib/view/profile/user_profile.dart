@@ -1,8 +1,11 @@
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
+import 'package:fitnessapp/view/profile/update_profile_page.dart';
 import 'package:fitnessapp/view/profile/widgets/setting_row.dart';
 import 'package:fitnessapp/view/profile/widgets/title_subtitle_cell.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../../common_widgets/round_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -132,7 +135,7 @@ class _UserProfileState extends State<UserProfile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          userName, //user's name
+                          "Stefani Wong", //user's name
                           style: TextStyle(
                             color: AppColors.blackColor,
                             fontSize: 14,
@@ -154,9 +157,13 @@ class _UserProfileState extends State<UserProfile> {
                     height: 25,
                     child: RoundButton(
                       title: "Edit",
-                      type: RoundButtonType.primaryBG,
                       onPressed: () {
-
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProfilePage(),
+                          ),
+                        );
                       },
                     ),
                   )

@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitnessapp/view/Traning/fitnesss_list.dart';
 import 'package:fitnessapp/view/Traning/train2.dart';
-import 'package:fitnessapp/view/forum/general/forum_screen.dart';
 import 'package:fitnessapp/routes.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/auth/auth.dart';
@@ -9,6 +8,7 @@ import 'package:fitnessapp/view/dashboard/dashboard_screen.dart';
 import 'package:fitnessapp/view/forum/main_forum.dart';
 import 'package:fitnessapp/view/login/login_screen.dart';
 import 'package:fitnessapp/view/profile/complete_profile_screen.dart';
+import 'package:fitnessapp/view/profile/update_profile_page.dart';
 import 'package:fitnessapp/view/profile/user_profile.dart';
 import 'package:fitnessapp/view/signup/signup_screen.dart';
 import 'package:fitnessapp/view/tutorial_videos/admin_add_video.dart';
