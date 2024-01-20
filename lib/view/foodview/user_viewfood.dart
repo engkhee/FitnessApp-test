@@ -38,54 +38,58 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 10), // Add some spacing if needed
+            const SizedBox(height: 10),
             _buildCategoryFilterDropdown(),
             const SizedBox(height: 18),
             Expanded(
               child: FutureBuilder<List<FoodItem>>(
                 future: dbHelper.getFoodItems(),
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Text('No food items available.');
-                  } else {
-                    // Filter and sort the items
-                    List<FoodItem> filteredItems = snapshot.data!;
-                    if (selectedCategory != 'All') {
-                      filteredItems = filteredItems
-                          .where((foodItem) =>
-                          foodItem.category.contains(selectedCategory))
-                          .toList();
-                    }
-
-                    // Sort the items based on the selected sorting option
-                    filteredItems.sort((a, b) {
-                      switch (selectedSortingOption) {
-                        case SortingOption.Name:
-                          return a.name.compareTo(b.name);
-                        case SortingOption.Calories:
-                          return a.calories.compareTo(b.calories);
-                        case SortingOption.Favorite:
-                          return a.isFavorite ? -1 : 1;
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Text('No food items available.');
+                    } else {
+                      // Filter and sort the items
+                      List<FoodItem> filteredItems = snapshot.data!;
+                      if (selectedCategory != 'All') {
+                        filteredItems = filteredItems
+                            .where((foodItem) =>
+                            foodItem.category.contains(selectedCategory))
+                            .toList();
                       }
-                    });
 
-                    return GridView.builder(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 16.0,
-                        mainAxisSpacing: 16.0,
-                        childAspectRatio: 0.75, // Adjust the aspect ratio as needed
-                      ),
-                      itemCount: filteredItems.length,
-                      itemBuilder: (context, index) {
-                        return _buildFoodItemBox(
-                            context, filteredItems[index]);
-                      },
-                    );
+                      // Sort the items based on the selected sorting option
+                      filteredItems.sort((a, b) {
+                        switch (selectedSortingOption) {
+                          case SortingOption.Name:
+                            return a.name.compareTo(b.name);
+                          case SortingOption.Calories:
+                            return a.calories.compareTo(b.calories);
+                          case SortingOption.Favorite:
+                            return a.isFavorite ? -1 : 1;
+                        }
+                      });
+
+                      return GridView.builder(
+                        gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 16.0,
+                          mainAxisSpacing: 16.0,
+                          childAspectRatio: 0.75,
+                        ),
+                        itemCount: filteredItems.length,
+                        itemBuilder: (context, index) {
+                          return _buildFoodItemBox(
+                              context, filteredItems[index]);
+                        },
+                      );
+                    }
+                  } else {
+                    // If connectionState is not done, return an empty container or any widget you prefer
+                    return Container();
                   }
                 },
               ),
@@ -185,7 +189,6 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
     List<String> itemCategories =
     foodItem.category.split(', ').map((category) => category.trim()).toList();
 
-    // Check if the selected category is 'All' or if the food item contains any of the selected categories
     if (selectedCategory == 'All' || itemCategories.contains(selectedCategory)) {
       return Container(
         decoration: BoxDecoration(
@@ -199,7 +202,6 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             onTap: () {
-              // Navigate to the detailed food information page
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => FoodDetailPage(foodItem)),
@@ -275,16 +277,13 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
         ),
       );
     } else {
-      // If the item doesn't match the selected categories, return an empty container
       return Container();
     }
   }
 
   void _toggleFavorite(FoodItem foodItem) async {
-    // Toggle the 'isFavorite' status in Firestore
     dbHelper.updateFavoriteStatus(foodItem.id, !foodItem.isFavorite);
 
-    // Update the UI to reflect the new 'isFavorite' status
     setState(() {
       foodItem.isFavorite = !foodItem.isFavorite;
       foodItem.likes += foodItem.isFavorite ? 1 : -1;
