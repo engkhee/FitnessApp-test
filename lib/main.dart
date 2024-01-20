@@ -50,13 +50,13 @@ class MyApp extends StatelessWidget {
           fontFamily: "Poppins"
       ),
       home: //DashboardScreen(),
-      AdminFoodViewPage(),
+      //AdminFoodViewPage(),
         // Authpage(),
         //LoginScreen UserPage AddVideo
         //DashboardScreen training VideoInfo ActivityScreen
         // AdminPage
         // FoodViewPage(),
-     //  CaloriesTrackerPage(),
+      CaloriesTrackerPage(),
     );
   }
 }
