@@ -15,7 +15,7 @@ import 'package:fitnessapp/view/activity/activity_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/view/firebase/firebase_functions.dart';
 import 'package:firebase_core/firebase_core.dart';
-import'package:fitnessapp/view/foodview/food_viewpage.dart';
+import'package:fitnessapp/view/foodview/nutri_viewfood.dart';
 import'package:fitnessapp/view/calories/caloriestracker.dart';
 import 'view/admin/admin_page.dart';
 
@@ -46,13 +46,12 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           fontFamily: "Poppins"
       ),
-      home: DashboardScreen(),
-        // Authpage
+      home: //DashboardScreen(),
+        // Authpage(),
         //LoginScreen UserPage AddVideo
         //DashboardScreen training VideoInfo ActivityScreen
         // AdminPage
-     // AddFood(),
-       //FoodViewPage(),
+        FoodViewPage(),
      //  CaloriesTrackerPage(),
     );
   }

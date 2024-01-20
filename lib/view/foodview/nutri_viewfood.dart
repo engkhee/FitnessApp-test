@@ -13,7 +13,6 @@ class FoodViewPage extends StatefulWidget {
 
 class _FoodViewPageState extends State<FoodViewPage> {
   final DatabaseHelper dbHelper = DatabaseHelper();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,12 +87,18 @@ class _FoodViewPageState extends State<FoodViewPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
           // Navigate to the Add Food Page
-          Navigator.push(
+          final result = await Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => AddFood()),
           );
+
+          // Check if result is true (added successfully)
+          if (result == true) {
+            // Refresh the data
+            setState(() {});
+          }
         },
         backgroundColor: AppColors.primaryColor1,
         child: const Icon(Icons.add),
@@ -173,12 +178,18 @@ class _FoodViewPageState extends State<FoodViewPage> {
                   [
                     const PopupMenuItem<String>(
                       value: 'edit',
-                      child: Text('Edit'),
+                      child: ListTile(
+                        leading: Icon(Icons.edit),
+                        title: Text('Edit'),
+                      ),
                     ),
 
                     const PopupMenuItem<String>(
                       value: 'delete',
-                      child: Text('Delete'),
+                      child: ListTile(
+                        leading: Icon(Icons.delete),
+                        title: Text('Delete'),
+                      ),
                     ),
                   ],
                 ),
