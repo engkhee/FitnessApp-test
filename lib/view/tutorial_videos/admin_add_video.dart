@@ -175,7 +175,7 @@ class _AddVideoState extends State<AddVideo> {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
