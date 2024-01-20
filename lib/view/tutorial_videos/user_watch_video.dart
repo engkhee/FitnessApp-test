@@ -3,7 +3,6 @@ import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-//import 'package:fitnessapp/view/tutorial_videos/create_playlist.dart';
 
 class UserPage extends StatelessWidget {
   static String routeName = "/UserPage";
@@ -16,7 +15,6 @@ class UserPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFFD1C4E9),
-        //title: Text('Tutorial Videos'),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -29,17 +27,6 @@ class UserPage extends StatelessWidget {
             ),
           ],
         ),
-        //actions: <Widget>[
-          // IconButton(
-          //   icon: Icon(Icons.playlist_add),
-          //   onPressed: () {
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(builder: (context) => PlaylistManagementPage()),
-          //     );
-          //   },
-          // ),
-        //],
       ),
       body: Column(
         children: [
@@ -151,6 +138,7 @@ class VideoPlayerPage extends StatefulWidget {
 class _VideoPlayerPageState extends State<VideoPlayerPage> {
   late YoutubePlayerController _controller;
   late Size size;
+  bool isFullScreen = false;
 
   @override
   void initState() {
@@ -162,10 +150,17 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
         autoPlay: true,
         mute: false,
       ),
-    );
+    )..addListener(() {
+      if (_controller.value.isFullScreen != isFullScreen) {
+      setState(() {
+      isFullScreen = _controller.value.isFullScreen;
+  });
   }
+  });
+}
 
-  void seekForward() {
+
+void seekForward() {
     _controller.seekTo(Duration(seconds: _controller.value.position.inSeconds + 5));
   }
 
@@ -173,86 +168,84 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
     _controller.seekTo(Duration(seconds: _controller.value.position.inSeconds - 5));
   }
 
-  void enterFullScreen() {
+  void toggleFullScreen() {
+  if (isFullScreen) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
+  } else {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
   }
-
-  void exitFullScreen() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
-  }
+  _controller.toggleFullScreenMode();
+}
 
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF9575CD),
-        title: Text(widget.title,
+        appBar: isFullScreen
+            ? null // Hide AppBar in full-screen mode
+            : AppBar(
+          backgroundColor: Color(0xFF9575CD),
+          title: Text(
+            widget.title,
             style: TextStyle(
-            color: AppColors.whiteColor,
-            fontSize: 16,
-            fontWeight: FontWeight.w600),
+              color: AppColors.whiteColor,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ),
-      ),
       body: Stack(
         children: [
           Container(
-            height: size.height,
+            height: isFullScreen ? size.width : size.height, // Adjust height for full-screen
             width: size.width,
             decoration: BoxDecoration(color: Color(0xFFD1C4E9)),
             child: Center(
-              child: ListView(
-                shrinkWrap: true,
-                children: [
-                  YoutubePlayer(controller: _controller,),
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.replay_5),
-                              onPressed: seekBackward,
-                              color: Colors.purple,
-                            ),
-                            IconButton(
-                              icon: Icon(_controller.value.isPlaying? Icons.pause:Icons.play_arrow),
-                              onPressed: (){
-                                if(_controller.value.isPlaying)
-                                  _controller.pause();
-                                else
-                                  _controller.play();
-                              },
-                              color: Colors.purple,
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.forward_5),
-                              onPressed: seekForward,
-                              color: Colors.purple,
-                            ),
-                            IconButton(
-                              icon: Icon(_controller.value.isFullScreen ? Icons.fullscreen_exit : Icons.fullscreen),
-                              onPressed: () async {
-                                if (_controller.value.isFullScreen) {
-                                  exitFullScreen();
-                                }
-                                else
-                                  enterFullScreen();
-                              })
-                              ],
-                            )
-                          ],
-                        )
-                  )],
+              child: YoutubePlayer(controller: _controller),
+            ),
+          ),
+          if (!isFullScreen) // Show controls only in non-fullscreen mode
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.replay_5),
+                      onPressed: seekBackward,
+                      color: Colors.purple,
                     ),
-                  ),
-          )],
-              )
-            );
+                    IconButton(
+                      icon: Icon(_controller.value.isPlaying ? Icons.pause : Icons.play_arrow),
+                      onPressed: () {
+                        if (_controller.value.isPlaying)
+                          _controller.pause();
+                        else
+                          _controller.play();
+                      },
+                      color: Colors.purple,
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.forward_5),
+                      onPressed: seekForward,
+                      color: Colors.purple,
+                    ),
+                    IconButton(
+                      icon: Icon(isFullScreen ? Icons.fullscreen_exit : Icons.fullscreen),
+                      onPressed: toggleFullScreen,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
   }
 
   @override

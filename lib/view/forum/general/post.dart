@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:fitnessapp/view/forum/comment.dart';
 import 'package:fitnessapp/view/forum/comment_button.dart';
 import 'package:fitnessapp/view/forum/delete_button.dart';
 import 'package:fitnessapp/view/forum/like_button.dart';
 import 'package:flutter/material.dart';
 
-import '../../utils/app_colors.dart';
-import 'helper/helper_method.dart';
+import '../../../utils/app_colors.dart';
+import '../helper/helper_method.dart';
+
 
 class Post extends StatefulWidget{
   final String message;
@@ -243,7 +243,7 @@ class _PostState extends State<Post> {
           // message
           Container(
             margin: EdgeInsets.only(top: 8, left: 8),
-            child: Row(
+            child: Column(
               children: [
                 Text(
                   widget.message,

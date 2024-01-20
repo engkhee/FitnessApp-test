@@ -1,20 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitnessapp/view/forum/post.dart';
+import 'package:fitnessapp/view/forum/fitness/fitness_post.dart';
 import 'package:fitnessapp/common_widgets/round_textfield.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
-import 'helper/helper_method.dart';
+import '../helper/helper_method.dart';
 
-class ForumScreen extends StatefulWidget {
-  const ForumScreen({Key? key}) : super(key: key);
+class FitnessForumScreen extends StatefulWidget {
+  const FitnessForumScreen({Key? key}) : super(key: key);
 
   @override
-  State<ForumScreen> createState() => _CameraScreenState();
+  State<FitnessForumScreen> createState() => _CameraScreenState();
 }
 
-class _CameraScreenState extends State<ForumScreen> {
+class _CameraScreenState extends State<FitnessForumScreen> {
 
   // user
   final currentUser = FirebaseAuth.instance.currentUser!;
@@ -27,7 +27,7 @@ class _CameraScreenState extends State<ForumScreen> {
     // only post if there is something in the textfield
     if(textController.text.isNotEmpty){
       // store in firebase
-      FirebaseFirestore.instance.collection("UserPosts").add({
+      FirebaseFirestore.instance.collection("FitnessPosts").add({
         "UserEmail": currentUser.email,
         "Message": textController.text,
         "TimeStamp": Timestamp.now(),
@@ -49,18 +49,7 @@ class _CameraScreenState extends State<ForumScreen> {
       child:
         Scaffold(
           backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            centerTitle: true,
-            elevation: 0,
-            leadingWidth: 0,
-            leading: const SizedBox(),
-            title: Text(
-              "Discussion Forum ✎",
-              style: TextStyle(
-                  color: AppColors.whiteColor, fontSize: 16, fontWeight: FontWeight.w700),
-            ),
-          ),
+
           body: Center(
             child: Column(
               children: [
@@ -98,7 +87,7 @@ class _CameraScreenState extends State<ForumScreen> {
                 Expanded(
                     child: StreamBuilder(
                       stream: FirebaseFirestore.instance
-                        .collection("UserPosts").orderBy(
+                        .collection("FitnessPosts").orderBy(
                           "TimeStamp",
                           descending:false,
                       )
@@ -110,7 +99,7 @@ class _CameraScreenState extends State<ForumScreen> {
                             itemBuilder: (context, index){
                               // get the message
                               final post = snapshot.data!.docs[index];
-                              return Post(
+                              return FitnessPost(
                                 message: post['Message'],
                                 user: post['UserEmail'],
                                 time: formatDate(post["TimeStamp"]),

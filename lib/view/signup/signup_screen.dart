@@ -206,7 +206,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   title: "Register as user",
                   onPressed: () {
                     _register(); // Call the register function
-                    Navigator.pushNamed(context, LoginScreen.routeName);
+                    Navigator.pop(context);
                   },
                 ),
 
