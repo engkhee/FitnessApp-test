@@ -26,7 +26,7 @@ class AppColors{
   static const Color lightorangeColor= Color(0xFFFED8B1);
   static const Color white = Colors.white;
   static const Color black = Colors.black;
-  static const Color gray = Colors.grey;
+  static const Color darkpurple = Color(0xFF301934);
 
 
   static List<Color> get primaryG => [primaryColor1,primaryColor2];
