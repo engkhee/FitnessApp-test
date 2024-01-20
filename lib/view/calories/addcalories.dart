@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'meal.dart';
+import 'dbhelper.dart';
 
 class AddCaloriesPage extends StatefulWidget {
-  const AddCaloriesPage({Key? key}) : super(key: key);
+  const AddCaloriesPage({Key? key, required this.selectedDate}) : super(key: key);
+
+  final DateTime selectedDate;
 
   @override
   _AddCaloriesPageState createState() => _AddCaloriesPageState();
@@ -19,9 +20,8 @@ class _AddCaloriesPageState extends State<AddCaloriesPage> {
   double? carbohydrate;
   double? fat;
   double? totalCalories;
-  DateTime? date;
 
-  DateTime _selectedDate = DateTime.now();
+  DatabaseHelper _dbHelper = DatabaseHelper();
 
   @override
   Widget build(BuildContext context) {
@@ -29,90 +29,165 @@ class _AddCaloriesPageState extends State<AddCaloriesPage> {
       appBar: AppBar(
         title: Text('Add Your Meals'),
       ),
-      body: ListView(
-        children: [
-          Padding(
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(16.0),
+        child: Card(
+          elevation: 4.0,
+          child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(
               key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  DropdownButtonFormField<String>(
-                    value: mealType,
-                    onChanged: (value) {
-                      setState(() {
-                        mealType = value;
-                      });
-                    },
-                    items: [
-                      'Breakfast',
-                      'Lunch',
-                      'Dinner',
-                      'Supper',
-                      'Teatime',
-                      'Snack',
-                    ].map((type) {
-                      return DropdownMenuItem<String>(
-                        value: type,
-                        child: Text(type),
-                      );
-                    }).toList(),
-                    decoration: const InputDecoration(labelText: 'Meal Type: '),
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(labelText: 'Meal Name: '),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter Meal Name!';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      mealName = value;
-                    },
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    child: DropdownButtonFormField<String>(
+                      value: mealType,
+                      onChanged: (value) {
+                        setState(() {
+                          mealType = value;
+                        });
+                      },
+                      items: [
+                        'Breakfast',
+                        'Lunch',
+                        'Dinner',
+                        'Supper',
+                        'Teatime',
+                        'Snack',
+                      ].map((type) {
+                        return DropdownMenuItem<String>(
+                          value: type,
+                          child: Text(type),
+                        );
+                      }).toList(),
+                      decoration: const InputDecoration(
+                        labelText: 'Meal Type:',
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 10),
-                  TextFormField(
-                    decoration: const InputDecoration(labelText: 'Description: '),
-                    onSaved: (value) {
-                      description = value;
-                    },
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    child: TextFormField(
+                      initialValue: 'Roti Canai',
+                      decoration: const InputDecoration(
+                        labelText: 'Meal Name:',
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter Meal Name!';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        mealName = value;
+                      },
+                    ),
                   ),
                   const SizedBox(height: 10),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(labelText: 'Protein (g): '),
-                    onSaved: (value) {
-                      protein = double.parse(value!);
-                    },
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    child: TextFormField(
+                      initialValue: '2 slices',
+                      decoration: const InputDecoration(
+                        labelText: 'Description:',
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
+                      ),
+                      onSaved: (value) {
+                        description = value;
+                      },
+                    ),
                   ),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(labelText: 'Carbohydrate (g): '),
-                    onSaved: (value) {
-                      carbohydrate = double.parse(value!);
-                    },
+                  const SizedBox(height: 10),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: 'Protein (g):',
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
+                      ),
+                      onSaved: (value) {
+                        protein = double.parse(value!);
+                      },
+                    ),
                   ),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(labelText: 'Fat (g): '),
-                    onSaved: (value) {
-                      fat = double.parse(value!);
-                    },
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: 'Carbohydrate (g):',
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
+                      ),
+                      onSaved: (value) {
+                        carbohydrate = double.parse(value!);
+                      },
+                    ),
                   ),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(labelText: 'Calories: '),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter Calories!';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      totalCalories = double.parse(value!);
-                    },
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: 'Fat (g):',
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
+                      ),
+                      onSaved: (value) {
+                        fat = double.parse(value!);
+                      },
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: 'Calories:',
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter Calories!';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        totalCalories = double.parse(value!);
+                      },
+                    ),
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(
@@ -120,19 +195,8 @@ class _AddCaloriesPageState extends State<AddCaloriesPage> {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
 
-                        if (_selectedDate != null) {
-                          date = _selectedDate; // Update the date variable with the selected date
-
-                          print('Meal Type: $mealType');
-                          print('Meal Name: $mealName');
-                          print('Description: $description');
-                          print('Protein: $protein');
-                          print('Carbohydrate: $carbohydrate');
-                          print('Fat: $fat');
-                          print('Total Calories: $totalCalories');
-                          print('Date: $date');
-
-                          // Create a Meal object and save it to the database
+                        if (widget.selectedDate != null) {
+                          // Create a Meal object
                           Meal meal = Meal(
                             mealType: mealType!,
                             mealName: mealName!,
@@ -141,11 +205,11 @@ class _AddCaloriesPageState extends State<AddCaloriesPage> {
                             carbohydrate: carbohydrate!,
                             fat: fat!,
                             totalCalories: totalCalories!,
-                            date: date!,
+                            date: widget.selectedDate,
                           );
 
-                          // Add the await keyword to wait for the asynchronous operation to complete
-                          await addMeal(meal);
+                          // Add the meal to Firebase using DatabaseHelper
+                          await _dbHelper.insertMeal(meal);
 
                           // Provide feedback to the user
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -153,6 +217,11 @@ class _AddCaloriesPageState extends State<AddCaloriesPage> {
                               content: Text('Meal added successfully!'),
                             ),
                           );
+
+                          // Update the UI or navigate back
+                          Navigator.pop(context, widget.selectedDate);
+
+                          setState(() {});
                         }
                       }
                     },
@@ -162,38 +231,8 @@ class _AddCaloriesPageState extends State<AddCaloriesPage> {
               ),
             ),
           ),
-          SfCalendar(
-            view: CalendarView.month,
-            showNavigationArrow: true,
-            onTap: (CalendarTapDetails details) {
-              if (details.targetElement == CalendarElement.calendarCell) {
-                setState(() {
-                  _selectedDate = details.date!;
-                  date = details.date!;
-                });
-              }
-            },
-          ),
-          // Add other widgets as needed
-        ],
+        ),
       ),
     );
-  }
-}
-
-Future<void> addMeal(Meal meal) async {
-  try {
-    // Get a reference to the 'meals' collection
-    CollectionReference mealsCollection = FirebaseFirestore.instance.collection('meals');
-
-    // Add the meal document
-    await mealsCollection.add({
-      ...meal.toMap(),
-      'date': Timestamp.fromDate(meal.date), // Convert DateTime to Firestore Timestamp
-    });
-
-    print('Meal added successfully!');
-  } catch (e) {
-    print('Error adding meal: $e');
   }
 }

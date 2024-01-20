@@ -49,14 +49,14 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           fontFamily: "Poppins"
       ),
-      home: DashboardScreen(),
+      home: //DashboardScreen(),
       //AdminFoodViewPage(),
       // Authpage(),
       //LoginScreen UserPage AddVideo
       //DashboardScreen training VideoInfo ActivityScreen
       // AdminPage
       // FoodViewPage(),
-      //CaloriesTrackerPage(),
+      CaloriesTrackerPage(),
     );
   }
 }
