@@ -31,6 +31,7 @@ class FoodItem {
       calories: map['calories'] ?? 0,
       category: map['category'] ?? '',
       isFavorite: map['isFavorite']==true ,
+      likes: map['likes'] ?? 0,
     );
   }
 
