@@ -51,12 +51,12 @@ class MyApp extends StatelessWidget {
       ),
       home: //DashboardScreen(),
           //AdminFoodViewPage(),
-          Authpage(),
+          //Authpage(),
         //LoginScreen UserPage AddVideo
         //DashboardScreen training VideoInfo ActivityScreen
         // AdminPage
          //FoodViewPage(),
-      //CaloriesTrackerPage(),
+       CaloriesTrackerPage(),
     );
   }
 }
