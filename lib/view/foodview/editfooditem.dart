@@ -17,7 +17,15 @@ class _EditFoodItemState extends State<EditFoodItem> {
   final TextEditingController imageController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController caloriesController = TextEditingController();
-  List<String> selectedCategories =[] ;
+  final TextEditingController fatController = TextEditingController();
+  final TextEditingController proteinController = TextEditingController();
+  final TextEditingController carbohydrateController = TextEditingController();
+  List<String> selectedCategories = [];
+  List<String> bmiGroupsselected = [];
+  final List<String> categories = ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
+  final List<String> bmiGroups = ['Overweight', 'Normal', 'Lightweight'];
+  final TextEditingController ingredientsController = TextEditingController();
+  final TextEditingController preparationController = TextEditingController();
 
   @override
   void initState() {
@@ -26,8 +34,14 @@ class _EditFoodItemState extends State<EditFoodItem> {
     nameController.text = widget.originalFoodItem.name;
     imageController.text = widget.originalFoodItem.image;
     descriptionController.text = widget.originalFoodItem.description;
-    caloriesController.text = widget.originalFoodItem.calories.toString();
     selectedCategories = widget.originalFoodItem.category.split(',');
+    caloriesController.text = widget.originalFoodItem.calories.toString();
+    fatController.text = widget.originalFoodItem.fat.toString();
+    proteinController.text = widget.originalFoodItem.protein.toString();
+    carbohydrateController.text = widget.originalFoodItem.carbohydrate.toString();
+    bmiGroupsselected = widget.originalFoodItem.BMIgroup.split(',');
+    ingredientsController.text = widget.originalFoodItem.ingredient.toString();
+    preparationController.text = widget.originalFoodItem.preparvideo.toString();
   }
 
   @override
@@ -37,34 +51,45 @@ class _EditFoodItemState extends State<EditFoodItem> {
         title: const Text('Edit Meal'),
         backgroundColor: AppColors.primaryColor1,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(11.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildTextField('Name', nameController),
-            _buildTextField('Image URL', imageController),
-            _buildTextField('Description', descriptionController),
-            _buildTextField('Calories', caloriesController, keyboardType: TextInputType.number),
-            _buildMultiselectDropdownField('Category', selectedCategories, categoryOptions: ['Breakfast', 'Lunch', 'Dinner', 'Snack']),            const SizedBox(height: 16),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                _updateFoodItem();
-              },
-              style: ElevatedButton.styleFrom(
-                primary: AppColors.secondaryColor1,
-                onPrimary: AppColors.lightGrayColor,
-              ),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0),
-                child: Text(
-                  'Update',
-                  style: TextStyle(fontSize: 15),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(11.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildTextField('Name', nameController),
+              _buildTextField('Image URL', imageController),
+              _buildTextField('Description', descriptionController),
+              _buildTextField('Calories', caloriesController, keyboardType: TextInputType.number),
+              _buildTextField('Fat (g)', fatController, keyboardType: TextInputType.number),
+              _buildTextField('Protein (g)', proteinController, keyboardType: TextInputType.number),
+              _buildTextField('Carbohydrate (g)', carbohydrateController, keyboardType: TextInputType.number),
+              _buildMultiselectDropdownField('Category', selectedCategories, categoryOptions: categories),
+              const SizedBox(height: 16),
+              _buildMultiselectDropdownField('BMI Group', bmiGroupsselected, categoryOptions: bmiGroups),
+              const SizedBox(height: 16),
+              _buildTextField('Ingredients', ingredientsController),
+              const SizedBox(height: 16),
+              _buildTextField('Preparation', preparationController),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  _updateFoodItem();
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: AppColors.secondaryColor1,
+                  onPrimary: AppColors.lightGrayColor,
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10.0),
+                  child: Text(
+                    'Update',
+                    style: TextStyle(fontSize: 15),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -73,28 +98,7 @@ class _EditFoodItemState extends State<EditFoodItem> {
   Widget _buildTextField(String label, TextEditingController controller, {TextInputType keyboardType = TextInputType.text, List<String>? categoryOptions}) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 6.0),
-      child: categoryOptions != null
-          ? DropdownButtonFormField<String>(
-        value: controller.text,
-        onChanged: (String? newValue) {
-          if (newValue != null) {
-            controller.text = newValue;
-          }
-        },
-        items: categoryOptions.map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
-        decoration: InputDecoration(
-          labelText: label,
-          border: OutlineInputBorder(),
-          filled: true,
-          fillColor: AppColors.lightGrayColor,
-        ),
-      )
-          : TextFormField(
+      child: TextFormField(
         controller: controller,
         decoration: InputDecoration(
           labelText: label,
@@ -103,11 +107,12 @@ class _EditFoodItemState extends State<EditFoodItem> {
           fillColor: AppColors.lightGrayColor,
         ),
         keyboardType: keyboardType,
+        maxLines: null,
       ),
     );
   }
 
-  Widget _buildMultiselectDropdownField(String labelText, List<String> selectedCategories, {List<String>? categoryOptions}) {
+  Widget _buildMultiselectDropdownField(String labelText, List<String> selectedItems, {List<String>? categoryOptions}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -123,10 +128,10 @@ class _EditFoodItemState extends State<EditFoodItem> {
           onChanged: (String? newValue) {
             if (newValue != null) {
               setState(() {
-                if (selectedCategories.contains(newValue)) {
-                  selectedCategories.remove(newValue);
+                if (selectedItems.contains(newValue)) {
+                  selectedItems.remove(newValue);
                 } else {
-                  selectedCategories.add(newValue);
+                  selectedItems.add(newValue);
                 }
               });
             }
@@ -138,14 +143,14 @@ class _EditFoodItemState extends State<EditFoodItem> {
               child: Row(
                 children: [
                   Checkbox(
-                    value: selectedCategories.contains(value),
+                    value: selectedItems.contains(value),
                     onChanged: (bool? isChecked) {
                       setState(() {
                         if (isChecked != null) {
                           if (isChecked) {
-                            selectedCategories.add(value);
+                            selectedItems.add(value);
                           } else {
-                            selectedCategories.remove(value);
+                            selectedItems.remove(value);
                           }
                         }
                       });
@@ -160,12 +165,12 @@ class _EditFoodItemState extends State<EditFoodItem> {
         const SizedBox(height: 8),
         Wrap(
           spacing: 8,
-          children: selectedCategories.map((category) {
+          children: selectedItems.map((item) {
             return Chip(
-              label: Text(category),
+              label: Text(item),
               onDeleted: () {
                 setState(() {
-                  selectedCategories.remove(category);
+                  selectedItems.remove(item);
                 });
               },
             );
@@ -188,8 +193,14 @@ class _EditFoodItemState extends State<EditFoodItem> {
       name: nameController.text,
       image: imageController.text,
       description: descriptionController.text,
-      calories: int.parse(caloriesController.text),
-      category: selectedCategories.join(', ') ,
+      category: selectedCategories.join(', '),
+      calories: double.parse(caloriesController.text),
+      fat: double.parse(fatController.text),
+      protein: double.parse(proteinController.text),
+      carbohydrate: double.parse(carbohydrateController.text),
+      BMIgroup: bmiGroupsselected.join(', '),
+      ingredient: ingredientsController.text,
+      preparvideo: preparationController.text,
     );
 
     DatabaseHelper dbHelper = DatabaseHelper();

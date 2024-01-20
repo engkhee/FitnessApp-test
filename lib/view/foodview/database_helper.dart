@@ -24,8 +24,14 @@ class DatabaseHelper {
           name: doc['name'],
           image: doc['image'],
           description: doc['description'],
-          calories: doc['calories'],
           category: doc['category'],
+          calories: doc['calories'],
+          fat: doc['fat'],
+          protein: doc['protein'],
+          carbohydrate: doc['carbohydrate'],
+          BMIgroup: doc['BMIgroup'],
+          ingredient: doc['ingredient'],
+          preparvideo: doc['preparvideo'],
           isFavorite: doc['isFavorite'] ?? false,
           likes: doc['likes'],
 
@@ -75,5 +81,40 @@ class DatabaseHelper {
       rethrow;
     }
   }
+
+
+  // Future<int> getTotalLikesForItem() async {
+  //   try {
+  //     QuerySnapshot<Map<String, dynamic>> snapshot =
+  //     await foodCollection.get() as QuerySnapshot<Map<String, dynamic>>;
+  //
+  //     int totalLikes = 0;
+  //
+  //     for (DocumentSnapshot<Map<String, dynamic>> doc in snapshot.docs) {
+  //       totalLikes += (doc['likes'] ?? 0) as int;
+  //     }
+  //
+  //     return totalLikes;
+  //   } catch (e) {
+  //     print('Error getting total likes: $e');
+  //     rethrow;
+  //   }
+  // }
+  Future<int> getTotalLikesForItem(String itemId) async {
+    try {
+      QuerySnapshot<Object?> snapshot =
+      await foodCollection.where('id', isEqualTo: itemId).get();
+
+      if (snapshot.docs.isNotEmpty) {
+        return snapshot.docs[0]['likes'] ?? 0;
+      } else {
+        return 0;
+      }
+    } catch (e) {
+      print('Error getting total likes for item: $e');
+      rethrow;
+    }
+  }
+
 
 }

@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/foodview/database_helper.dart';
 import 'package:fitnessapp/view/foodview/fooditem.dart';
-import 'package:fitnessapp/view/foodview/fooddetails.dart';
 
-class UserFoodViewPage extends StatefulWidget {
+class AdminFoodViewPage extends StatefulWidget {
   @override
-  _UserFoodViewPageState createState() => _UserFoodViewPageState();
+  _AdminFoodViewPageState createState() => _AdminFoodViewPageState();
 }
 
 enum SortingOption { Name, Calories, Favorite }
 
-class _UserFoodViewPageState extends State<UserFoodViewPage> {
+class _AdminFoodViewPageState extends State<AdminFoodViewPage> {
   final DatabaseHelper dbHelper = DatabaseHelper();
   String selectedCategory = 'All'; // Default category
   SortingOption selectedSortingOption = SortingOption.Name;
+
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +68,7 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
                           case SortingOption.Calories:
                             return a.calories.compareTo(b.calories);
                           case SortingOption.Favorite:
-                            return a.isFavorite ? -1 : 1;
+                            return b.likes.compareTo(a.likes);;
                         }
                       });
 
@@ -88,7 +88,6 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
                       );
                     }
                   } else {
-                    // If connectionState is not done, return an empty container or any widget you prefer
                     return Container();
                   }
                 },
@@ -200,13 +199,6 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
         child: Material(
           borderRadius: BorderRadius.circular(15),
           clipBehavior: Clip.antiAlias,
-          child: InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => FoodDetailPage(foodItem)),
-              );
-            },
             child: Stack(
               children: [
                 Column(
@@ -244,51 +236,23 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
                   ],
                 ),
                 Positioned(
-                  bottom: 0,
-                  left: 0,
+                  bottom: 1,
+                  left: 5,
                   right: 0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          foodItem.isFavorite
-                              ? Icons.favorite
-                              : Icons.favorite_border,
-                          color: foodItem.isFavorite ? Colors.red : null,
-                        ),
-                        onPressed: () {
-                          _toggleFavorite(foodItem);
-                        },
-                      ),
-                      Text(
-                        '${foodItem.likes}',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: AppColors.grayColor,
-                        ),
-                      ),
-                    ],
+                  child: Text(
+                    '${foodItem.likes} Likes',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: AppColors.darkpurple,
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-        ),
       );
     } else {
       return Container();
     }
-  }
-
-  void _toggleFavorite(FoodItem foodItem) async {
-    dbHelper.updateFavoriteStatus(foodItem.id, !foodItem.isFavorite);
-
-    setState(() {
-      foodItem.isFavorite = !foodItem.isFavorite;
-      foodItem.likes += foodItem.isFavorite ? 1 : -1;
-    });
-
-    await dbHelper.updateLikes(foodItem.id, foodItem.isFavorite, foodItem.likes);
   }
 }

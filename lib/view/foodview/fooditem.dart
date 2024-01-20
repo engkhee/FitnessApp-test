@@ -3,8 +3,14 @@ class FoodItem {
   final String name;
   final String image;
   final String description;
-  final int calories;
   final String category;
+  final double calories;
+  final double fat;
+  final double protein;
+  final double carbohydrate;
+  final String BMIgroup;
+  final String ingredient;
+  final String preparvideo;
   bool isFavorite;
   int likes;
 
@@ -15,8 +21,14 @@ class FoodItem {
     required this.name,
     required this.image,
     required this.description,
-    required this.calories,
     required this.category,
+    required this.calories,
+    required this.fat,
+    required this.protein,
+    required this.carbohydrate,
+    required this.BMIgroup,
+    required this.ingredient,
+    required this.preparvideo,
     this.isFavorite = false,
     this.likes=0,
   });
@@ -28,9 +40,16 @@ class FoodItem {
       name: map['name'] ?? '',
       image: map['image'] ?? '',
       description: map['description'] ?? '',
-      calories: map['calories'] ?? 0,
       category: map['category'] ?? '',
+      calories: map['calories'] ?? 0.0,
+      fat: map['fat'] ?? 0.0,
+      protein: map['protein'] ?? 0.0,
+      carbohydrate: map['carbohydrate'] ?? 0.0,
+      BMIgroup: map['BMIgroup'] ?? '',
+      ingredient: map['ingredient'] ?? '',
+      preparvideo: map['preparvideo'] ?? '',
       isFavorite: map['isFavorite']==true ,
+      likes: map['likes'] ?? 0,
     );
   }
 
@@ -40,9 +59,16 @@ class FoodItem {
       'name': name,
       'image': image,
       'description': description,
-      'calories': calories,
       'category': category,
+      'calories': calories,
+      'fat': fat,
+      'protein': protein,
+      'carbohydrate': carbohydrate,
+      'BMIgroup': BMIgroup,
+      'ingredient': ingredient,
+      'preparvideo':preparvideo,
       'isFavorite':isFavorite,
+      'likes':likes,
     };
   }
 }
