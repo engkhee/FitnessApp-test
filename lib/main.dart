@@ -26,12 +26,12 @@ import 'view/admin/admin_page.dart';
 //   runApp(const MyApp());
 // }
 
-  Future<void> main() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    await FirebaseFunctions.initializeFirebase(); // Initialize Firebase
-    await Firebase.initializeApp();
-    runApp(MyApp());
-  }
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await FirebaseFunctions.initializeFirebase(); // Initialize Firebase
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 
 class MyApp extends StatelessWidget {
@@ -50,13 +50,13 @@ class MyApp extends StatelessWidget {
           fontFamily: "Poppins"
       ),
       home: //DashboardScreen(),
-          //AdminFoodViewPage(),
-          //Authpage(),
-        //LoginScreen UserPage AddVideo
-        //DashboardScreen training VideoInfo ActivityScreen
-        // AdminPage
-         //FoodViewPage(),
-       CaloriesTrackerPage(),
+      //AdminFoodViewPage(),
+      // Authpage(),
+      //LoginScreen UserPage AddVideo
+      //DashboardScreen training VideoInfo ActivityScreen
+      // AdminPage
+      // FoodViewPage(),
+      CaloriesTrackerPage(),
     );
   }
 }
