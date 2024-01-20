@@ -1,12 +1,13 @@
 import 'dart:io';
 
-import 'package:fitnessapp/view/forum/forum_screen.dart';
+import 'package:fitnessapp/view/forum/general/forum_screen.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/activity/activity_screen.dart';
 import 'package:fitnessapp/view/profile/user_profile.dart';
 import 'package:fitnessapp/view/foodview/user_viewfood.dart';
 import 'package:flutter/material.dart';
 
+import '../forum/main_forum.dart';
 import '../home/home_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -24,7 +25,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final List<Widget> _widgetOptions = <Widget>[
     const HomeScreen(),
     const ActivityScreen(),
-    const ForumScreen(),
+    const MainForum(),
     const UserProfile(),
     UserFoodViewPage(),
   ];
