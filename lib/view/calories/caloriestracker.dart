@@ -4,6 +4,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'addcalories.dart';
 import 'mealinfo.dart';
 import 'piechart.dart';
+import 'dbhelper.dart';
 
 class CaloriesTrackerPage extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class _CaloriesTrackerPageState extends State<CaloriesTrackerPage> {
   late DateTime _selectedDate;
   late DateTime _firstDay;
   late DateTime _lastDay;
+  final DatabaseHelper dbHelper = DatabaseHelper();
 
   @override
   void initState() {
@@ -35,7 +37,6 @@ class _CaloriesTrackerPageState extends State<CaloriesTrackerPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             DailyPieChart(date: _selectedDate),
-
             TableCalendar(
               firstDay: _firstDay,
               lastDay: _lastDay,
@@ -64,12 +65,10 @@ class _CaloriesTrackerPageState extends State<CaloriesTrackerPage> {
               headerVisible: true,
               startingDayOfWeek: StartingDayOfWeek.sunday,
             ),
-
             MealInformationWidget(
               selectedDate: _selectedDate,
               updateSelectedDate: updateSelectedDate,
             ),
-
           ],
         ),
       ),
