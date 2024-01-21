@@ -41,9 +41,32 @@ class DailyPieChart extends StatelessWidget {
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return const Text('No data available for this date.');
+                return const Column(
+                  children: [
+                    Text(
+                      'No data available for this date.',
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Record Now ',
+                          style: TextStyle(
+                            color: AppColors.midGrayColor,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                        Text(
+                          '😊',
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
               } else {
-                // Calculate total protein, carbohydrate, fat, and calories for the day
                 double totalProtein = snapshot.data!.map((meal) => meal.protein).reduce((a, b) => a + b);
                 double totalCarbohydrate = snapshot.data!.map((meal) => meal.carbohydrate).reduce((a, b) => a + b);
                 double totalFat = snapshot.data!.map((meal) => meal.fat).reduce((a, b) => a + b);
@@ -52,36 +75,14 @@ class DailyPieChart extends StatelessWidget {
                 return Column(
                   children: [
                     SizedBox(
-                      height: 150, // Set the desired height
+                      height: 150,
                       child: Row(
                         children: [
                           Expanded(
                             flex: 3,
                             child: PieChart(
                               PieChartData(
-                                sections: [
-                                  PieChartSectionData(
-                                    color: AppColors.primaryColor1,
-                                    value: totalProtein,
-                                    title: 'Protein',
-                                    radius: 30,
-                                    titleStyle: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.black),
-                                  ),
-                                  PieChartSectionData(
-                                    color: AppColors.verifyNut3,
-                                    value: totalCarbohydrate,
-                                    title: 'Carbs',
-                                    radius: 30,
-                                    titleStyle: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.black),
-                                  ),
-                                  PieChartSectionData(
-                                    color: AppColors.lightyellowColor,
-                                    value: totalFat,
-                                    title: 'Fat',
-                                    radius: 30,
-                                    titleStyle: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.black),
-                                  ),
-                                ],
+                                sections: _getSections(totalProtein, totalCarbohydrate, totalFat),
                                 centerSpaceRadius: 20,
                                 sectionsSpace: 0,
                               ),
@@ -92,9 +93,9 @@ class DailyPieChart extends StatelessWidget {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                _buildColorBox(AppColors.primaryColor1, totalProtein / totalCalories),
-                                _buildColorBox(AppColors.verifyNut3, totalCarbohydrate / totalCalories),
-                                _buildColorBox(AppColors.lightyellowColor, totalFat / totalCalories),
+                                _buildColorBox('Protein', AppColors.protein),
+                                _buildColorBox('Carbs', AppColors.verifyNut3),
+                                _buildColorBox('Fat', AppColors.lightyellowColor),
                               ],
                             ),
                           ),
@@ -120,7 +121,33 @@ class DailyPieChart extends StatelessWidget {
     return meals.map((meal) => meal.totalCalories).reduce((a, b) => a + b);
   }
 
-  Widget _buildColorBox(Color color, double percentage) {
+  List<PieChartSectionData> _getSections(double totalProtein, double totalCarbohydrate, double totalFat) {
+    return [
+      PieChartSectionData(
+        color: AppColors.protein,
+        value: totalProtein,
+        title: '${((totalProtein / (totalProtein + totalCarbohydrate + totalFat)) * 100).toStringAsFixed(2)}%',
+        radius: 30,
+        titleStyle: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.black),
+      ),
+      PieChartSectionData(
+        color: AppColors.verifyNut3,
+        value: totalCarbohydrate,
+        title: '${((totalCarbohydrate / (totalProtein + totalCarbohydrate + totalFat)) * 100).toStringAsFixed(2)}%',
+        radius: 30,
+        titleStyle: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.black),
+      ),
+      PieChartSectionData(
+        color: AppColors.lightyellowColor,
+        value: totalFat,
+        title: '${((totalFat / (totalProtein + totalCarbohydrate + totalFat)) * 100).toStringAsFixed(2)}%',
+        radius: 30,
+        titleStyle: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.black),
+      ),
+    ];
+  }
+
+  Widget _buildColorBox(String label, Color color) {
     return Row(
       children: [
         Container(
@@ -129,7 +156,7 @@ class DailyPieChart extends StatelessWidget {
           color: color,
         ),
         const SizedBox(width: 8),
-        Text('${(percentage * 100).toStringAsFixed(2)}%'),
+        Text(label),
       ],
     );
   }
