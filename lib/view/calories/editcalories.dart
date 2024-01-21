@@ -157,7 +157,7 @@ class _EditCaloriesState extends State<EditCalories> {
   Widget _buildDropdown(String label, String initialValue) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.lightorangeColor,
+        color: AppColors.lightbrownColor,
         border: Border.all(color: AppColors.grayColor),
         borderRadius: BorderRadius.circular(5.0),
       ),
@@ -193,7 +193,7 @@ class _EditCaloriesState extends State<EditCalories> {
   Widget _buildTextField(String label, String? initialValue, void Function(String?)? onSaved) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.lightorangeColor,
+        color: AppColors.lightbrownColor,
         border: Border.all(color: AppColors.grayColor),
         borderRadius: BorderRadius.circular(5.0),
       ),
@@ -213,7 +213,7 @@ class _EditCaloriesState extends State<EditCalories> {
   Widget _buildDateField() {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.lightorangeColor,
+        color: AppColors.lightbrownColor,
         border: Border.all(color: AppColors.grayColor),
         borderRadius: BorderRadius.circular(5.0),
       ),

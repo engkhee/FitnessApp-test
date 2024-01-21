@@ -16,7 +16,7 @@ class DailyPieChart extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
-        color: Colors.white,
+        color:AppColors.white.withOpacity(0.8),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
