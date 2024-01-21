@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/foodview/database_helper.dart';
 import 'package:fitnessapp/view/foodview/fooditem.dart';
 import 'package:fitnessapp/view/foodview/fooddetails.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserFoodViewPage extends StatefulWidget {
   @override
@@ -13,6 +15,8 @@ enum SortingOption { Name, Calories, Favorite }
 
 class _UserFoodViewPageState extends State<UserFoodViewPage> {
   final DatabaseHelper dbHelper = DatabaseHelper();
+  FirebaseAuth _auth = FirebaseAuth.instance;
+
   String selectedCategory = 'All'; // Default category
   SortingOption selectedSortingOption = SortingOption.Name;
 
@@ -189,12 +193,14 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
     List<String> itemCategories =
     foodItem.category.split(', ').map((category) => category.trim()).toList();
 
-    if (selectedCategory == 'All' || itemCategories.contains(selectedCategory)) {
+    if (selectedCategory == 'All' ||
+        itemCategories.contains(selectedCategory)) {
       return Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           boxShadow: const [
-            BoxShadow(color: Colors.black26, blurRadius: 2, offset: Offset(0, 2)),
+            BoxShadow(
+                color: Colors.black26, blurRadius: 2, offset: Offset(0, 2)),
           ],
         ),
         child: Material(
@@ -204,7 +210,8 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => FoodDetailPage(foodItem)),
+                MaterialPageRoute(
+                    builder: (context) => FoodDetailPage(foodItem)),
               );
             },
             child: Stack(
@@ -282,13 +289,33 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
   }
 
   void _toggleFavorite(FoodItem foodItem) async {
-    dbHelper.updateFavoriteStatus(foodItem.id, !foodItem.isFavorite);
+    try {
+      // Get the current user
+      User? user = _auth.currentUser;
 
-    setState(() {
-      foodItem.isFavorite = !foodItem.isFavorite;
-      foodItem.likes += foodItem.isFavorite ? 1 : -1;
-    });
+      // Update local state
+      setState(() {
+        foodItem.isFavorite = !foodItem.isFavorite;
+        foodItem.likes += foodItem.isFavorite ? 1 : -1;
+      });
 
-    await dbHelper.updateLikes(foodItem.id, foodItem.isFavorite, foodItem.likes);
+      // Update Firestore with new like status and count
+      await dbHelper.updateLikes(
+          foodItem.id, foodItem.isFavorite, foodItem.likes);
+
+      // Save food item with user's UID as a reference
+      await FirebaseFirestore.instance.collection('UserFoodViewPageData').doc(
+          user!.uid).collection('FoodItems').doc(foodItem.id.toString()).set({
+        'name': foodItem.name,
+        'calories': foodItem.calories,
+        'isFavorite': foodItem.isFavorite,
+        // ... other food item properties
+      });
+
+      print("Food item updated successfully!");
+    } catch (error) {
+      print("Error updating food item: $error");
+      // Handle the error (display a message, log, etc.)
+    }
   }
 }
