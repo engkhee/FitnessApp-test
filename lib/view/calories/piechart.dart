@@ -94,7 +94,7 @@ class DailyPieChart extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 _buildColorBox('Protein', AppColors.protein),
-                                _buildColorBox('Carbs', AppColors.verifyNut3),
+                                _buildColorBox('Carbohydrate', AppColors.verifyNut3),
                                 _buildColorBox('Fat', AppColors.lightyellowColor),
                               ],
                             ),
