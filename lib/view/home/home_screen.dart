@@ -1,7 +1,6 @@
 import 'package:dotted_dashed_line/dotted_dashed_line.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/activity_tracker/activity_tracker_screen.dart';
-import 'package:fitnessapp/view/finish_workout/finish_workout_screen.dart';
 import 'package:fitnessapp/view/home/widgets/workout_row.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -904,7 +903,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       var wObj = lastWorkoutArr[index] as Map? ?? {};
                       return InkWell(
                           onTap: () {
-                            Navigator.pushNamed(context, FinishWorkoutScreen.routeName);
+                            //Navigator.pushNamed(context, FinishWorkoutScreen.routeName);
                           },
                           child: WorkoutRow(wObj: wObj));
                     }),

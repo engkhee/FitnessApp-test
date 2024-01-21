@@ -1,7 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
-import 'package:fitnessapp/view/login/login_screen.dart';
-import 'package:fitnessapp/view/welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../common_widgets/round_gradient_button.dart';
@@ -141,7 +139,7 @@ class _YourGoalScreenState extends State<YourGoalScreen> {
                     RoundGradientButton(
                       title: "Confirm",
                       onPressed: () {
-                        Navigator.pushNamed(context, WelcomeScreen.routeName);
+                        //Navigator.pushNamed(context, WelcomeScreen.routeName);
                       },
                     )
                   ],
