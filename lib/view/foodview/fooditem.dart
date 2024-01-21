@@ -11,7 +11,7 @@ class FoodItem {
   final String BMIgroup;
   final String ingredient;
   final String preparvideo;
-  bool isFavorite;
+  //bool isFavorite;
   int likes;
 
 
@@ -29,7 +29,7 @@ class FoodItem {
     required this.BMIgroup,
     required this.ingredient,
     required this.preparvideo,
-    this.isFavorite = false,
+    //this.isFavorite = false,
     this.likes=0,
   });
 
@@ -48,7 +48,7 @@ class FoodItem {
       BMIgroup: map['BMIgroup'] ?? '',
       ingredient: map['ingredient'] ?? '',
       preparvideo: map['preparvideo'] ?? '',
-      isFavorite: map['isFavorite']==true ,
+      // isFavorite: map['isFavorite']==true ,
       likes: map['likes'] ?? 0,
     );
   }
@@ -67,7 +67,7 @@ class FoodItem {
       'BMIgroup': BMIgroup,
       'ingredient': ingredient,
       'preparvideo':preparvideo,
-      'isFavorite':isFavorite,
+      // 'isFavorite':isFavorite,
       'likes':likes,
     };
   }

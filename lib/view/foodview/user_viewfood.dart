@@ -1,10 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/foodview/database_helper.dart';
 import 'package:fitnessapp/view/foodview/fooditem.dart';
 import 'package:fitnessapp/view/foodview/fooddetails.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitnessapp/view/forum/like_button.dart';
 
 class UserFoodViewPage extends StatefulWidget {
   @override
@@ -15,13 +15,75 @@ enum SortingOption { Name, Calories, Favorite }
 
 class _UserFoodViewPageState extends State<UserFoodViewPage> {
   final DatabaseHelper dbHelper = DatabaseHelper();
-  FirebaseAuth _auth = FirebaseAuth.instance;
-
   String selectedCategory = 'All'; // Default category
   SortingOption selectedSortingOption = SortingOption.Name;
+  String? currentUserId;
+  Map<String, List<String>> userLikes = {};
 
   @override
+  @override
+  @override
+  @override
+  void initState() {
+    super.initState();
+    print('Initializing state...');
+    _getCurrentUser();
+  }
+
+
+  void _getCurrentUser() {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      setState(() {
+        currentUserId = user?.uid;
+        print('Current user ID: $currentUserId');
+        if (currentUserId != null) {
+          // Load user likes when the user logs in
+          _loadUserLikes().then((_) {
+            // After likes are loaded, build the UI
+            setState(() {
+              // Update any other UI state if needed
+            });
+          });
+        }
+      });
+    });
+  }
+
+  Future<void> _loadUserLikes() async {
+    try {
+      // Load user likes from the database
+      List<String> likes = await dbHelper.getUserLikes(currentUserId!);
+      print('User likes loaded for $currentUserId: $likes');
+
+      setState(() {
+        userLikes[currentUserId!] = likes;
+      });
+    } catch (e) {
+      print('Error loading user likes: $e');
+    }
+  }
+
+  bool _isUserFavorite(String foodItemId) {
+    print('Checking favorite status for item $foodItemId');
+    print('currentUserId: $currentUserId');
+    print('userLikes: $userLikes');
+
+    if (currentUserId != null &&
+        userLikes.containsKey(currentUserId!) &&
+        userLikes[currentUserId!]!.contains(foodItemId)) {
+      print('Returning true');
+      return true;
+    } else {
+      print('Returning false');
+      return false;
+    }
+  }
+
+
+
+
   Widget build(BuildContext context) {
+    print('Building FutureBuilder...');
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -72,7 +134,11 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
                           case SortingOption.Calories:
                             return a.calories.compareTo(b.calories);
                           case SortingOption.Favorite:
-                            return a.isFavorite ? -1 : 1;
+                            bool isAFavorite = _isUserFavorite(a.id);
+                            bool isBFavorite = _isUserFavorite(b.id);
+                            return isAFavorite == isBFavorite ? 0 : isAFavorite
+                                ? -1
+                                : 1;
                         }
                       });
 
@@ -190,17 +256,22 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
   }
 
   Widget _buildFoodItemBox(BuildContext context, FoodItem foodItem) {
+    print('Initial isFavorite value: ${_isUserFavorite(foodItem.id)}');
     List<String> itemCategories =
     foodItem.category.split(', ').map((category) => category.trim()).toList();
 
-    if (selectedCategory == 'All' ||
-        itemCategories.contains(selectedCategory)) {
+    if (selectedCategory == 'All' || itemCategories.contains(selectedCategory)) {
+      bool isFavorite = _isUserFavorite(foodItem.id);
+
       return Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           boxShadow: const [
             BoxShadow(
-                color: Colors.black26, blurRadius: 2, offset: Offset(0, 2)),
+              color: Colors.black26,
+              blurRadius: 2,
+              offset: Offset(0, 2),
+            ),
           ],
         ),
         child: Material(
@@ -210,8 +281,7 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => FoodDetailPage(foodItem)),
+                MaterialPageRoute(builder: (context) => FoodDetailPage(foodItem)),
               );
             },
             child: Stack(
@@ -257,17 +327,13 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(
-                        icon: Icon(
-                          foodItem.isFavorite
-                              ? Icons.favorite
-                              : Icons.favorite_border,
-                          color: foodItem.isFavorite ? Colors.red : null,
+                      if (currentUserId != null)
+                        LikeButton(
+                          isLiked: _isUserFavorite(foodItem.id),
+                          onTap: () {
+                            _toggleFavorite(foodItem.id);
+                          },
                         ),
-                        onPressed: () {
-                          _toggleFavorite(foodItem);
-                        },
-                      ),
                       Text(
                         '${foodItem.likes}',
                         style: const TextStyle(
@@ -288,34 +354,33 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
     }
   }
 
-  void _toggleFavorite(FoodItem foodItem) async {
-    try {
-      // Get the current user
-      User? user = _auth.currentUser;
 
-      // Update local state
+
+
+
+
+  void _toggleFavorite(String foodItemId) async {
+    if (currentUserId != null) {
+      bool isAlreadyLiked = await dbHelper.getUserLikeStatus(foodItemId);
+
+      int currentLikes = await dbHelper.getLikesCount(foodItemId);
+
+      // Update the likes count and favorite status in the user interface
+      dbHelper.updateLikes(foodItemId, !isAlreadyLiked, currentLikes);
+
       setState(() {
-        foodItem.isFavorite = !foodItem.isFavorite;
-        foodItem.likes += foodItem.isFavorite ? 1 : -1;
+        if (userLikes.containsKey(currentUserId!)) {
+          if (isAlreadyLiked) {
+            userLikes[currentUserId!]!.remove(foodItemId);
+          } else {
+            userLikes[currentUserId!]!.add(foodItemId);
+          }
+        } else {
+          userLikes[currentUserId!] = [foodItemId];
+        }
       });
-
-      // Update Firestore with new like status and count
-      await dbHelper.updateLikes(
-          foodItem.id, foodItem.isFavorite, foodItem.likes);
-
-      // Save food item with user's UID as a reference
-      await FirebaseFirestore.instance.collection('UserFoodViewPageData').doc(
-          user!.uid).collection('FoodItems').doc(foodItem.id.toString()).set({
-        'name': foodItem.name,
-        'calories': foodItem.calories,
-        'isFavorite': foodItem.isFavorite,
-        // ... other food item properties
-      });
-
-      print("Food item updated successfully!");
-    } catch (error) {
-      print("Error updating food item: $error");
-      // Handle the error (display a message, log, etc.)
+    } else {
+      print('Current user ID is null.');
     }
   }
 }
