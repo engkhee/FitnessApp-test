@@ -54,6 +54,18 @@ class _AddVideo2State extends State<AddVideo2> {
           ),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.ondemand_video_rounded, 
+              color: Colors.black,
+            ),
+            onPressed: () {
+              // Navigate to the other page here
+              Navigator.pushNamed(context, '/DanceWorkout');
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(

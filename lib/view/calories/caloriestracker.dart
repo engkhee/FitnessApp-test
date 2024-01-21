@@ -1,4 +1,3 @@
-// calories_tracker_page.dart
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -6,7 +5,6 @@ import 'addcalories.dart';
 import 'mealinfo.dart';
 import 'piechart.dart';
 import 'dbhelper.dart';
-import 'meal.dart';
 
 class CaloriesTrackerPage extends StatefulWidget {
   @override
