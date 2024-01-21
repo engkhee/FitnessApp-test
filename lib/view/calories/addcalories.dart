@@ -79,7 +79,7 @@ class _AddCaloriesPageState extends State<AddCaloriesPage> {
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                     child: TextFormField(
-                      initialValue: 'Roti Canai',
+                      // initialValue: 'Roti Canai',
                       decoration: const InputDecoration(
                         labelText: 'Meal Name:',
                         border: InputBorder.none,
@@ -103,7 +103,7 @@ class _AddCaloriesPageState extends State<AddCaloriesPage> {
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                     child: TextFormField(
-                      initialValue: '2 slices',
+                      // initialValue: '2 slices',
                       decoration: const InputDecoration(
                         labelText: 'Description:',
                         border: InputBorder.none,

@@ -152,5 +152,30 @@ class DatabaseHelper {
       rethrow;
     }
   }
+
+  Future<List<double>> getSevenDayCalories() async {
+    List<double> caloriesList = List.filled(7, 0);
+
+    DateTime endDate = DateTime.now();
+    DateTime startDate = endDate.subtract(Duration(days: 6));
+
+    QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+        .collection('meals')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('user_meals')
+        .where('date', isGreaterThanOrEqualTo: startDate)
+        .where('date', isLessThanOrEqualTo: endDate)
+        .get();
+
+    for (QueryDocumentSnapshot<Map<String, dynamic>> document in snapshot.docs) {
+      Meal meal = Meal.fromMap(document.data());
+      int index = endDate.difference(meal.date).inDays;
+      caloriesList[index] += meal.totalCalories;
+    }
+
+    return caloriesList;
+  }
+
+
 }
 
