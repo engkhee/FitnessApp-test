@@ -1,8 +1,8 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/Traning/training_home.dart';
 import 'package:fitnessapp/view/tutorial_videos/user_watch_video.dart';
-import 'package:flutter/material.dart';
 import '../../common_widgets/round_button.dart';
 import '../Traning/fitnesss_list.dart';
 
@@ -30,8 +30,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
   }
 
   void _initData() {
-    DefaultAssetBundle.of(context).loadString("json/workout.json").then((
-        value) {
+    DefaultAssetBundle.of(context).loadString("json/workout.json").then((value) {
       setState(() {
         workout_info = jsonDecode(value);
       });
@@ -49,128 +48,140 @@ class _ActivityScreenState extends State<ActivityScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.primaryColor1,
+        title: const Text(
+          "Fitness",
+          style: TextStyle(
+            color: AppColors.whiteColor,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+        elevation: 0,
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.more_vert,
+              color: AppColors.whiteColor,
+            ),
+            onPressed: () {
+              // Your action here
+            },
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            _buildSection(
+              title: "Explore more tutorial videos",
+              description: "Discover a variety of tutorial videos",
+              imageAsset: "assets/images/pp_2.png",
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserPage(),
+                  ),
+                );
+              },
+            ),
+            _buildSection(
+              title: "Explore more workout plans",
+              description: "Find the perfect fitness workout plans",
+              imageAsset: "assets/images/pp_5.png",
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FitnessList(),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSection({
+    required String title,
+    required String description,
+    required String imageAsset,
+    required VoidCallback onPressed,
+  }) {
     return Container(
+      margin: const EdgeInsets.all(16),
+      width: double.infinity,
       decoration: BoxDecoration(
-          gradient: LinearGradient(colors: AppColors.primaryG)),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: SingleChildScrollView(
+        borderRadius: BorderRadius.circular(15),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onPressed,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // SliverAppBar equivalent (without slivers since we're in a SingleChildScrollView)
-              AppBar(
-                backgroundColor: Colors.transparent,
-                centerTitle: true,
-                elevation: 0,
-                title: const Text(
-                  "Fitness",
-                  style: TextStyle(
-                      color: AppColors.whiteColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700),
-                ),
-                actions: [
-                  InkWell(
-                    onTap: () {},
-                    child: Container(
-                      margin: const EdgeInsets.all(8),
-                      height: 40,
-                      width: 40,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          color: AppColors.lightGrayColor,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Image.asset(
-                        "assets/icons/more_icon.png",
-                        width: 15,
-                        height: 15,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              // Other widgets you might want to include
               Container(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
+                height: 200,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(2),
-                  color: Colors.white,
+                  image: DecorationImage(
+                    image: AssetImage(imageAsset),
+                    fit: BoxFit.cover,
+                  ),
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 15, horizontal: 15),
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryColor2.withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Explore more tutorial videos",
-                            style: TextStyle(
-                                color: AppColors.blackColor,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700),
-                          ),
-                          SizedBox(
-                            width: 75,
-                            height: 25,
-                            child: RoundButton(
-                              title: "Search",
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => UserPage(),
-                                  ),
-                                );
-                              },
-                            ),
-                          )
-                        ],
+                    Text(
+                      title,
+                      style: TextStyle(
+                        color: AppColors.blackColor,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 20,),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 15, horizontal: 15),
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryColor2.withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(15),
+                    const SizedBox(height: 10),
+                    Text(
+                      description,
+                      style: TextStyle(
+                        color: AppColors.grayColor,
+                        fontSize: 16,
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Explore more fitness workout plans",
-                            style: TextStyle(
-                                color: AppColors.blackColor,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700),
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryColor2,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Search",
+                          style: TextStyle(
+                            color: AppColors.whiteColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
-                          SizedBox(
-                            width: 75,
-                            height: 25,
-                            child: RoundButton(
-                              title: "Search",
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => FitnessList(),
-                                  ),
-                                );
-                              },
-                            ),
-                          )
-                        ],
+                        ),
                       ),
                     ),
                   ],
@@ -182,5 +193,11 @@ class _ActivityScreenState extends State<ActivityScreen> {
       ),
     );
   }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: ActivityScreen(),
+  ));
 }
 

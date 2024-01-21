@@ -190,35 +190,24 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 25,
                           fit: BoxFit.fitHeight,
                         )),
+                    SizedBox(width: 16),
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            Container(
-                              child: const Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Welcome Back,",
-                                    style: TextStyle(
-                                      color: AppColors.midGrayColor,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Stefani Wong",
-                                    style: TextStyle(
-                                      color: AppColors.blackColor,
-                                      fontSize: 20,
-                                      fontFamily: "Poppins",
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                      Text(
+                      "Welcome Back,",
+                      style: TextStyle(
+                        color: AppColors.midGrayColor,
+                        fontSize: 12,
+                      ),
+                    ),
+                    Text(
+                      "Stefani Wong",
+                      style: TextStyle(
+                        color: AppColors.blackColor,
+                        fontSize: 20,
+                        fontFamily: "Poppins",
+                        fontWeight: FontWeight.w700,),),
                       ],
                     )
                   ],
@@ -232,24 +221,33 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      Row(
-                        children: [
-                          Container(
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Image.asset(
-                                    "assets/icons/bg_dots.png",
-                                    height: media.width * 0.4,
-                                    width: double.maxFinite,
-                                    fit: BoxFit.fitHeight,
+                      SingleChildScrollView(
+                        child: Container(
+                          width: double.infinity,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: ClipRect(
+                                          child: Image.asset(
+                                            "assets/icons/bg_dots.png",
+                                            height: media.width * 0.4,
+                                            width: double.maxFinite,
+                                            fit: BoxFit.fitHeight,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                       Padding(
                         padding:
