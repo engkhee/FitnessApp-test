@@ -27,7 +27,7 @@ class _WorkoutScheduleViewState extends State<WorkoutScheduleView> {
     },
     {
       "name": "Upperbody Workout",
-      "start_time": "07/06/2023 09:00 AM",
+      "start_time": "21/01/2024 09:00 AM",
     },
     {
       "name": "Lowerbody Workout",

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:fitnessapp/view/tutorial_videos/dance_workout.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/Traning/training_home.dart';
@@ -77,19 +78,6 @@ class _ActivityScreenState extends State<ActivityScreen> {
         child: Column(
           children: [
             _buildSection(
-              title: "Explore more tutorial videos",
-              description: "Discover a variety of tutorial videos",
-              imageAsset: "assets/images/pp_2.png",
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => UserPage(),
-                  ),
-                );
-              },
-            ),
-            _buildSection(
               title: "Explore more workout plans",
               description: "Find the perfect fitness workout plans",
               imageAsset: "assets/images/pp_5.png",
@@ -98,6 +86,32 @@ class _ActivityScreenState extends State<ActivityScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => FitnessList(),
+                  ),
+                );
+              },
+            ),
+            _buildSection(
+              title: "Explore more dance workouts",
+              description: "Let's dance together!",
+              imageAsset: "assets/images/letdance.jpg",
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DanceWorkout(),
+                  ),
+                );
+              },
+            ),
+            _buildSection(
+              title: "Explore more tutorial videos",
+              description: "Discover a variety of tutorial videos",
+              imageAsset: "assets/images/pp_2.png",
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserPage(),
                   ),
                 );
               },
