@@ -7,7 +7,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
-
+import 'package:fitnessapp/view/calories/caloriestracker.dart';
+import 'package:fitnessapp/view/calories/piechart.dart';
 import '../../common_widgets/round_button.dart';
 import '../../common_widgets/round_gradient_button.dart';
 import '../notification/notification_screen.dart';
@@ -26,38 +27,38 @@ class _HomeScreenState extends State<HomeScreen> {
   List<int> showingTooltipOnSpots = [21];
 
   List<FlSpot> get allSpots => const [
-        FlSpot(0, 20),
-        FlSpot(1, 25),
-        FlSpot(2, 40),
-        FlSpot(3, 50),
-        FlSpot(4, 35),
-        FlSpot(5, 40),
-        FlSpot(6, 30),
-        FlSpot(7, 20),
-        FlSpot(8, 25),
-        FlSpot(9, 40),
-        FlSpot(10, 50),
-        FlSpot(11, 35),
-        FlSpot(12, 50),
-        FlSpot(13, 60),
-        FlSpot(14, 40),
-        FlSpot(15, 50),
-        FlSpot(16, 20),
-        FlSpot(17, 25),
-        FlSpot(18, 40),
-        FlSpot(19, 50),
-        FlSpot(20, 35),
-        FlSpot(21, 80),
-        FlSpot(22, 30),
-        FlSpot(23, 20),
-        FlSpot(24, 25),
-        FlSpot(25, 40),
-        FlSpot(26, 50),
-        FlSpot(27, 35),
-        FlSpot(28, 50),
-        FlSpot(29, 60),
-        FlSpot(30, 40),
-      ];
+    FlSpot(0, 20),
+    FlSpot(1, 25),
+    FlSpot(2, 40),
+    FlSpot(3, 50),
+    FlSpot(4, 35),
+    FlSpot(5, 40),
+    FlSpot(6, 30),
+    FlSpot(7, 20),
+    FlSpot(8, 25),
+    FlSpot(9, 40),
+    FlSpot(10, 50),
+    FlSpot(11, 35),
+    FlSpot(12, 50),
+    FlSpot(13, 60),
+    FlSpot(14, 40),
+    FlSpot(15, 50),
+    FlSpot(16, 20),
+    FlSpot(17, 25),
+    FlSpot(18, 40),
+    FlSpot(19, 50),
+    FlSpot(20, 35),
+    FlSpot(21, 80),
+    FlSpot(22, 30),
+    FlSpot(23, 20),
+    FlSpot(24, 25),
+    FlSpot(25, 40),
+    FlSpot(26, 50),
+    FlSpot(27, 35),
+    FlSpot(28, 50),
+    FlSpot(29, 60),
+    FlSpot(30, 40),
+  ];
 
   List waterArr = [
     {"title": "6am - 8am", "subtitle": "600ml"},
@@ -179,27 +180,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Welcome Back,",
-                          style: TextStyle(
-                            color: AppColors.midGrayColor,
-                            fontSize: 12,
-                          ),
-                        ),
-                        Text(
-                          "Stefani Wong",
-                          style: TextStyle(
-                            color: AppColors.blackColor,
-                            fontSize: 20,
-                            fontFamily: "Poppins",
-                            fontWeight: FontWeight.w700,
-                          ),
-                        )
-                      ],
-                    ),
                     IconButton(
                         onPressed: () {
                           Navigator.pushNamed(context, NotificationScreen.routeName);
@@ -209,7 +189,38 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: 25,
                           height: 25,
                           fit: BoxFit.fitHeight,
-                        ))
+                        )),
+                    Column(
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              child: const Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Welcome Back,",
+                                    style: TextStyle(
+                                      color: AppColors.midGrayColor,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                  Text(
+                                    "Stefani Wong",
+                                    style: TextStyle(
+                                      color: AppColors.blackColor,
+                                      fontSize: 20,
+                                      fontFamily: "Poppins",
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
                   ],
                 ),
                 SizedBox(height: media.width * 0.05),
@@ -221,15 +232,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      Image.asset(
-                        "assets/icons/bg_dots.png",
-                        height: media.width * 0.4,
-                        width: double.maxFinite,
-                        fit: BoxFit.fitHeight,
+                      Row(
+                        children: [
+                          Container(
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.asset(
+                                    "assets/icons/bg_dots.png",
+                                    height: media.width * 0.4,
+                                    width: double.maxFinite,
+                                    fit: BoxFit.fitHeight,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                       Padding(
                         padding:
-                            EdgeInsets.symmetric(vertical: 25, horizontal: 25),
+                        EdgeInsets.symmetric(vertical: 25, horizontal: 25),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -249,7 +273,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   "You have a normal weight",
                                   style: TextStyle(
                                     color:
-                                        AppColors.whiteColor.withOpacity(0.7),
+                                    AppColors.whiteColor.withOpacity(0.7),
                                     fontSize: 12,
                                     fontFamily: "Poppins",
                                     fontWeight: FontWeight.w400,
@@ -362,11 +386,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 blendMode: BlendMode.srcIn,
                                 shaderCallback: (bounds) {
                                   return LinearGradient(
-                                          colors: AppColors.primaryG,
-                                          begin: Alignment.centerLeft,
-                                          end: Alignment.centerRight)
+                                      colors: AppColors.primaryG,
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight)
                                       .createShader(Rect.fromLTRB(
-                                          0, 0, bounds.width, bounds.height));
+                                      0, 0, bounds.width, bounds.height));
                                 },
                                 child: const Text(
                                   "78 BPM",
@@ -383,7 +407,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         LineChart(
                           LineChartData(
                             showingTooltipIndicators:
-                                showingTooltipOnSpots.map((index) {
+                            showingTooltipOnSpots.map((index) {
                               return ShowingTooltipIndicators([
                                 LineBarSpot(
                                   tooltipsOnBar,
@@ -427,7 +451,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               },
                               getTouchedSpotIndicator:
                                   (LineChartBarData barData,
-                                      List<int> spotIndexes) {
+                                  List<int> spotIndexes) {
                                 return spotIndexes.map((index) {
                                   return TouchedSpotIndicatorData(
                                     FlLine(
@@ -437,12 +461,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                       show: true,
                                       getDotPainter:
                                           (spot, percent, barData, index) =>
-                                              FlDotCirclePainter(
-                                        radius: 3,
-                                        color: Colors.white,
-                                        strokeWidth: 2,
-                                        strokeColor: AppColors.secondaryColor2,
-                                      ),
+                                          FlDotCirclePainter(
+                                            radius: 3,
+                                            color: Colors.white,
+                                            strokeWidth: 2,
+                                            strokeColor: AppColors.secondaryColor2,
+                                          ),
                                     ),
                                   );
                                 }).toList();
@@ -483,301 +507,213 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(height: media.width * 0.05),
+                const Text(
+                  "Calories Tracker",
+                  style: TextStyle(
+                    color: AppColors.blackColor,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(height: media.width * 0.02),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CaloriesTrackerPage()),
+                    );
+                  },
+                  child: //DailyPieChart(date: DateTime(2024, 1, 18)),
+                  DailyPieChart(date: DateTime.now()),
+                ),
+                SizedBox(height: media.width * 0.05),
+
                 Row(
                   children: [
                     Expanded(
                         child: Container(
-                      height: media.width * 0.95,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 25, horizontal: 10),
-                      decoration: BoxDecoration(
-                          color: AppColors.whiteColor,
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: const [
-                            BoxShadow(color: Colors.black12, blurRadius: 2)
-                          ]),
-                      child: Row(children: [
-                        SimpleAnimationProgressBar(
-                          height: media.width * 0.9,
-                          width: media.width * 0.07,
-                          backgroundColor: Colors.grey.shade100,
-                          foregrondColor: Colors.purple,
-                          ratio: 0.5,
-                          direction: Axis.vertical,
-                          curve: Curves.fastLinearToSlowEaseIn,
-                          duration: const Duration(seconds: 3),
-                          borderRadius: BorderRadius.circular(30),
-                          gradientColor: LinearGradient(
-                              colors: AppColors.primaryG,
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                            child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Water Intake",
-                              style: TextStyle(
-                                  color: AppColors.blackColor,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold),
+                          height: media.width * 0.95,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 25, horizontal: 10),
+                          decoration: BoxDecoration(
+                              color: AppColors.whiteColor,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: const [
+                                BoxShadow(color: Colors.black12, blurRadius: 2)
+                              ]),
+                          child: Row(children: [
+                            SimpleAnimationProgressBar(
+                              height: media.width * 0.9,
+                              width: media.width * 0.07,
+                              backgroundColor: Colors.grey.shade100,
+                              foregrondColor: Colors.purple,
+                              ratio: 0.5,
+                              direction: Axis.vertical,
+                              curve: Curves.fastLinearToSlowEaseIn,
+                              duration: const Duration(seconds: 3),
+                              borderRadius: BorderRadius.circular(30),
+                              gradientColor: LinearGradient(
+                                  colors: AppColors.primaryG,
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter),
                             ),
-                            SizedBox(height: media.width * 0.01),
-                            ShaderMask(
-                              blendMode: BlendMode.srcIn,
-                              shaderCallback: (bounds) {
-                                return LinearGradient(
-                                        colors: AppColors.primaryG,
-                                        begin: Alignment.centerLeft,
-                                        end: Alignment.centerRight)
-                                    .createShader(Rect.fromLTRB(
-                                        0, 0, bounds.width, bounds.height));
-                              },
-                              child: const Text(
-                                "4 Liters",
-                                style: TextStyle(
-                                  color: AppColors.blackColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
+                            const SizedBox(
+                              width: 10,
                             ),
-                            SizedBox(height: media.width * 0.03),
-                            const Text(
-                              "Real time updates",
-                              style: TextStyle(
-                                  color: AppColors.blackColor,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                            SizedBox(height: media.width * 0.01),
-                            Column(
-                              children: waterArr.map((obj) {
-                                var isLast = obj == waterArr.last;
-                                return Row(
+                            Expanded(
+                                child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            margin: const EdgeInsets.symmetric(
-                                                vertical: 6),
-                                            width: 10,
-                                            height: 10,
-                                            decoration: BoxDecoration(
-                                                color: AppColors.secondaryColor1
-                                                    .withOpacity(0.5),
-                                                borderRadius:
-                                                    BorderRadius.circular(5)),
-                                          ),
-                                          if (!isLast)
-                                            DottedDashedLine(
-                                              width: 0,
-                                              height: media.width * 0.078,
-                                              axis: Axis.vertical,
-                                              dashColor: AppColors
-                                                  .secondaryColor1
-                                                  .withOpacity(0.5),
-                                            )
-                                        ]),
-                                    const SizedBox(width: 10),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SizedBox(height: media.width * 0.01),
-                                        Text(
-                                          obj["title"].toString(),
-                                          style: const TextStyle(
-                                              color: AppColors.blackColor,
-                                              fontSize: 11,
-                                              fontWeight: FontWeight.w400),
+                                    const Text(
+                                      "Water Intake",
+                                      style: TextStyle(
+                                          color: AppColors.blackColor,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    SizedBox(height: media.width * 0.01),
+                                    ShaderMask(
+                                      blendMode: BlendMode.srcIn,
+                                      shaderCallback: (bounds) {
+                                        return LinearGradient(
+                                            colors: AppColors.primaryG,
+                                            begin: Alignment.centerLeft,
+                                            end: Alignment.centerRight)
+                                            .createShader(Rect.fromLTRB(
+                                            0, 0, bounds.width, bounds.height));
+                                      },
+                                      child: const Text(
+                                        "4 Liters",
+                                        style: TextStyle(
+                                          color: AppColors.blackColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
                                         ),
-                                        SizedBox(height: 1),
-                                        ShaderMask(
-                                          blendMode: BlendMode.srcIn,
-                                          shaderCallback: (bounds) {
-                                            return LinearGradient(
-                                                    colors:
+                                      ),
+                                    ),
+                                    SizedBox(height: media.width * 0.03),
+                                    const Text(
+                                      "Real time updates",
+                                      style: TextStyle(
+                                          color: AppColors.blackColor,
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    SizedBox(height: media.width * 0.01),
+                                    Column(
+                                      children: waterArr.map((obj) {
+                                        var isLast = obj == waterArr.last;
+                                        return Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Column(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    margin: const EdgeInsets.symmetric(
+                                                        vertical: 6),
+                                                    width: 10,
+                                                    height: 10,
+                                                    decoration: BoxDecoration(
+                                                        color: AppColors.secondaryColor1
+                                                            .withOpacity(0.5),
+                                                        borderRadius:
+                                                        BorderRadius.circular(5)),
+                                                  ),
+                                                  if (!isLast)
+                                                    DottedDashedLine(
+                                                      width: 0,
+                                                      height: media.width * 0.078,
+                                                      axis: Axis.vertical,
+                                                      dashColor: AppColors
+                                                          .secondaryColor1
+                                                          .withOpacity(0.5),
+                                                    )
+                                                ]),
+                                            const SizedBox(width: 10),
+                                            Column(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: [
+                                                SizedBox(height: media.width * 0.01),
+                                                Text(
+                                                  obj["title"].toString(),
+                                                  style: const TextStyle(
+                                                      color: AppColors.blackColor,
+                                                      fontSize: 11,
+                                                      fontWeight: FontWeight.w400),
+                                                ),
+                                                SizedBox(height: 1),
+                                                ShaderMask(
+                                                  blendMode: BlendMode.srcIn,
+                                                  shaderCallback: (bounds) {
+                                                    return LinearGradient(
+                                                        colors:
                                                         AppColors.secondaryG,
-                                                    begin: Alignment.centerLeft,
-                                                    end: Alignment.centerRight)
-                                                .createShader(Rect.fromLTRB(
-                                                    0,
-                                                    0,
-                                                    bounds.width,
-                                                    bounds.height));
-                                          },
-                                          child: Text(
-                                            obj["subtitle"].toString(),
-                                            style: const TextStyle(
-                                              color: AppColors.blackColor,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                                        begin: Alignment.centerLeft,
+                                                        end: Alignment.centerRight)
+                                                        .createShader(Rect.fromLTRB(
+                                                        0,
+                                                        0,
+                                                        bounds.width,
+                                                        bounds.height));
+                                                  },
+                                                  child: Text(
+                                                    obj["subtitle"].toString(),
+                                                    style: const TextStyle(
+                                                      color: AppColors.blackColor,
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.w500,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        );
+                                      }).toList(),
                                     )
                                   ],
-                                );
-                              }).toList(),
-                            )
-                          ],
-                        ))
-                      ]),
-                    )),
+                                ))
+                          ]),
+                        )),
                     SizedBox(width: media.width * 0.05),
-                    Expanded(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          width: double.maxFinite,
-                          height: media.width * 0.45,
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 25, horizontal: 20),
-                          decoration: BoxDecoration(
-                              color: AppColors.whiteColor,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: const [
-                                BoxShadow(color: Colors.black12, blurRadius: 2)
-                              ]),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                "Sleep",
-                                style: TextStyle(
-                                    color: AppColors.blackColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: media.width * 0.01),
-                              ShaderMask(
-                                blendMode: BlendMode.srcIn,
-                                shaderCallback: (bounds) {
-                                  return LinearGradient(
-                                          colors: AppColors.primaryG,
-                                          begin: Alignment.centerLeft,
-                                          end: Alignment.centerRight)
-                                      .createShader(Rect.fromLTRB(
-                                          0, 0, bounds.width, bounds.height));
-                                },
-                                child: const Text(
-                                  "8h 20m",
-                                  style: TextStyle(
-                                    color: AppColors.blackColor,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                  child: Image.asset(
-                                "assets/images/sleep_graph.png",
-                                width: double.maxFinite,
-                                fit: BoxFit.fitWidth,
-                              ))
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: media.width * 0.05),
-                        Container(
-                          width: double.maxFinite,
-                          height: media.width * 0.45,
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 25, horizontal: 20),
-                          decoration: BoxDecoration(
-                              color: AppColors.whiteColor,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: const [
-                                BoxShadow(color: Colors.black12, blurRadius: 2)
-                              ]),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                "Calories",
-                                style: TextStyle(
-                                    color: AppColors.blackColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: media.width * 0.01),
-                              ShaderMask(
-                                blendMode: BlendMode.srcIn,
-                                shaderCallback: (bounds) {
-                                  return LinearGradient(
-                                          colors: AppColors.primaryG,
-                                          begin: Alignment.centerLeft,
-                                          end: Alignment.centerRight)
-                                      .createShader(Rect.fromLTRB(
-                                          0, 0, bounds.width, bounds.height));
-                                },
-                                child: const Text(
-                                  "760 kCal",
-                                  style: TextStyle(
-                                    color: AppColors.blackColor,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              const Spacer(),
-                              Container(
-                                alignment: Alignment.center,
-                                child: SizedBox(
-                                  width: media.width * 0.2,
-                                  height: media.width * 0.2,
-                                  child: Stack(
-                                    alignment: Alignment.center,
-                                    children: [
-                                      Container(
-                                        width: media.width * 0.16,
-                                        height: media.width * 0.16,
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                                colors: AppColors.primaryG),
-                                            borderRadius: BorderRadius.circular(
-                                                media.width * 0.075)),
-                                        child: const Text("230kCal\nleft",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              color: AppColors.whiteColor,
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w400,
-                                            )),
-                                      ),
-                                      SimpleCircularProgressBar(
-                                        startAngle: -180,
-                                        progressStrokeWidth: 10,
-                                        backStrokeWidth: 10,
-                                        progressColors: AppColors.primaryG,
-                                        backColor: Colors.grey.shade100,
-                                        valueNotifier: ValueNotifier(60),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ))
+                    // Expanded(
+                    //   child: Column(
+                    //     mainAxisAlignment: MainAxisAlignment.start,
+                    //     mainAxisSize: MainAxisSize.min,
+                    //     children: [
+                    //       const Text(
+                    //         "Calories Tracker",
+                    //         style: TextStyle(
+                    //           color: AppColors.blackColor,
+                    //           fontSize: 16,
+                    //           fontWeight: FontWeight.w600,
+                    //         ),
+                    //       ),
+                    //       SizedBox(height: media.width * 0.02),
+                    //       GestureDetector(
+                    //         onTap: () {
+                    //           Navigator.push(
+                    //             context,
+                    //             MaterialPageRoute(builder: (context) => CaloriesTrackerPage()),
+                    //           );
+                    //         },
+                    //         child: DailyPieChart(date: DateTime(2024, 1, 18)),
+                    //
+                    //         //DailyPieChart(date: DateTime.now()),
+                    //       ),
+                    //       SizedBox(height: media.width * 0.05),
+                    //
+                    //     ],
+                    //   ),
+                    // )
+
                   ],
                 ),
                 SizedBox(height: media.width * 0.1),
@@ -802,13 +738,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: DropdownButton(
                           items: ["Weekly", "Monthly"]
                               .map((name) => DropdownMenuItem(
-                                  value: name,
-                                  child: Text(
-                                    name,
-                                    style: const TextStyle(
-                                        color: AppColors.blackColor,
-                                        fontSize: 14),
-                                  )))
+                              value: name,
+                              child: Text(
+                                name,
+                                style: const TextStyle(
+                                    color: AppColors.blackColor,
+                                    fontSize: 14),
+                              )))
                               .toList(),
                           onChanged: (value) {},
                           icon: Icon(Icons.expand_more,
@@ -988,7 +924,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<PieChartSectionData> showingSections() {
     return List.generate(
       2,
-      (i) {
+          (i) {
         const color0 = AppColors.secondaryColor2;
         const color1 = AppColors.whiteColor;
 
@@ -1001,9 +937,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 radius: 55,
                 titlePositionPercentageOffset: 0.55,
                 badgeWidget: Text("20.1", style: TextStyle(
-                      color: AppColors.whiteColor,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 12),
+                    color: AppColors.whiteColor,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 12),
                 ));
           case 1:
             return PieChartSectionData(
