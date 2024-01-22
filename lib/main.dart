@@ -5,13 +5,10 @@ import 'package:fitnessapp/view/auth/auth.dart';
 import 'package:fitnessapp/view/dashboard/dashboard_screen.dart';
 import 'package:fitnessapp/view/forum/main_forum.dart';
 import 'package:fitnessapp/view/login/login_screen.dart';
-import 'package:fitnessapp/view/on_boarding/on_boarding_screen.dart';
-import 'package:fitnessapp/view/on_boarding/start_screen.dart';
 import 'package:fitnessapp/view/profile/complete_profile_screen.dart';
 import 'package:fitnessapp/view/profile/update_profile_page.dart';
 import 'package:fitnessapp/view/profile/user_profile.dart';
 import 'package:fitnessapp/view/signup/signup_screen.dart';
-import 'package:fitnessapp/view/workout_schedule_view/workout_schedule_view.dart';
 import 'package:fitnessapp/view/your_goal/your_goal_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/view/firebase/firebase_functions.dart';
@@ -44,6 +41,7 @@ class MyApp extends StatelessWidget {
           fontFamily: "Poppins"
       ),
       home: DashboardScreen(),
+      //YourGoalScreen(),
       //LoginScreen
       //DashboardScreen  ActivityScreen
       // AdminPage

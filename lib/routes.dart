@@ -14,7 +14,6 @@ import 'package:fitnessapp/view/profile/complete_profile_screen.dart';
 import 'package:fitnessapp/view/signup/signup_screen.dart';
 import 'package:fitnessapp/view/tutorial_videos/add_video_v2.dart';
 import 'package:fitnessapp/view/tutorial_videos/dance_workout.dart';
-import 'package:fitnessapp/view/workout_schedule_view/workout_schedule_view.dart';
 import 'package:fitnessapp/view/your_goal/your_goal_screen.dart';
 import 'package:fitnessapp/view/tutorial_videos/admin_add_video.dart';
 import 'package:fitnessapp/view/tutorial_videos/user_watch_video.dart';
@@ -33,7 +32,6 @@ final Map<String, WidgetBuilder> routes = {
   YourGoalScreen.routeName: (context) => const YourGoalScreen(),
   DashboardScreen.routeName: (context) => const DashboardScreen(),
   NotificationScreen.routeName: (context) => const NotificationScreen(),
-  WorkoutScheduleView.routeName: (context) => const WorkoutScheduleView(),
   AddVideo.routeName: (context) => AddVideo(),
   AddVideo2.routeName: (context) => AddVideo2(),
   UserPage.routeName: (context) => UserPage(),

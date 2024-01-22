@@ -164,7 +164,6 @@ class TutorialVideoList extends StatelessWidget {
               var video = videos[index].data() as Map<String, dynamic>;
               var videoId = YoutubePlayer.convertUrlToId(video['videoId']) ?? '';
               var thumbnailUrl = 'https://img.youtube.com/vi/$videoId/0.jpg';
-              var views = video['views'] ?? 0;
 
               return Card(
                 child: InkWell(
@@ -176,12 +175,7 @@ class TutorialVideoList extends StatelessWidget {
                           videoId: videoId,
                           title: video['title'],
                           description: video['description'],
-                          views: views,
                           selectedCategory: selectedCategory,
-                          onViewsUpdated: (newViews) {
-                            // Update views in the video list when returning from the player page
-                            video['views'] = newViews;
-                          },
                         ),
                       ),
                     );
@@ -199,7 +193,6 @@ class TutorialVideoList extends StatelessWidget {
                       ListTile(
                         title: Text(video['title']),
                         subtitle: Text(video['description']),
-                        trailing: Text('$views views'),
                       ),
                     ],
                   ),
@@ -218,18 +211,14 @@ class VideoPlayerPage extends StatefulWidget {
   final String videoId;
   final String title;
   final String description;
-  final int views;
   final String selectedCategory;
-  final Function(int) onViewsUpdated;
 
   VideoPlayerPage({
     Key? key,
     required this.videoId,
     required this.title,
     required this.description,
-    required this.views,
     required this.selectedCategory,
-    required this.onViewsUpdated,
     }) : super(key: key);
 
   @override
@@ -271,22 +260,6 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
         });
       }
     });
-    // Update views when the VideoPlayerPage is initialized
-    updateViews(widget.videoId, widget.views);
-  }
-
-  void updateViews(String videoId, int currentViews) async {
-    try {
-      await FirebaseFirestore.instance
-          .collection(getCategoryCollectionPath(widget.selectedCategory))
-          .doc(videoId)
-          .update({'views': currentViews + 1});
-
-      // Callback to update views in the parent list
-      widget.onViewsUpdated(currentViews + 1);
-    } catch (error) {
-      print('Error updating views: $error');
-    }
   }
 
   void seekForward() {
@@ -383,7 +356,6 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
     super.dispose();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: SystemUiOverlay.values);
-    widget.onViewsUpdated(widget.views + 1);
   }
 }
 
