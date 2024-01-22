@@ -1,9 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitnessapp/view/Traning/fitnesss_list.dart';
 import 'package:fitnessapp/routes.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
-import 'package:fitnessapp/view/activity_tracker/activity_tracker_screen.dart';
-import 'package:fitnessapp/view/admin/manage_fitness.dart';
 import 'package:fitnessapp/view/auth/auth.dart';
 import 'package:fitnessapp/view/dashboard/dashboard_screen.dart';
 import 'package:fitnessapp/view/forum/main_forum.dart';
@@ -22,11 +19,6 @@ import 'package:firebase_core/firebase_core.dart';
 import'package:fitnessapp/view/foodview/nutri_viewfood.dart';
 import'package:fitnessapp/view/foodview/admin_viewfood.dart';
 import'package:fitnessapp/view/calories/caloriestracker.dart';
-import 'view/admin/admin_page.dart';
-
-// void main() {
-//   runApp(const MyApp());
-// }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

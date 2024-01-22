@@ -1,6 +1,4 @@
 //import 'dart:js';
-
-import 'package:fitnessapp/view/activity_tracker/activity_tracker_screen.dart';
 import 'package:fitnessapp/view/admin/admin_page.dart';
 import 'package:fitnessapp/view/admin/contact_developer.dart';
 import 'package:fitnessapp/view/admin/developer_chat_room.dart';
@@ -35,7 +33,6 @@ final Map<String, WidgetBuilder> routes = {
   YourGoalScreen.routeName: (context) => const YourGoalScreen(),
   DashboardScreen.routeName: (context) => const DashboardScreen(),
   NotificationScreen.routeName: (context) => const NotificationScreen(),
-  ActivityTrackerScreen.routeName: (context) => const ActivityTrackerScreen(),
   WorkoutScheduleView.routeName: (context) => const WorkoutScheduleView(),
   AddVideo.routeName: (context) => AddVideo(),
   AddVideo2.routeName: (context) => AddVideo2(),
