@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/Traning/training_home.dart';
 import 'package:fitnessapp/view/tutorial_videos/user_watch_video.dart';
-import '../../common_widgets/round_button.dart';
 import '../Traning/fitnesss_list.dart';
 
 class ActivityScreen extends StatefulWidget {

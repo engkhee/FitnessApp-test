@@ -1,6 +1,6 @@
 import 'package:fitnessapp/utils/app_colors.dart';
+import 'package:fitnessapp/view/dashboard/dashboard_screen.dart';
 import 'package:fitnessapp/view/on_boarding/widgets/pager_widget.dart';
-import 'package:fitnessapp/view/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -97,7 +97,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                             curve: Curves.easeInSine);
                       }
                       else{
-                        Navigator.pushNamed(context, SignupScreen.routeName);
+                        Navigator.pushNamed(context, DashboardScreen.routeName);
                       }
                     },
                   ),
