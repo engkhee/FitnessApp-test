@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitnessapp/view/Traning/fitnesss_list.dart';
-import 'package:fitnessapp/view/Traning/train2.dart';
 import 'package:fitnessapp/routes.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
+import 'package:fitnessapp/view/admin/admin_page.dart';
 import 'package:fitnessapp/view/auth/auth.dart';
 import 'package:fitnessapp/view/dashboard/dashboard_screen.dart';
 import 'package:fitnessapp/view/forum/main_forum.dart';
@@ -11,20 +10,13 @@ import 'package:fitnessapp/view/profile/complete_profile_screen.dart';
 import 'package:fitnessapp/view/profile/update_profile_page.dart';
 import 'package:fitnessapp/view/profile/user_profile.dart';
 import 'package:fitnessapp/view/signup/signup_screen.dart';
-import 'package:fitnessapp/view/tutorial_videos/admin_add_video.dart';
-import 'package:fitnessapp/view/welcome/welcome_screen.dart';
-import 'package:fitnessapp/view/activity/activity_screen.dart';
+import 'package:fitnessapp/view/your_goal/your_goal_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/view/firebase/firebase_functions.dart';
 import 'package:firebase_core/firebase_core.dart';
 import'package:fitnessapp/view/foodview/nutri_viewfood.dart';
 import'package:fitnessapp/view/foodview/admin_viewfood.dart';
 import'package:fitnessapp/view/calories/caloriestracker.dart';
-import 'view/admin/admin_page.dart';
-
-// void main() {
-//   runApp(const MyApp());
-// }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,13 +42,12 @@ class MyApp extends StatelessWidget {
           fontFamily: "Poppins"
       ),
       home: //DashboardScreen(),
-      //AdminFoodViewPage(),
-      // Authpage(),
-      //LoginScreen UserPage AddVideo
-      //DashboardScreen training VideoInfo ActivityScreen
+       YourGoalScreen(),
+      // LoginScreen(),
+      //DashboardScreen  ActivityScreen
       // AdminPage
       // FoodViewPage(),
-      CaloriesTrackerPage(),
+      //CaloriesTrackerPage(),
     );
   }
 }

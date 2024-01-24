@@ -53,6 +53,18 @@ class _AddVideoState extends State<AddVideo> {
           ),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.ondemand_video_rounded,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              // Navigate to the other page here
+              Navigator.pushNamed(context, '/UserPage');
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

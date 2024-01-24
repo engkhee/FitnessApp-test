@@ -1,11 +1,9 @@
 //import 'dart:js';
 
 import 'package:fitnessapp/view/activity_tracker/activity_tracker_screen.dart';
-import 'package:fitnessapp/view/admin/Test2.dart';
 import 'package:fitnessapp/view/admin/admin_page.dart';
 import 'package:fitnessapp/view/admin/contact_developer.dart';
 import 'package:fitnessapp/view/admin/developer_chat_room.dart';
-import 'package:fitnessapp/view/admin/email_to_developer.dart';
 import 'package:fitnessapp/view/admin/manage_fitness.dart';
 import 'package:fitnessapp/view/admin/nutritionist.dart';
 import 'package:fitnessapp/view/admin/verify_code.dart';
@@ -42,15 +40,12 @@ final Map<String, WidgetBuilder> routes = {
   SignupScreen.routeName: (context) => const SignupScreen(),
   CompleteProfileScreen.routeName: (context) => const CompleteProfileScreen(),
   YourGoalScreen.routeName: (context) => const YourGoalScreen(),
-  WelcomeScreen.routeName: (context) => const WelcomeScreen(),
   DashboardScreen.routeName: (context) => const DashboardScreen(),
-  FinishWorkoutScreen.routeName: (context) => const FinishWorkoutScreen(),
   NotificationScreen.routeName: (context) => const NotificationScreen(),
-  ActivityTrackerScreen.routeName: (context) => const ActivityTrackerScreen(),
-  WorkoutScheduleView.routeName: (context) => const WorkoutScheduleView(),
   AddVideo.routeName: (context) => AddVideo(),
   AddVideo2.routeName: (context) => AddVideo2(),
   UserPage.routeName: (context) => UserPage(),
+  DanceWorkout.routeName: (context) => DanceWorkout(),
   PlaylistManagementPage.routeName: (context) => PlaylistManagementPage(),
   AuthService.routeName:(context) => AuthService(),
   training.routeName:(context) => training(),
@@ -62,10 +57,7 @@ final Map<String, WidgetBuilder> routes = {
   ManageFitness.routeName:(context) => ManageFitness(),
   NutritionistTermsConditionsScreen.routeName:(context) => NutritionistTermsConditionsScreen(),
   AdminFoodViewPage.routeName:(context) => AdminFoodViewPage(),
-  Test2.routeName:(context) => Test2(),
   NutritionistPage.routeName:(context) => NutritionistPage(),
   VerifyCode.routeName:(context) => VerifyCode(),
   NutriFoodViewPage.routeName:(context) =>NutriFoodViewPage(),
-
-
 };

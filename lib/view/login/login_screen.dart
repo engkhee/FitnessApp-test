@@ -127,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 title: "Login as user",
                 onPressed: () {
                   _login(); // Call the login function
-                  // Navigator.pushNamed(context,DashboardScreen.routeName);
+                  Navigator.pushNamed(context,DashboardScreen.routeName);
                 },
               ),
               RoundGradientButton(

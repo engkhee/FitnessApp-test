@@ -79,7 +79,7 @@ class _AddCaloriesPageState extends State<AddCaloriesPage> {
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                     child: TextFormField(
-                      initialValue: 'Roti Canai',
+                      // initialValue: 'Roti Canai',
                       decoration: const InputDecoration(
                         labelText: 'Meal Name:',
                         border: InputBorder.none,
@@ -103,7 +103,7 @@ class _AddCaloriesPageState extends State<AddCaloriesPage> {
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                     child: TextFormField(
-                      initialValue: '2 slices',
+                      // initialValue: '2 slices',
                       decoration: const InputDecoration(
                         labelText: 'Description:',
                         border: InputBorder.none,
@@ -196,7 +196,6 @@ class _AddCaloriesPageState extends State<AddCaloriesPage> {
                         _formKey.currentState!.save();
 
                         if (widget.selectedDate != null) {
-                          // Create a Meal object
                           Meal meal = Meal(
                             mealType: mealType!,
                             mealName: mealName!,
@@ -208,20 +207,17 @@ class _AddCaloriesPageState extends State<AddCaloriesPage> {
                             date: widget.selectedDate,
                           );
 
-                          // Add the meal to Firebase using DatabaseHelper
                           await _dbHelper.insertMeal(meal);
 
-                          // Provide feedback to the user
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text('Meal added successfully!'),
                             ),
                           );
 
-                          // Update the UI or navigate back
                           Navigator.pop(context, widget.selectedDate);
 
-                          setState(() {});
+                          _formKey.currentState!.reset();
                         }
                       }
                     },

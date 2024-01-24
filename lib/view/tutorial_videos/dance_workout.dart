@@ -4,13 +4,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class UserPage extends StatelessWidget {
-  static String routeName = "/UserPage";
-  final TextEditingController _searchController = TextEditingController();
+class DanceWorkout extends StatefulWidget {
+  static String routeName = "/DanceWorkout";
 
-  UserPage({Key? key}) : super(key: key);
+  DanceWorkout({Key? key}) : super(key: key);
 
   @override
+  _DanceWorkoutState createState() => _DanceWorkoutState();
+}
+
+class _DanceWorkoutState extends State<DanceWorkout> {
+  final TextEditingController _searchController = TextEditingController();
+  String selectedCategory = 'All'; // Default category
+
+
+@override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -19,7 +27,7 @@ class UserPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Tutorial Videos",
+              "Dance Workout",
               style: TextStyle(
                   color: AppColors.blackColor,
                   fontSize: 16,
@@ -32,16 +40,54 @@ class UserPage extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                labelText: 'Search Videos',
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.clear),
-                  onPressed: () => _searchController.clear(),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _searchController,
+                    decoration: InputDecoration(
+                      labelText: 'Search Videos',
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.clear),
+                        onPressed: () => _searchController.clear(),
+                      ),
+                    ),
+                    onChanged: (value) => (context as Element).markNeedsBuild(),
+                  ),
                 ),
-              ),
-              onChanged: (value) => (context as Element).markNeedsBuild(), // To rebuild the widget tree
+                SizedBox(width: 10),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    border: Border.all(color: AppColors.secondaryColor1),
+                  ),
+                  child: DropdownButton<String>(
+                    value: selectedCategory,
+                    icon: Icon(Icons.arrow_drop_down, color: Colors.black),
+                    iconSize: 24,
+                    elevation: 16,
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                    underline: Container(
+                      height: 0,
+                      color: Colors.black,
+                    ),
+                    onChanged: (String? newValue) {
+                      if (newValue != null) {
+                        setState(() {
+                          selectedCategory = newValue;
+                        });
+                      }
+                    },
+                    items: ['All', 'English', 'K-POP', 'Others'].map((String category) {
+                      return DropdownMenuItem<String>(
+                        value: category,
+                        child: Text(category),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ],
             ),
           ),
           Expanded(
@@ -49,29 +95,69 @@ class UserPage extends StatelessWidget {
               thickness: 8,
               thumbVisibility: true,
               radius: const Radius.circular(10),
-              child: TutorialVideoList(searchQuery: _searchController.text),
+              child: TutorialVideoList(
+                searchQuery: _searchController.text,
+                selectedCategory: selectedCategory,
+              ),
             ),
           ),
         ],
       ),
     );
-  }
+}
 }
 
 class TutorialVideoList extends StatelessWidget {
   final String searchQuery;
-  TutorialVideoList({Key? key, required this.searchQuery}) : super(key: key);
+  final String selectedCategory;
+
+  TutorialVideoList({
+    Key? key,
+    required this.searchQuery,
+    required this.selectedCategory,
+  }) : super(key: key);
+
+  Future<List<QueryDocumentSnapshot>> getVideos() async {
+    CollectionReference collectionReference;
+
+    switch (selectedCategory) {
+      case 'English':
+        collectionReference = FirebaseFirestore.instance.collection('eng_videos');
+        break;
+      case 'K-POP':
+        collectionReference = FirebaseFirestore.instance.collection('kpop_videos');
+        break;
+      case 'Others':
+        collectionReference = FirebaseFirestore.instance.collection('other_videos');
+        break;
+      default:
+      // Fetch documents from all collections
+      List<QueryDocumentSnapshot> allVideos = [];
+      allVideos.addAll(await FirebaseFirestore.instance.collection('eng_videos').get().then((value) => value.docs));
+      allVideos.addAll(await FirebaseFirestore.instance.collection('kpop_videos').get().then((value) => value.docs));
+      allVideos.addAll(await FirebaseFirestore.instance.collection('other_videos').get().then((value) => value.docs));
+      return allVideos;
+    }
+    return await collectionReference.get().then((value) => value.docs);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('tutorial_videos').snapshots(),
+    return FutureBuilder<List<QueryDocumentSnapshot>>(
+      future: getVideos(),
       builder: (context, snapshot) {
-        if (snapshot.hasData && snapshot.data != null) {
-          var videos = snapshot.data!.docs.where((doc) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          var documents = snapshot.data ?? [];
+          var videos = documents.where((doc) {
             var video = doc.data() as Map<String, dynamic>;
-            return (video['title'].toString().toLowerCase().contains(searchQuery.toLowerCase()) || video['description'].toString().toLowerCase().contains(searchQuery.toLowerCase()));
+            return (video['title'].toString().toLowerCase().contains(searchQuery.toLowerCase()) ||
+                video['description'].toString().toLowerCase().contains(searchQuery.toLowerCase()));
           }).toList();
+
           return ListView.builder(
             itemCount: videos.length,
             itemBuilder: (context, index) {
@@ -89,6 +175,7 @@ class TutorialVideoList extends StatelessWidget {
                           videoId: videoId,
                           title: video['title'],
                           description: video['description'],
+                          selectedCategory: selectedCategory,
                         ),
                       ),
                     );
@@ -113,10 +200,6 @@ class TutorialVideoList extends StatelessWidget {
               );
             },
           );
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else {
-          return Center(child: CircularProgressIndicator());
         }
       },
     );
@@ -128,8 +211,15 @@ class VideoPlayerPage extends StatefulWidget {
   final String videoId;
   final String title;
   final String description;
+  final String selectedCategory;
 
-  VideoPlayerPage({Key? key, required this.videoId, required this.title, required this.description}) : super(key: key);
+  VideoPlayerPage({
+    Key? key,
+    required this.videoId,
+    required this.title,
+    required this.description,
+    required this.selectedCategory,
+    }) : super(key: key);
 
   @override
   _VideoPlayerPageState createState() => _VideoPlayerPageState();
@@ -139,6 +229,19 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
   late YoutubePlayerController _controller;
   late Size size;
   bool isFullScreen = false;
+
+  String getCategoryCollectionPath(String category) {
+    switch (category) {
+      case 'English':
+        return 'eng_videos';
+      case 'K-POP':
+        return 'kpop_videos';
+      case 'Others':
+        return 'other_videos';
+      default:
+        return ''; // Handle other cases as needed
+    }
+  }
 
   @override
   void initState() {
@@ -158,7 +261,6 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
       }
     });
   }
-
 
   void seekForward() {
     _controller.seekTo(Duration(seconds: _controller.value.position.inSeconds + 5));
