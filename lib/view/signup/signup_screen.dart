@@ -5,7 +5,6 @@ import 'package:fitnessapp/view/signup/auth_service.dart';
 import 'package:flutter/material.dart';
 import '../../common_widgets/round_gradient_button.dart';
 import '../../common_widgets/round_textfield.dart';
-import '../login/login_screen.dart';
 import '../profile/complete_profile_screen.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -24,19 +23,17 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _icNumberController = TextEditingController();
 
-  // Future<void> _register() async {
-  //   {
-  //     await FirebaseAuth.instance.createUserWithEmailAndPassword(
-  //       email: _emailController.text,
-  //       password: _passwordController.text,
-  //     );
-  //
-  //   }
-  // }
+  Future<void> _register(String userType) async {
 
-  Future<void> _register() async {
+    String collectionName;
+
+    if(userType =='user'){
+      collectionName = 'Users_public_user';
+    }else {
+        collectionName = 'Users_nutritionist';
+    }
+
     try {
       // Create user with email and password
       await _auth.createUserWithEmailAndPassword(
@@ -48,11 +45,10 @@ class _SignupScreenState extends State<SignupScreen> {
       User? user = _auth.currentUser;
 
       // Store user data in Firestore
-      await FirebaseFirestore.instance.collection('Users').doc(user!.uid).set({
+      await FirebaseFirestore.instance.collection(collectionName).doc(user!.uid).set({
         'firstName': _firstNameController.text,
         'lastName': _lastNameController.text,
         'email': _emailController.text,
-        'icNumber': _icNumberController.text,
       });
 
       print("Registration successful!");
@@ -114,20 +110,9 @@ class _SignupScreenState extends State<SignupScreen> {
                 SizedBox(
                   height: 15,
                 ),
-                RoundTextField(
-                  controller: _icNumberController,
-                  hintText: "IC Number",
-                  icon: "assets/icons/ic_number_icon.png",
-                  textInputType: TextInputType.number, // Assuming IC number is numeric
-                ),
                 SizedBox(
                   height: 15,
                 ),
-                // RoundTextField(
-                //     hintText: "Email",
-                //     icon: "assets/icons/message_icon.png",
-                //     textInputType: TextInputType.emailAddress),
-                // Update the Email TextField
                 RoundTextField(
                   controller: _emailController, // Add this line
                   hintText: "Email",
@@ -205,20 +190,18 @@ class _SignupScreenState extends State<SignupScreen> {
                 RoundGradientButton(
                   title: "Register as user",
                   onPressed: () {
-                    _register(); // Call the register function
-                    Navigator.pop(context);
+                    _register('user'); // Call the register function
+                    Navigator.pushNamed(context, CompleteProfileScreen.routeName,arguments: {'Fname': _firstNameController, 'Lname': _lastNameController},);
+                    // Navigator.pop(context);
                   },
                 ),
-
                 RoundGradientButton(
                   title: "Register as nutritionist",
                   onPressed: () {
-                    _register(); // Call the register function
+                    _register('nutritionist'); // Call the register function
                     Navigator.pushNamed(context, AuthService.routeName);
                   },
                 ),
-
-
                 SizedBox(
                   height: 10,
                 ),

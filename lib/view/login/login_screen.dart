@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../common_widgets/round_gradient_button.dart';
 import '../../common_widgets/round_textfield.dart';
 import '../admin/admin_page.dart';
-import '../dashboard/dashboard_screen.dart';
-import '../profile/complete_profile_screen.dart';
+import '../admin/verify_code.dart';
 
 class LoginScreen extends StatefulWidget {
   static String routeName = "/LoginScreen";
@@ -126,12 +124,25 @@ class _LoginScreenState extends State<LoginScreen> {
               //     Navigator.pushNamed(context, CompleteProfileScreen.routeName);
               //   },
               // ),
-                title: "Login",
+                title: "Login as user",
                 onPressed: () {
                   _login(); // Call the login function
                   // Navigator.pushNamed(context,DashboardScreen.routeName);
                 },
               ),
+              RoundGradientButton(
+                //   title: "Login",
+                //   onPressed: () {
+                //     Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                //   },
+                // ),
+                title: "Login as nutritionist",
+                onPressed: () {
+                  // _login(); // Call the login function
+                  Navigator.pushNamed(context,VerifyCode.routeName);
+                },
+              ),
+
               SizedBox(height: media.width*0.01),
               Row(
                 children: [
@@ -226,3 +237,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
