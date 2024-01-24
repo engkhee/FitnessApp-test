@@ -40,7 +40,7 @@ class NutritionistPage extends StatelessWidget {
         ),
         child :ListView(
             children: [
-              SizedBox(height: 10),
+              SizedBox(height: 150),
               SizedBox(
                 width: 200,
                 height: 150,
