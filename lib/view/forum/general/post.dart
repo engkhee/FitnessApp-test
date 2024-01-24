@@ -82,46 +82,160 @@ class _PostState extends State<Post> {
   }
   
   // show aialog for adding comment
-  void showCommentDialog(){
+  void showCommentDialog() {
     showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text("Add Comment"),
-          content: TextField(
-            controller: _commentTextController,
-            decoration: InputDecoration(hintText: "Write a comment..."),
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        title: Text(
+          "Add Comment",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 19,
+            fontWeight: FontWeight.bold,
           ),
-
-          actions: [
-            // cancel button
-            TextButton(
-              onPressed: () => {
-                // pop the box
-                Navigator.pop(context),
-
-                // clear controller
-                _commentTextController.clear(),
-              },
-              child: Text("Cancel"),
-            ),
-
-            // post button
-            TextButton(
-                onPressed: () => {
-                  // add comment
-                  addComment(_commentTextController.text),
-
-                  // pop box
-                  Navigator.pop(context),
-
-                  // clear controler
-                  _commentTextController.clear(),
-                },
-                child: Text("Post"),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              margin: EdgeInsets.only(bottom: 12),
+              child: TextField(
+                controller: _commentTextController,
+                decoration: InputDecoration(
+                  hintText: "Write a comment...",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: Colors.blue),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: Colors.blue),
+                  ),
+                ),
+                maxLines: null,
+              ),
             ),
           ],
-        )
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              _commentTextController.clear();
+            },
+            child: Text(
+              "Cancel",
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 14,
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              addComment(_commentTextController.text);
+              Navigator.pop(context);
+              _commentTextController.clear();
+            },
+            style: ElevatedButton.styleFrom(
+              primary: AppColors.primaryColor1,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            child: Text(
+              "Post",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
+  }
+
+  void showEditPostDialog() {
+    TextEditingController _editPostController = TextEditingController(text: widget.message);
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Colors.white, // Change the background color
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20), // Rounded corners for dialog
+        ),
+        title: Text(
+          "Edit Post",
+          style: TextStyle(
+            color: Colors.black, // Title text color
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        content: TextField(
+          controller: _editPostController,
+          decoration: InputDecoration(
+            hintText: "Edit your post...",
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            fillColor: Colors.white, // Light grey background color for the text field
+            filled: true,
+          ),
+          maxLines: null, // Makes it expandable
+          style: TextStyle(fontSize: 16), // Text size inside the TextField
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              "Cancel",
+              style: TextStyle(
+                color: Colors.red, // Cancel button text color
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              updatePost(_editPostController.text);
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              "Update",
+              style: TextStyle(
+                color: Colors.black, // Update button text color
+              ),
+            ),
+            style: ElevatedButton.styleFrom(
+              primary: AppColors.lightblueColor , // Background color of the button
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+// Method to update the post in Firestore
+  void updatePost(String newMessage) {
+    FirebaseFirestore.instance.collection("UserPosts").doc(widget.postId).update({
+      "Message": newMessage,
+    }).then((_) {
+      print("Post updated successfully");
+    }).catchError((error) {
+      print("Error updating post: $error");
+    });
   }
 
   // delete a post
@@ -185,6 +299,13 @@ class _PostState extends State<Post> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.lightblueColor,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
       ),
       margin: EdgeInsets.only(top: 10, left: 20, right: 20),
       padding: EdgeInsets.all(20),
@@ -228,13 +349,12 @@ class _PostState extends State<Post> {
                       ),
                     ],
                   ),
-
                 ],
               ),
               const SizedBox(width: 10,),
 
               // delete button
-              if(widget.user == currentUser.email)
+              if(widget.user == currentUser.email || currentUser.email == 'admin@fitness.com')
                 DeleteButton(onTap: deletePost),
             ],
           ),
@@ -253,7 +373,37 @@ class _PostState extends State<Post> {
             ),
           ),
 
-          const SizedBox(height: 5,),
+          if (widget.user == currentUser.email) ...[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                // EDIT
+                Column(
+                  children: [
+                    // Edit button
+                    InkWell(
+                      onTap: showEditPostDialog,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5), // Adjust padding as needed
+                        decoration: BoxDecoration(
+                          color: AppColors.secondaryColor1 , // Box color
+                          borderRadius: BorderRadius.circular(4), // Rounded corners
+                        ),
+                        child: Text(
+                          "Edit",
+                          style: TextStyle(
+                            color: Colors.white, // Text color
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 15,),
+                  ],
+                ),
+              ],
+            ),
+          ],
 
           Row(
             mainAxisAlignment: MainAxisAlignment.end,

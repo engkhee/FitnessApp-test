@@ -3,6 +3,7 @@ import 'package:fitnessapp/view/admin/contact_developer.dart';
 import 'package:fitnessapp/view/admin/manage_fitness.dart';
 import 'package:fitnessapp/view/admin/verify_nutritionist.dart';
 import 'package:fitnessapp/view/admin/view_database.dart';
+import 'package:fitnessapp/view/forum/main_forum.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import '../foodview/admin_viewfood.dart';
@@ -241,7 +242,11 @@ class AdminPage extends StatelessWidget {
                 padding: const EdgeInsets.all(10.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    // Navigator.pushNamed(context, ManageFitness.routeName);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MainForum()),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     primary: AppColors.adminpageColor3, // Background color

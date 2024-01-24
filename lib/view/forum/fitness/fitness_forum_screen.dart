@@ -44,11 +44,10 @@ class _CameraScreenState extends State<FitnessForumScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(colors: AppColors.secondaryG)),
+
       child:
         Scaffold(
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.white,
 
           body: Center(
             child: Column(
@@ -71,7 +70,7 @@ class _CameraScreenState extends State<FitnessForumScreen> {
                       IconButton(
                         onPressed: postMessage,
                         icon: const Icon(Icons.arrow_circle_right_outlined),
-                        color: Colors.white70,
+                        color: Colors.black54,
                       )
                     ],
                   ),
@@ -80,7 +79,7 @@ class _CameraScreenState extends State<FitnessForumScreen> {
                 // log in as
                 Text(
                   "Logged in as: " + currentUser.email!,
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.black54),
                 ),
 
                 // the wall

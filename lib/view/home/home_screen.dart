@@ -7,6 +7,7 @@ import 'package:fitnessapp/view/calories/caloriestracker.dart';
 import 'package:fitnessapp/view/calories/piechart.dart';
 import '../../common_widgets/round_button.dart';
 import '../notification/notification_screen.dart';
+import '../recognition/tflite_model.dart';
 
 class HomeScreen extends StatefulWidget {
   static String routeName = "/HomeScreen";
@@ -53,58 +54,71 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
     return Scaffold(
-      backgroundColor: AppColors.whiteColor,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        backgroundColor: AppColors.whiteColor,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    IconButton(
-                        onPressed: () {
-                          Navigator.pushNamed(
-                              context, NotificationScreen.routeName);
-                        },
-                        icon: Image.asset(
-                          "assets/icons/notification_icon.png",
-                          width: 25,
-                          height: 25,
-                          fit: BoxFit.fitHeight,
-                        )),
-                    SizedBox(width: 16),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "Welcome Back,",
-                          style: TextStyle(
-                            color: AppColors.midGrayColor,
-                            fontSize: 12,
+                        IconButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, NotificationScreen.routeName);
+                            },
+                            icon: Image.asset(
+                              "assets/icons/notification_icon.png",
+                              width: 25,
+                              height: 25,
+                              fit: BoxFit.fitHeight,
+                            )
+                        ),
+                        // Expanded widget to ensure proper spacing and alignment
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Welcome Back,",
+                                style: TextStyle(
+                                  color: AppColors.midGrayColor,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              Text(
+                                "Stefani Wong",
+                                style: TextStyle(
+                                  color: AppColors.blackColor,
+                                  fontSize: 20,
+                                  fontFamily: "Poppins",
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        Text(
-                          "Stefani Wong",
-                          style: TextStyle(
-                            color: AppColors.blackColor,
-                            fontSize: 20,
-                            fontFamily: "Poppins",
-                            fontWeight: FontWeight.w700,),),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => TfliteModel()),
+                            );
+                          },
+                          icon: Icon(Icons.settings_overscan_outlined, color: Colors.black),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.pushNamed(
+                                context, StartScreen.routeName);
+                          },
+                          icon: Icon(Icons.info_outline, color: Colors.black),
+                        ),
                       ],
                     ),
-                    SizedBox(width: 16),
-                    IconButton(
-                        onPressed: () {
-                          Navigator.pushNamed(
-                              context, StartScreen.routeName);
-                        },
-                        icon: Icon(Icons.info_outline, color: Colors.black,),
-                    ),
-                  ],
-                ),
                 SizedBox(height: media.width * 0.05),
                 Container(
                   height: media.width * 0.4,
@@ -227,7 +241,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: //DailyPieChart(date: DateTime(2024, 1, 18)),
                   DailyPieChart(date: DateTime.now()),
                 ),
+
                 SizedBox(height: media.width * 0.05),
+
                     // Expanded(
                     //   child: Column(
                     //     mainAxisAlignment: MainAxisAlignment.start,
