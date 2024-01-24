@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitnessapp/routes.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/admin/admin_page.dart';
@@ -10,7 +9,6 @@ import 'package:fitnessapp/view/profile/complete_profile_screen.dart';
 import 'package:fitnessapp/view/profile/update_profile_page.dart';
 import 'package:fitnessapp/view/profile/user_profile.dart';
 import 'package:fitnessapp/view/signup/signup_screen.dart';
-import 'package:fitnessapp/view/your_goal/your_goal_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/view/firebase/firebase_functions.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -29,7 +27,6 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -41,11 +38,8 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           fontFamily: "Poppins"
       ),
-      home: //DashboardScreen(),
-       YourGoalScreen(),
-      // LoginScreen(),
-      //DashboardScreen  ActivityScreen
-      // AdminPage
+      home: DashboardScreen(),
+       // LoginScreen(),
       // FoodViewPage(),
       //CaloriesTrackerPage(),
     );

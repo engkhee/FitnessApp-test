@@ -54,6 +54,7 @@ dependencies:
   intl: ^0.17.0-nullsafety.3
   get:
   video_player: ^2.8.2
+  provider: ^6.1.1
 
 flutter_native_splash:
   color: "#ffffff"
