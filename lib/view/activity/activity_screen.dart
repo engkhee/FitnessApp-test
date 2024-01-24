@@ -1,6 +1,7 @@
-import 'dart:convert';
+import 'package:fitnessapp/common_widgets/round_button.dart';
 import 'package:fitnessapp/view/on_boarding/start_screen.dart';
 import 'package:fitnessapp/view/tutorial_videos/dance_workout.dart';
+import 'package:fitnessapp/view/your_goal/your_goal_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/tutorial_videos/user_watch_video.dart';
@@ -14,21 +15,6 @@ class ActivityScreen extends StatefulWidget {
 }
 
 class _ActivityScreenState extends State<ActivityScreen> {
-  List workout_info = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _initData();
-  }
-
-  void _initData() {
-    DefaultAssetBundle.of(context).loadString("json/workout.json").then((value) {
-      setState(() {
-        workout_info = jsonDecode(value);
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,50 +44,139 @@ class _ActivityScreenState extends State<ActivityScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
+      body: Column(
           children: [
-            _buildSection(
-              title: "Explore more workout plans",
-              description: "Find the perfect fitness workout plans",
-              imageAsset: "assets/images/pp_5.png",
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => FitnessList(),
-                  ),
-                );
-              },
-            ),
-            _buildSection(
-              title: "Explore more dance workouts",
-              description: "Let's dance together!",
-              imageAsset: "assets/images/letdance.jpg",
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => DanceWorkout(),
-                  ),
-                );
-              },
-            ),
-            _buildSection(
-              title: "Explore more tutorial videos",
-              description: "Discover a variety of tutorial videos",
-              imageAsset: "assets/images/pp_2.png",
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => UserPage(),
-                  ),
-                );
-              },
+            _buildSelectGoalSection(),
+            SizedBox(height: 10,),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text("Explore more:",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18,
+                          ),),
+                      ),
+                    ),
+                    _buildSection(
+                      title: "Explore more workout plans",
+                      description: "Find the perfect fitness workout plans",
+                      imageAsset: "assets/images/pp_5.png",
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FitnessList(),
+                          ),
+                        );
+                      },
+                    ),
+                    _buildSection(
+                      title: "Explore more dance workouts",
+                      description: "Let's dance together!",
+                      imageAsset: "assets/images/letdance.jpg",
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DanceWorkout(),
+                          ),
+                        );
+                      },
+                    ),
+                    _buildSection(
+                      title: "Explore more tutorial videos",
+                      description: "Discover a variety of tutorial videos",
+                      imageAsset: "assets/images/pp_2.png",
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UserPage(),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
+      );
+  }
+
+  Widget _buildSelectGoalSection() {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset(
+            "assets/icons/goal.png",
+            height: 150,
+          ),
+          SizedBox(height: 20),
+          Text(
+            "Select Today's Goal",
+            style: TextStyle(
+              color: AppColors.blackColor,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 12),
+          Text(
+            "Set your fitness goal and start your journey",
+            style: TextStyle(
+              color: AppColors.grayColor,
+              fontSize: 16,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => YourGoalScreen()),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              primary: AppColors.primaryColor2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+            ),
+            child: Text(
+              "View More",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -134,7 +209,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
-                height: 200,
+                height: 280,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(imageAsset),
@@ -152,7 +227,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                       title,
                       style: TextStyle(
                         color: AppColors.blackColor,
-                        fontSize: 20,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -176,7 +251,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                           "Search",
                           style: TextStyle(
                             color: AppColors.whiteColor,
-                            fontSize: 18,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -198,4 +273,3 @@ void main() {
     home: ActivityScreen(),
   ));
 }
-

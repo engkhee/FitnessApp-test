@@ -1,68 +1,77 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:fitnessapp/utils/app_colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class SearchVideo extends StatelessWidget {
-  final List<String> searchQueries;
+class ExerciseTutos extends StatelessWidget {
+  static String routeName = "/ExerciseTutos";
+  final TextEditingController _searchController = TextEditingController();
 
-  const SearchVideo({Key? key, required this.searchQueries}) : super(key: key);
+  ExerciseTutos({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Recommended Workouts:"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        backgroundColor: Color(0xFFD1C4E9),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Search Queries:",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 20),
-            // Display search queries
-            for (String query in searchQueries)
-              ListTile(
-                title: Text(query),
-              ),
-            // Add your video search result widgets here
-            Expanded(
-              child: Scrollbar(
-                thickness: 8,
-                thumbVisibility: true,
-                radius: const Radius.circular(10),
-                child: VideoSearchResults(searchQueries: searchQueries),
-              ),
+              "Exercise Tutorials",
+              style: TextStyle(
+                  color: AppColors.blackColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700),
             ),
           ],
         ),
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                labelText: 'Search Videos',
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: () => _searchController.clear(),
+                ),
+              ),
+              onChanged: (value) => (context as Element).markNeedsBuild(), // To rebuild the widget tree
+            ),
+          ),
+          Expanded(
+            child: Scrollbar(
+              thickness: 8,
+              thumbVisibility: true,
+              radius: const Radius.circular(10),
+              child: TutorialVideoList(searchQuery: _searchController.text),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
-class VideoSearchResults extends StatelessWidget {
-  final List<String> searchQueries;
-
-  VideoSearchResults({Key? key, required this.searchQueries}) : super(key: key);
+class TutorialVideoList extends StatelessWidget {
+  final String searchQuery;
+  TutorialVideoList({Key? key, required this.searchQuery}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('tutorial_videos').snapshots(),
+      stream: FirebaseFirestore.instance.collection('exercise_tutos').snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData && snapshot.data != null) {
           var videos = snapshot.data!.docs.where((doc) {
             var video = doc.data() as Map<String, dynamic>;
-            return searchQueries.any((query) =>
-            video['title'].toString().toLowerCase().contains(query.toLowerCase()) ||
-                video['description'].toString().toLowerCase().contains(query.toLowerCase()));
+            return (video['title'].toString().toLowerCase().contains(searchQuery.toLowerCase()));
           }).toList();
-
           return ListView.builder(
             itemCount: videos.length,
             itemBuilder: (context, index) {
@@ -79,7 +88,6 @@ class VideoSearchResults extends StatelessWidget {
                         builder: (context) => VideoPlayerPage(
                           videoId: videoId,
                           title: video['title'],
-                          description: video['description'],
                         ),
                       ),
                     );
@@ -96,7 +104,6 @@ class VideoSearchResults extends StatelessWidget {
                       ),
                       ListTile(
                         title: Text(video['title']),
-                        subtitle: Text(video['description']),
                       ),
                     ],
                   ),
@@ -114,12 +121,12 @@ class VideoSearchResults extends StatelessWidget {
   }
 }
 
+
 class VideoPlayerPage extends StatefulWidget {
   final String videoId;
   final String title;
-  final String description;
 
-  VideoPlayerPage({Key? key, required this.videoId, required this.title, required this.description}) : super(key: key);
+  VideoPlayerPage({Key? key, required this.videoId, required this.title}) : super(key: key);
 
   @override
   _VideoPlayerPageState createState() => _VideoPlayerPageState();
@@ -214,9 +221,9 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                       icon: Icon(_controller.value.isPlaying ? Icons.pause : Icons.play_arrow),
                       onPressed: () {
                         if (_controller.value.isPlaying)
-                          _controller.pause();
-                        else
                           _controller.play();
+                        else
+                          _controller.pause();
                       },
                       color: Colors.purple,
                     ),

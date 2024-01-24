@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
-import 'package:fitnessapp/view/activity/activity_screen.dart';
 import 'package:fitnessapp/view/your_goal/widget/selectedGoal.dart';
 import 'package:flutter/material.dart';
 
