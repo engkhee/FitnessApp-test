@@ -9,6 +9,8 @@ import 'package:get/get_core/src/get_main.dart';
 import '../../common_widgets/round_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../login/login_screen.dart';
+
 class UserProfile extends StatefulWidget {
   const UserProfile({Key? key}) : super(key: key);
 
@@ -85,21 +87,26 @@ class _UserProfileState extends State<UserProfile> {
         title: const Text(
           "Profile",
           style: TextStyle(
-              color: AppColors.blackColor,
-              fontSize: 16,
-              fontWeight: FontWeight.w700),
+            color: AppColors.blackColor,
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+          ),
         ),
         actions: [
-          InkWell(
-            onTap: signOut,
+          GestureDetector(
+            onTap: () {
+              // Call the signOut method here if needed
+              Navigator.pushNamed(context, LoginScreen.routeName); // Replace '/login' with the route name of your login class
+            },
             child: Container(
               margin: const EdgeInsets.all(8),
               height: 40,
               width: 40,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                  color: AppColors.lightGrayColor,
-                  borderRadius: BorderRadius.circular(15)),
+                color: AppColors.lightGrayColor,
+                borderRadius: BorderRadius.circular(15),
+              ),
               child: Image.asset(
                 "assets/icons/logout.png",
                 width: 12,
@@ -107,9 +114,10 @@ class _UserProfileState extends State<UserProfile> {
                 fit: BoxFit.contain,
               ),
             ),
-          )
+          ),
         ],
       ),
+
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
