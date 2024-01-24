@@ -307,13 +307,12 @@
 //     );
 //   }
 // }
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
-import 'package:fitnessapp/view/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import '../../common_widgets/round_gradient_button.dart';
 import '../../common_widgets/round_textfield.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import '../signup/signup_screen.dart';
 
 class CompleteProfileScreen extends StatefulWidget {
   static String routeName = "/CompleteProfileScreen";
@@ -326,20 +325,27 @@ class CompleteProfileScreen extends StatefulWidget {
 }
 
 class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
-
-  final TextEditingController _dobController = TextEditingController();
+  TextEditingController? _dobController;
   final TextEditingController _weightController = TextEditingController();
   final TextEditingController _heightController = TextEditingController();
 
-  String? _selectedGender; // Use nullable type
+  String? _selectedGender;
 
-  final CollectionReference _userProfileCollection = FirebaseFirestore.instance.collection('User_profile_info');
+  final CollectionReference _usersPublicUserCollection =
+  FirebaseFirestore.instance.collection('Users_public_user');
+
+  @override
+  void initState() {
+    super.initState();
+    _dobController = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
     String userFname = widget.userData?['Fname'] ?? '';
     String userLname = widget.userData?['Lname'] ?? '';
+
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       body: SafeArea(
@@ -348,11 +354,12 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
             padding: const EdgeInsets.only(right: 15, left: 15),
             child: Column(
               children: [
-                Image.asset("assets/images/complete_profile.png", width: media.width),
-                SizedBox(
+                Image.asset("assets/images/complete_profile.png",
+                    width: media.width),
+                const SizedBox(
                   height: 15,
                 ),
-                Text(
+                const Text(
                   "Let’s complete your profile",
                   style: TextStyle(
                     color: AppColors.blackColor,
@@ -360,8 +367,8 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                SizedBox(height: 5),
-                Text(
+                const SizedBox(height: 5),
+                const Text(
                   "It will help us to know more about you!",
                   style: TextStyle(
                     color: AppColors.grayColor,
@@ -370,7 +377,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                SizedBox(height: 25),
+                const SizedBox(height: 25),
                 Container(
                   decoration: BoxDecoration(
                     color: AppColors.lightGrayColor,
@@ -406,63 +413,67 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                             });
                           },
                           isExpanded: true,
-                          hint: Text("Choose Gender"),
+                          hint: const Text("Choose Gender"),
                         ),
                       ),
-                      SizedBox(width: 8)
+                      const SizedBox(width: 8)
                     ],
                   ),
                 ),
-                SizedBox(height: 15),
-                RoundTextField(
-                  controller: _dobController,
-                  hintText: "Date of Birth",
-                  icon: "assets/icons/calendar_icon.png",
-                  textInputType: TextInputType.text,
+                const SizedBox(height: 15),
+                InkWell(
+                  onTap: () => _selectDate(context),
+                  child: TextFormField(
+                    controller: _dobController,
+                    readOnly: true,
+                    onTap: () => _selectDate(context),
+                    decoration: InputDecoration(
+                      hintText: "Date of Birth",
+                      icon: Image.asset(
+                          "assets/icons/calendar_icon.png",
+                          width: 20,
+                          height: 20),
+                    ),
+                    keyboardType: TextInputType.text,
+                  ),
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 RoundTextField(
                   controller: _weightController,
-                  hintText: "Your Weight",
+                  hintText: "Your Weight in kg",
                   icon: "assets/icons/weight_icon.png",
                   textInputType: TextInputType.text,
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 RoundTextField(
                   controller: _heightController,
-                  hintText: "Your Height",
+                  hintText: "Your Height in cm",
                   icon: "assets/icons/swap_icon.png",
                   textInputType: TextInputType.text,
                 ),
-                SizedBox(height: 15),
-            RoundGradientButton(
-              title: "Next >",
-              onPressed: () async {
-                // Get the user input
-                String dob = _dobController.text;
-                String weight = _weightController.text;
-                String height = _heightController.text;
+                const SizedBox(height: 15),
+                RoundGradientButton(
+                  title: "Next >",
+                  onPressed: () async {
+                    String dob = _dobController?.text ?? '';
+                    String weight = _weightController.text;
+                    String height = _heightController.text;
 
-                // Calculate BMI
-                double weightInKg = double.tryParse(weight) ?? 0.0;
-                double heightInMeter = double.tryParse(height) ?? 0.0;
-                double bmi = calculateBMI(weightInKg, heightInMeter);
+                    double weightInKg = double.tryParse(weight) ?? 0.0;
+                    double heightInCM = double.tryParse(height) ?? 0.0;
+                    Object bmi = calculateBMI(weightInKg, heightInCM);
 
-                // Store the user profile information including BMI and user details in Firestore
-                await _userProfileCollection.add({
-                  'fname': userFname,
-                  'lname': userLname,
-                  'gender': _selectedGender,
-                  'dob': dob,
-                  'weight': weight,
-                  'height': height,
-                  'bmi': bmi.toString(),
-                });
-                // Navigate to the next screen
-                // Navigator.pushNamed(context, YourGoalScreen.routeName);
-                Navigator.pushNamed(context, LoginScreen.routeName);
-              },
-            ),
+                    await _usersPublicUserCollection.add({
+                      'gender': _selectedGender,
+                      'dob': dob,
+                      'weight': weight,
+                      'height': height,
+                      'bmi': bmi.toString(),
+                    });
+
+                    Navigator.pushNamed(context, SignupScreen.routeName);
+                  },
+                ),
               ],
             ),
           ),
@@ -470,16 +481,30 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
       ),
     );
   }
-}
-double calculateBMI(double weightInKg, double heightInMeter) {
-  // BMI formula: BMI = weight (kg) / (height (m) * height (m))
-  if (heightInMeter > 0) {
-    return weightInKg / (heightInMeter * heightInMeter);
-  } else {
-    return 0.0;
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      initialDatePickerMode: DatePickerMode.year,
+    );
+
+    if (picked != null && picked != DateTime.now()) {
+      String formattedDate =
+          "${picked.day}/${picked.month}/${picked.year}";
+      _dobController!.text = formattedDate;
+    }
+  }
+
+  Object calculateBMI(double weightInKg, double heightInCM) {
+    if (heightInCM > 0) {
+      return (weightInKg /
+          ((heightInCM / 100) * (heightInCM / 100)))
+          .toStringAsFixed(2);
+    } else {
+      return 0.00;
+    }
   }
 }
-
-
-
-

@@ -24,7 +24,7 @@ class _ProfilePage extends State<ProfilePage> {
         leading: IconButton(onPressed: () {
           Navigator.pop(context);
         }, icon: const Icon(Icons.keyboard_double_arrow_left_outlined),),
-        title: Text(
+        title: const Text(
           "Edit Profile",
           style: TextStyle(
             color: AppColors.blackColor,
@@ -73,7 +73,7 @@ class _ProfilePage extends State<ProfilePage> {
                     children: [
                       TextFormField(
 
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             label: Text("Full Name"),
                             prefixIcon: Icon(Icons.person)
                         ),
@@ -81,14 +81,14 @@ class _ProfilePage extends State<ProfilePage> {
                       const SizedBox(height: 10),
                       TextFormField(
                         initialValue: currentUser.email!,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             label: Text("Email"),
                             prefixIcon: Icon(Icons.email)
                         ),
                       ),
                       const SizedBox(height: 10),
                       TextFormField(
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             label: Text("Phone No"),
                             prefixIcon: Icon(Icons.phone)
                         ),
