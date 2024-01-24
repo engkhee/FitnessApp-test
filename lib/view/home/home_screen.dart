@@ -7,6 +7,7 @@ import 'package:fitnessapp/view/calories/caloriestracker.dart';
 import 'package:fitnessapp/view/calories/piechart.dart';
 import '../../common_widgets/round_button.dart';
 import '../notification/notification_screen.dart';
+import '../recognition/tflite_model.dart';
 
 class HomeScreen extends StatefulWidget {
   static String routeName = "/HomeScreen";
@@ -75,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 25,
                           fit: BoxFit.fitHeight,
                         )),
-                    SizedBox(width: 16),
+                    SizedBox(width: 36),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -95,7 +96,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontWeight: FontWeight.w700,),),
                       ],
                     ),
-                    SizedBox(width: 16),
+                    SizedBox(width: 40),
+
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => TfliteModel()),
+                        );
+                      },
+                      icon: Icon(Icons.settings_overscan_outlined , color: Colors.black,),
+                    ),
+
                     IconButton(
                         onPressed: () {
                           Navigator.pushNamed(
@@ -227,7 +239,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: //DailyPieChart(date: DateTime(2024, 1, 18)),
                   DailyPieChart(date: DateTime.now()),
                 ),
+
                 SizedBox(height: media.width * 0.05),
+
                     // Expanded(
                     //   child: Column(
                     //     mainAxisAlignment: MainAxisAlignment.start,
