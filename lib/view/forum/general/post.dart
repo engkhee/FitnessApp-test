@@ -354,7 +354,7 @@ class _PostState extends State<Post> {
               const SizedBox(width: 10,),
 
               // delete button
-              if(widget.user == currentUser.email)
+              if(widget.user == currentUser.email || currentUser.email!.endsWith('fitness.com'))
                 DeleteButton(onTap: deletePost),
             ],
           ),

@@ -5,6 +5,7 @@ import 'package:fitnessapp/view/forum/general/forum_screen.dart';
 import '../../utils/app_colors.dart';
 
 class MainForum extends StatefulWidget {
+  static String routeName = "/MainForum";
   const MainForum({Key? key}) : super(key: key);
 
   @override
