@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/activity/activity_screen.dart';
+import 'package:fitnessapp/view/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -271,7 +272,7 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                             _controller.pause();
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => ActivityScreen()),
+                              MaterialPageRoute(builder: (context) => DashboardScreen()),
                             );
                           },
                           style: ElevatedButton.styleFrom(
