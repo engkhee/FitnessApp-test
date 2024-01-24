@@ -71,7 +71,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
               );
             },
           ),
-
         ],
       ),
 
@@ -81,45 +80,13 @@ class _VerificationScreenState extends State<VerificationScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Image taking up 2/3 of the screen size
               Container(
                 height: MediaQuery.of(context).size.height * 1 / 2,
                 child: Image.asset(
-                  'assets/icons/verify_icon.png', // Replace with your image path
+                  'assets/icons/verify_icon.png',
                   fit: BoxFit.cover,
                 ),
               ),
-
-              SizedBox(height: 20),
-              // Verification code functionality
-              TextField(
-                controller: _codeController,
-                decoration: InputDecoration(
-                  labelText: 'Enter Your Verification Code',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: Colors.blue, // You can customize the border color
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: Colors.blue, // You can customize the border color when focused
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: Colors.grey, // You can customize the border color when not focused
-                    ),
-                  ),
-                  filled: true,
-                  fillColor: Colors.white,
-                  contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
-                ),
-              ),
-
               SizedBox(height: 20),
               // Verification code functionality
               TextField(
