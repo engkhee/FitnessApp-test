@@ -6,12 +6,13 @@ import 'nutri_addfood.dart';
 import 'fooddetails.dart';
 import 'editfooditem.dart';
 
-class FoodViewPage extends StatefulWidget {
+class NutriFoodViewPage extends StatefulWidget {
+  static String routeName = "/NutriFoodViewPage";
   @override
   _FoodViewPageState createState() => _FoodViewPageState();
 }
 
-class _FoodViewPageState extends State<FoodViewPage> {
+class _FoodViewPageState extends State<NutriFoodViewPage> {
   final DatabaseHelper dbHelper = DatabaseHelper();
   @override
   Widget build(BuildContext context) {

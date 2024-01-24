@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:fitnessapp/view/admin/developer_chat_room.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 
 class Developer {
   final String name;
@@ -51,60 +51,61 @@ class _ContactDeveloperState extends State<ContactDeveloper> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              'Suggestions or Comments:',
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8.0),
-            Row(
-              children: [
-                Text('Category: '),
-                DropdownButton<String>(
-                  value: selectedCategory,
-                  onChanged: (value) {
-                    setState(() {
-                      selectedCategory = value!;
-                    });
-                  },
-                  items: ['Features', 'Maintenance', 'Design', 'Other']
-                      .map<DropdownMenuItem<String>>(
-                        (String value) => DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    ),
-                  )
-                      .toList(),
-                ),
-              ],
-            ),
-            SizedBox(height: 8.0),
-            TextField(
-              controller: commentController,
-              maxLines: 5,
-              decoration: InputDecoration(
-                hintText: 'Type your suggestions or comments here...',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () {
-                history.add(commentController.text);
-                commentController.clear();
-                setState(() {});
-              },
-              style: ElevatedButton.styleFrom(
-                primary: AppColors.adminpageColor1,
-                onPrimary: AppColors.blackColor,
-                elevation: 8,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50.0),
-                  side: BorderSide(color: AppColors.adminpageColor4),
-                ),
-              ),
-              child: Text('Submit'),
-            ),
-            SizedBox(height: 24.0),
+            // Text(
+            //   'Suggestions or Comments:',
+            //   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+            // ),
+            // SizedBox(height: 8.0),
+            // Row(
+            //   children: [
+            //     Text('Category: '),
+            //     DropdownButton<String>(
+            //       value: selectedCategory,
+            //       onChanged: (value) {
+            //         setState(() {
+            //           selectedCategory = value!;
+            //         });
+            //       },
+            //       items: ['Features', 'Maintenance', 'Design', 'Other']
+            //           .map<DropdownMenuItem<String>>(
+            //             (String value) => DropdownMenuItem<String>(
+            //           value: value,
+            //           child: Text(value),
+            //         ),
+            //       )
+            //           .toList(),
+            //     ),
+            //   ],
+            // ),
+            // SizedBox(height: 8.0),
+            // TextField(
+            //   controller: commentController,
+            //   maxLines: 5,
+            //   decoration: InputDecoration(
+            //     hintText: 'Type your suggestions or comments here...',
+            //     border: OutlineInputBorder(),
+            //   ),
+            // ),
+            // SizedBox(height: 16.0),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     history.add(commentController.text);
+            //     commentController.clear();
+            //     setState(() {});
+            //   },
+            //   style: ElevatedButton.styleFrom(
+            //     primary: AppColors.adminpageColor1,
+            //     onPrimary: AppColors.blackColor,
+            //     elevation: 8,
+            //     shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(50.0),
+            //       side: BorderSide(color: AppColors.adminpageColor4),
+            //     ),
+            //   ),
+            //   child: Text('Submit'),
+            // ),
+            // SizedBox(height: 24.0),
+
             Text(
               'Fitness system developers:',
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
@@ -121,6 +122,7 @@ class _ContactDeveloperState extends State<ContactDeveloper> {
                     trailing: ElevatedButton(
                       onPressed: () {
                         Navigator.pushNamed(context, DeveloperChatRoom.routeName);
+                        // _launchEmail(developer.name);
                       },
                       style: ElevatedButton.styleFrom(
                         primary: AppColors.adminpageColor3,
@@ -137,15 +139,71 @@ class _ContactDeveloperState extends State<ContactDeveloper> {
                 },
               ),
             ),
-            SizedBox(height: 24.0),
+            // SizedBox(height: 24.0),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     setState(() {
+            //       showHistory = !showHistory;
+            //     });
+            //   },
+            //   style: ElevatedButton.styleFrom(
+            //     primary: AppColors.adminpageColor2,
+            //     onPrimary: AppColors.blackColor,
+            //     elevation: 8,
+            //     shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(50.0),
+            //       side: BorderSide(color: AppColors.adminpageColor4),
+            //     ),
+            //   ),
+            //   child: Text(showHistory ? 'Hide History' : 'View History'),
+            // ),
+            //Display the history list
+            // if (showHistory)
+              // Expanded(
+              //   child: SingleChildScrollView(
+              //     child: Column(
+              //       children: [
+              //         SizedBox(height: 8.0),
+              //         Text(
+              //           'History:',
+              //           style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              //         ),
+              //         SizedBox(height: 8.0),
+              //         // Display the list of past comments in the history
+              //         ListView.builder(
+              //           shrinkWrap: true,
+              //           physics: NeverScrollableScrollPhysics(),
+              //           itemCount: history.length,
+              //           itemBuilder: (context, index) {
+              //             return ListTile(
+              //               title: Text('Comment ${index + 1}'),
+              //               subtitle: Text(history[index]),
+              //             );
+              //           },
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
+            SizedBox(height: 16.0),
             ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  showHistory = !showHistory;
-                });
+              // onPressed: () {
+              //   _launchGmail(''); // Pass an empty string for the user's name
+              // },
+              onPressed: () async {
+                String url = // will redirect to the google chrome to open firebase
+                // 'https://mail.google.com/mail/mu/mp/501/#tl/%E6%94%B6%E4%BB%B6%E7%AE%B1';
+                // 'https://mail.google.com/mail/mu/mp/501/#co';
+                    'https://mail.google.com/mail/u/1/#inbox?compose=jrjtXFBkBqFVXqKvxXCtxgqqrlqttzGVnZqZhkZMBsKtjgjlZCBLxGqjJQHlBXfrLZrRrkFB';
+                print('Email Open! Link: $url');
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  print('Could not launch $url');
+                }
               },
               style: ElevatedButton.styleFrom(
-                primary: AppColors.adminpageColor2,
+                primary: AppColors.adminpageColor1,
                 onPrimary: AppColors.blackColor,
                 elevation: 8,
                 shape: RoundedRectangleBorder(
@@ -153,36 +211,8 @@ class _ContactDeveloperState extends State<ContactDeveloper> {
                   side: BorderSide(color: AppColors.adminpageColor4),
                 ),
               ),
-              child: Text(showHistory ? 'Hide History' : 'View History'),
+              child: Text('Email Us'),
             ),
-            // Display the history list
-            if (showHistory)
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      SizedBox(height: 8.0),
-                      Text(
-                        'History:',
-                        style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 8.0),
-                      // Display the list of past comments in the history
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: history.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            title: Text('Comment ${index + 1}'),
-                            subtitle: Text(history[index]),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ),
           ],
         ),
       ),

@@ -4,6 +4,7 @@ import 'package:fitnessapp/view/foodview/database_helper.dart';
 import 'package:fitnessapp/view/foodview/fooditem.dart';
 
 class AdminFoodViewPage extends StatefulWidget {
+  static String routeName = "/AdminFoodViewPage";
   @override
   _AdminFoodViewPageState createState() => _AdminFoodViewPageState();
 }
@@ -28,7 +29,7 @@ class _AdminFoodViewPageState extends State<AdminFoodViewPage> {
             fontWeight: FontWeight.w700,
           ),
         ),
-        backgroundColor: AppColors.primaryColor1,
+        backgroundColor: AppColors.adminpageColor2,
         actions: [
           _buildSortingButton(),
         ],

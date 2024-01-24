@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitnessapp/routes.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
+import 'package:fitnessapp/view/admin/admin_page.dart';
 import 'package:fitnessapp/view/auth/auth.dart';
 import 'package:fitnessapp/view/dashboard/dashboard_screen.dart';
 import 'package:fitnessapp/view/forum/main_forum.dart';
@@ -40,9 +41,9 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           fontFamily: "Poppins"
       ),
-      home: DashboardScreen(),
-      //YourGoalScreen(),
-      //LoginScreen
+      home: //DashboardScreen(),
+       YourGoalScreen(),
+      // LoginScreen(),
       //DashboardScreen  ActivityScreen
       // AdminPage
       // FoodViewPage(),

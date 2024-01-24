@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../common_widgets/round_gradient_button.dart';
 import '../../common_widgets/round_textfield.dart';
 import '../admin/admin_page.dart';
+import '../admin/verify_code.dart';
 import '../dashboard/dashboard_screen.dart';
-import '../profile/complete_profile_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static String routeName = "/LoginScreen";
@@ -25,8 +24,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _login() async {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailController.text,
-      password: _passwordController.text,
+        email: _emailController.text,
+        password: _passwordController.text,
     );
 
     // Check if the logged-in user is the admin
@@ -80,9 +79,9 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: media.width*0.05),
               RoundTextField(
-                // hintText: "Email",
-                // icon: "assets/icons/message_icon.png",
-                // textInputType: TextInputType.emailAddress),
+                  // hintText: "Email",
+                  // icon: "assets/icons/message_icon.png",
+                  // textInputType: TextInputType.emailAddress),
                 controller: _emailController,
                 hintText: "Email",
                 icon: "assets/icons/message_icon.png",
@@ -121,17 +120,30 @@ class _LoginScreenState extends State<LoginScreen> {
                   )),
               const Spacer(),
               RoundGradientButton(
+              //   title: "Login",
+              //   onPressed: () {
+              //     Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+              //   },
+              // ),
+                title: "Login as user",
+                onPressed: () {
+                  _login(); // Call the login function
+                  Navigator.pushNamed(context,DashboardScreen.routeName);
+                },
+              ),
+              RoundGradientButton(
                 //   title: "Login",
                 //   onPressed: () {
                 //     Navigator.pushNamed(context, CompleteProfileScreen.routeName);
                 //   },
                 // ),
-                title: "Login",
+                title: "Login as nutritionist",
                 onPressed: () {
-                  _login(); // Call the login function
-                  // Navigator.pushNamed(context,DashboardScreen.routeName);
+                  // _login(); // Call the login function
+                  Navigator.pushNamed(context,VerifyCode.routeName);
                 },
               ),
+
               SizedBox(height: media.width*0.01),
               Row(
                 children: [
@@ -226,3 +238,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+

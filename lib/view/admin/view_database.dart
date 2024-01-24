@@ -71,6 +71,8 @@ class _ViewDatabaseState extends State<ViewDatabase> {
               onTap: () async {
                 String url = // will redirect to the google chrome to open firebase
                     'https://console.firebase.google.com/u/0/project/cat304-30c1e/analytics/app/android:com.hypeteq.fitnessapp/overview/reports~2Fdashboard%3Fparams%3D_u.date00%253D20231129%2526_u.date01%253D20240109%2526_r.explorerCard..selmet%253D%255B%2522eventCount%2522%255D%2526_r.explorerCard..seldim%253D%255B%2522eventName%2522%255D&r%3Dfirebase-overview&fpn%3D969629870665';
+                // 'https://mail.google.com/mail/u/5/#inbox';
+                // 'https://mail.google.com/mail/mu/mp/501/#tl/%E6%94%B6%E4%BB%B6%E7%AE%B1';
                 print('Overall database! Link: $url');
 
                 if (await canLaunch(url)) {

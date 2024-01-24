@@ -1,8 +1,8 @@
 import 'dart:convert';
+import 'package:fitnessapp/view/on_boarding/start_screen.dart';
 import 'package:fitnessapp/view/tutorial_videos/dance_workout.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
-import 'package:fitnessapp/view/Traning/training_home.dart';
 import 'package:fitnessapp/view/tutorial_videos/user_watch_video.dart';
 import '../Traning/fitnesss_list.dart';
 
@@ -16,13 +16,6 @@ class ActivityScreen extends StatefulWidget {
 class _ActivityScreenState extends State<ActivityScreen> {
   List workout_info = [];
 
-  final Map<String, Widget Function(BuildContext)> pageRoutes = {
-    'training': (context) => training(), // Replace with actual page
-    // Add more entries for different workouts
-    // 'anotherFilename': (context) => AnotherPage(),
-    // 'yetAnotherFilename': (context) => YetAnotherPage(),
-  };
-
   @override
   void initState() {
     super.initState();
@@ -35,15 +28,6 @@ class _ActivityScreenState extends State<ActivityScreen> {
         workout_info = jsonDecode(value);
       });
     });
-  }
-
-  void _navigateToPage(String filename) {
-    final pageBuilder = pageRoutes[filename];
-    if (pageBuilder != null) {
-      Navigator.push(context, MaterialPageRoute(builder: pageBuilder));
-    } else {
-      print('Filename not recognized: $filename');
-    }
   }
 
   @override
@@ -68,7 +52,8 @@ class _ActivityScreenState extends State<ActivityScreen> {
               color: AppColors.whiteColor,
             ),
             onPressed: () {
-              // Your action here
+              Navigator.pushNamed(
+                  context, StartScreen.routeName);
             },
           ),
         ],

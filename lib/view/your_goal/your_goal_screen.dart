@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
-import 'package:fitnessapp/view/your_goal/RecommendedWorkoutsPage.dart';
+import 'package:fitnessapp/view/activity/activity_screen.dart';
+import 'package:fitnessapp/view/your_goal/widget/selectedGoal.dart';
 import 'package:flutter/material.dart';
 
 import '../../common_widgets/round_gradient_button.dart';
@@ -15,31 +16,30 @@ class YourGoalScreen extends StatefulWidget {
 }
 
 class _YourGoalScreenState extends State<YourGoalScreen> {
-
   List pageList = [
     {
+      "id": "1",
       "title": "Arms & Shoulder",
       "subtitle": "Sculpt Your Upper Body Strength",
       "image": "assets/images/goal_1.png",
-      "keywords": ["arms", "shoulder"],
     },
     {
+      "id": "2",
       "title": "Chest & Back",
       "subtitle": "Build a Powerful Torso",
       "image": "assets/images/goal_2.png",
-      "keywords": ["chest", "back"],
     },
     {
+      "id": "3",
       "title": "Abs",
       "subtitle": "Define Your Core, Unleash Your Power",
       "image": "assets/images/goal_3.png",
-      "keywords": ["abs"],
     },
     {
+      "id": "4",
       "title": "Glutes & Legs",
       "subtitle": "Shape Your Lower Body for Strength and Stamina",
       "image": "assets/images/welcome_promo.png",
-      "keywords": ["glutes", "legs"],
     }
   ];
   CarouselController carouselController = CarouselController();
@@ -60,19 +60,27 @@ class _YourGoalScreenState extends State<YourGoalScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(22),
                     gradient: LinearGradient(
-                        colors: AppColors.primaryG,
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight),
+                      colors: AppColors.primaryG,
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
                   ),
                   alignment: Alignment.center,
-                  padding: EdgeInsets.symmetric(vertical: media.width*0.01,horizontal: 25),
+                  padding: EdgeInsets.symmetric(
+                    vertical: media.width * 0.01,
+                    horizontal: 25,
+                  ),
                   child: Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Image.asset(obj["image"],width: media.width*0.5,fit: BoxFit.fitWidth,),
-                        SizedBox(height: media.width*0.02),
+                        Image.asset(
+                          obj["image"],
+                          width: media.width * 0.5,
+                          fit: BoxFit.fitWidth,
+                        ),
+                        SizedBox(height: media.width * 0.02),
                         Text(
                           obj["title"],
                           textAlign: TextAlign.center,
@@ -82,13 +90,13 @@ class _YourGoalScreenState extends State<YourGoalScreen> {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        SizedBox(height: media.width*0.01),
+                        SizedBox(height: media.width * 0.01),
                         Container(
                           width: 50,
                           height: 1,
                           color: AppColors.lightGrayColor,
                         ),
-                        SizedBox(height: media.width*0.02),
+                        SizedBox(height: media.width * 0.02),
                         Text(
                           obj["subtitle"],
                           textAlign: TextAlign.center,
@@ -156,16 +164,17 @@ class _YourGoalScreenState extends State<YourGoalScreen> {
                     RoundGradientButton(
                       title: "Confirm",
                       onPressed: () {
-                        var selectedPage = pageList[selectedPageIndex];
-                        List<String> keywords = selectedPage['keywords'] ?? [];
+                        var selectedId = pageList[selectedPageIndex]['id'];
+                        print("Selected Goal ID: $selectedId");
 
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => RecommendedWorkoutsPage(selectedKeywords: keywords, keywords: '',
-                            ),
+                            builder: (context) =>
+                                selectedGoal(selectedGoalId: selectedId),
                           ),
                         );
+
                       },
                     )
                   ],
