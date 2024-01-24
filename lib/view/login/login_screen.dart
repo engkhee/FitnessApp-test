@@ -6,6 +6,7 @@ import '../../common_widgets/round_gradient_button.dart';
 import '../../common_widgets/round_textfield.dart';
 import '../admin/admin_page.dart';
 import '../admin/verify_code.dart';
+import '../dashboard/dashboard_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static String routeName = "/LoginScreen";
