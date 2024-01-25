@@ -22,66 +22,38 @@ class ManageFitness extends StatelessWidget {
           ),
         ),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    child: _buildCard(
-                      onPressed: () {
-                        // Link this button to the first page
-                        Navigator.pushNamed(context, '/AddVideo2');
-                      },
-                      imageAsset: 'assets/images/dance2_icon.png',
-                      buttonText: 'Add Dance Workout',
-                    ),
-                  ),
-                  SizedBox(width: 16),
-                  Expanded(
-                    child: _buildCard(
-                      onPressed: () {
-                        // Link this button to the second page
-                        Navigator.pushNamed(context, '/AddVideo');
-                      },
-                      imageAsset: 'assets/images/fitness workout.png',
-                      buttonText: 'Add Tutorial Videos',
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    child: _buildCard(
-                      onPressed: () {
-                        // Link this button to the first page
-                        Navigator.pushNamed(context, '/AddVideo2');
-                      },
-                      imageAsset: 'assets/images/dance2_icon.png',
-                      buttonText: 'Add Dance Workout',
-                    ),
-                  ),
-                  SizedBox(width: 16),
-                  Expanded(
-                    child: _buildCard(
-                      onPressed: () {
-                        // Link this button to the first page
-                        Navigator.pushNamed(context, '/AddVideo2');
-                      },
-                      imageAsset: 'assets/images/dance2_icon.png',
-                      buttonText: 'Add Dance Workout',
-                    ),
-                  ),
-                ],
-              ),
-            ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildCard(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/AddVideo2');
+                  },
+                  imageAsset: 'assets/images/dance_workout.jpg',
+                  buttonText: 'Add Dance Workout',
+                ),
+                SizedBox(height: 24),
+                _buildCard(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/AddVideo');
+                  },
+                  imageAsset: 'assets/images/workout.jpg',
+                  buttonText: 'Add Tutorial Videos',
+                ),
+                SizedBox(height: 24),
+                _buildCard(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/AddVideo3');
+                  },
+                  imageAsset: 'assets/images/workout4.jpg',
+                  buttonText: 'Add Steps Workout Tutorials',
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -96,7 +68,7 @@ class ManageFitness extends StatelessWidget {
     return Card(
       elevation: 3,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(15),
       ),
       child: InkWell(
         onTap: onPressed,
@@ -104,15 +76,15 @@ class ManageFitness extends StatelessWidget {
           children: [
             Image.asset(
               imageAsset,
-              height: 100,
+              height: 240, // Adjust the height as needed
               width: double.infinity,
               fit: BoxFit.cover,
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(12.0),
               child: Text(
                 buttonText,
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -122,4 +94,3 @@ class ManageFitness extends StatelessWidget {
     );
   }
 }
-
