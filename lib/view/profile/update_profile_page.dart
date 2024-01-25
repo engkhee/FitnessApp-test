@@ -1,3 +1,4 @@
+import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";
@@ -13,6 +14,29 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePage extends State<ProfilePage> {
+
+  // user
+  final currentUser = FirebaseAuth.instance.currentUser!;
+
+  // Add a variable to store the full name
+  late String fullName =  "";
+
+  @override
+  void initState() {
+    super.initState();
+    // Fetch the full name from Firestore when the page initializes
+    fetchFullNameFromFirestore();
+  }
+
+  void fetchFullNameFromFirestore() {
+
+    FirebaseFirestore.instance.collection('Users').doc(currentUser.email).get().then((snapshot) {
+      setState(() {
+        fullName = snapshot.data()?['firstName'];
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -24,7 +48,7 @@ class _ProfilePage extends State<ProfilePage> {
         leading: IconButton(onPressed: () {
           Navigator.pop(context);
         }, icon: const Icon(Icons.keyboard_double_arrow_left_outlined),),
-        title: const Text(
+        title: Text(
           "Edit Profile",
           style: TextStyle(
             color: AppColors.blackColor,
@@ -72,23 +96,23 @@ class _ProfilePage extends State<ProfilePage> {
                   Form(child: Column(
                     children: [
                       TextFormField(
-
-                        decoration: const InputDecoration(
-                            label: Text("Full Name"),
-                            prefixIcon: Icon(Icons.person)
+                        initialValue: fullName, // Set the initial value
+                        decoration: InputDecoration(
+                          label: Text("Full Name"),
+                          prefixIcon: Icon(Icons.person),
                         ),
                       ),
                       const SizedBox(height: 10),
                       TextFormField(
                         initialValue: currentUser.email!,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                             label: Text("Email"),
                             prefixIcon: Icon(Icons.email)
                         ),
                       ),
                       const SizedBox(height: 10),
                       TextFormField(
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                             label: Text("Phone No"),
                             prefixIcon: Icon(Icons.phone)
                         ),
