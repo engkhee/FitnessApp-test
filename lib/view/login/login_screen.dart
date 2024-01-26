@@ -7,6 +7,7 @@ import '../../common_widgets/round_textfield.dart';
 import '../admin/admin_page.dart';
 import '../admin/verify_code.dart';
 import '../dashboard/dashboard_screen.dart';
+import '../signup/register.dart';
 
 class LoginScreen extends StatefulWidget {
   static String routeName = "/LoginScreen";
@@ -145,72 +146,73 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
               SizedBox(height: media.width*0.01),
-              Row(
-                children: [
-                  Expanded(
-                      child: Container(
-                        width: double.maxFinite,
-                        height: 1,
-                        color: AppColors.grayColor.withOpacity(0.5),
-                      )),
-                  Text("  Or  ",
-                      style: TextStyle(
-                          color: AppColors.grayColor,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400)),
-                  Expanded(
-                      child: Container(
-                        width: double.maxFinite,
-                        height: 1,
-                        color: AppColors.grayColor.withOpacity(0.5),
-                      )),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-
-                    },
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(color: AppColors.primaryColor1.withOpacity(0.5), width: 1, ),
-                      ),
-                      child: Image.asset("assets/icons/google_icon.png",width: 20,height: 20,),
-                    ),
-                  ),
-                  SizedBox(width: 30,),
-                  GestureDetector(
-                    onTap: () {
-
-                    },
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(color: AppColors.primaryColor1.withOpacity(0.5), width: 1, ),
-                      ),
-                      child: Image.asset("assets/icons/facebook_icon.png",width: 20,height: 20,),
-                    ),
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Expanded(
+              //         child: Container(
+              //           width: double.maxFinite,
+              //           height: 1,
+              //           color: AppColors.grayColor.withOpacity(0.5),
+              //         )),
+              //     Text("  Or  ",
+              //         style: TextStyle(
+              //             color: AppColors.grayColor,
+              //             fontSize: 12,
+              //             fontWeight: FontWeight.w400)),
+              //     Expanded(
+              //         child: Container(
+              //           width: double.maxFinite,
+              //           height: 1,
+              //           color: AppColors.grayColor.withOpacity(0.5),
+              //         )),
+              //   ],
+              // ),
+              // const SizedBox(
+              //   height: 20,
+              // ),
+              // Row( // To be continue in FYP
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     GestureDetector(
+              //       onTap: () {
+              //
+              //       },
+              //       child: Container(
+              //         width: 50,
+              //         height: 50,
+              //         alignment: Alignment.center,
+              //         decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.circular(14),
+              //           border: Border.all(color: AppColors.primaryColor1.withOpacity(0.5), width: 1, ),
+              //         ),
+              //         child: Image.asset("assets/icons/google_icon.png",width: 20,height: 20,),
+              //       ),
+              //     ),
+              //     SizedBox(width: 30,),
+              //     GestureDetector(
+              //       onTap: () {
+              //
+              //       },
+              //       child: Container(
+              //         width: 50,
+              //         height: 50,
+              //         alignment: Alignment.center,
+              //         decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.circular(14),
+              //           border: Border.all(color: AppColors.primaryColor1.withOpacity(0.5), width: 1, ),
+              //         ),
+              //         child: Image.asset("assets/icons/facebook_icon.png",width: 20,height: 20,),
+              //       ),
+              //     ),
+              //   ],
+              // ),
               const SizedBox(
                 height: 20,
               ),
               TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, SignupScreen.routeName);
+                    // Navigator.pushNamed(context, SignupScreen.routeName);
+                    Navigator.pushNamed(context, RegisterPage.routeName);
                   },
                   child: RichText(
                     textAlign: TextAlign.center,
@@ -238,4 +240,5 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
 

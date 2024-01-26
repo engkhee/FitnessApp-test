@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import '../foodview/nutri_viewfood.dart';
+import '../forum/main_forum.dart';
 import '../login/login_screen.dart';
 
 
@@ -86,7 +87,11 @@ class NutritionistPage extends StatelessWidget {
                   padding: const EdgeInsets.all(10.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      // Navigator.pushNamed(context, ViewDatabase.routeName);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MainForum()),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       primary: AppColors.adminpageColor3, // Background color

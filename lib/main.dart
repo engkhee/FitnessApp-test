@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           fontFamily: "Poppins"
       ),
-      home: DashboardScreen(),
+      home: Authpage(),
        // LoginScreen(),
       // FoodViewPage(),
       //CaloriesTrackerPage(),

@@ -42,7 +42,7 @@ class _UserProfileState extends State<UserProfile> {
   ];
 
   List otherArr = [
-    {"image": "assets/icons/p_contact.png", "name": "Contact Us", "tag": "5"},
+    // {"image": "assets/icons/p_contact.png", "name": "Contact Us", "tag": "5"},
     {"image": "assets/icons/p_privacy.png", "name": "Privacy Policy", "tag": "6"},
     {"image": "assets/icons/p_setting.png", "name": "Setting", "tag": "7"},
   ];

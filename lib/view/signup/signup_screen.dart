@@ -110,9 +110,6 @@ class _SignupScreenState extends State<SignupScreen> {
                 SizedBox(
                   height: 15,
                 ),
-                SizedBox(
-                  height: 15,
-                ),
                 RoundTextField(
                   controller: _emailController, // Add this line
                   hintText: "Email",
@@ -195,76 +192,76 @@ class _SignupScreenState extends State<SignupScreen> {
                     // Navigator.pop(context);
                   },
                 ),
-                RoundGradientButton(
-                  title: "Register as nutritionist",
-                  onPressed: () {
-                    _register('nutritionist'); // Call the register function
-                    Navigator.pushNamed(context, AuthService.routeName);
-                  },
-                ),
+                // RoundGradientButton(
+                //   title: "Register as nutritionist",
+                //   onPressed: () {
+                //     _register('nutritionist'); // Call the register function
+                //     Navigator.pushNamed(context, AuthService.routeName);
+                //   },
+                // ),
                 SizedBox(
                   height: 10,
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                        child: Container(
-                          width: double.maxFinite,
-                          height: 1,
-                          color: AppColors.grayColor.withOpacity(0.5),
-                        )),
-                    Text("  Or  ",
-                        style: TextStyle(
-                            color: AppColors.grayColor,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400)),
-                    Expanded(
-                        child: Container(
-                          width: double.maxFinite,
-                          height: 1,
-                          color: AppColors.grayColor.withOpacity(0.5),
-                        )),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-
-                      },
-                      child: Container(
-                        width: 50,
-                        height: 50,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14),
-                          border: Border.all(color: AppColors.primaryColor1.withOpacity(0.5), width: 1, ),
-                        ),
-                        child: Image.asset("assets/icons/google_icon.png",width: 20,height: 20,),
-                      ),
-                    ),
-                    SizedBox(width: 30,),
-                    GestureDetector(
-                      onTap: () {
-
-                      },
-                      child: Container(
-                        width: 50,
-                        height: 50,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14),
-                          border: Border.all(color: AppColors.primaryColor1.withOpacity(0.5), width: 1, ),
-                        ),
-                        child: Image.asset("assets/icons/facebook_icon.png",width: 20,height: 20,),
-                      ),
-                    ),
-                  ],
-                ),
+                // Row( // To be continue in FYP
+                //   children: [
+                //     Expanded(
+                //         child: Container(
+                //           width: double.maxFinite,
+                //           height: 1,
+                //           color: AppColors.grayColor.withOpacity(0.5),
+                //         )),
+                //     Text("  Or  ",
+                //         style: TextStyle(
+                //             color: AppColors.grayColor,
+                //             fontSize: 12,
+                //             fontWeight: FontWeight.w400)),
+                //     Expanded(
+                //         child: Container(
+                //           width: double.maxFinite,
+                //           height: 1,
+                //           color: AppColors.grayColor.withOpacity(0.5),
+                //         )),
+                //   ],
+                // ),
+                // SizedBox(
+                //   height: 20,
+                // ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     GestureDetector(
+                //       onTap: () {
+                //
+                //       },
+                //       child: Container(
+                //         width: 50,
+                //         height: 50,
+                //         alignment: Alignment.center,
+                //         decoration: BoxDecoration(
+                //           borderRadius: BorderRadius.circular(14),
+                //           border: Border.all(color: AppColors.primaryColor1.withOpacity(0.5), width: 1, ),
+                //         ),
+                //         child: Image.asset("assets/icons/google_icon.png",width: 20,height: 20,),
+                //       ),
+                //     ),
+                //     SizedBox(width: 30,),
+                //     GestureDetector(
+                //       onTap: () {
+                //
+                //       },
+                //       child: Container(
+                //         width: 50,
+                //         height: 50,
+                //         alignment: Alignment.center,
+                //         decoration: BoxDecoration(
+                //           borderRadius: BorderRadius.circular(14),
+                //           border: Border.all(color: AppColors.primaryColor1.withOpacity(0.5), width: 1, ),
+                //         ),
+                //         child: Image.asset("assets/icons/facebook_icon.png",width: 20,height: 20,),
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 SizedBox(
                   height: 20,
                 ),
