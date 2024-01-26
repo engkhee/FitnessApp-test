@@ -8,6 +8,7 @@ import 'package:fitnessapp/view/on_boarding/start_screen.dart';
 import 'package:fitnessapp/view/calories/caloriestracker.dart';
 import '../../common_widgets/round_button.dart';
 import '../notification/notification_screen.dart';
+import '../recognition/tflite_model.dart';
 
 class HomeScreen extends StatefulWidget {
   static String routeName = "/HomeScreen";
@@ -99,6 +100,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     SizedBox(width: 16),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => TfliteModel()),
+                        );
+                      },
+                      icon: Icon(Icons.settings_overscan_outlined, color: Colors.black),
+                    ),
                     IconButton(
                       onPressed: () {
                         Navigator.pushNamed(context, StartScreen.routeName);
