@@ -31,7 +31,7 @@ class _AuthService extends State<AuthService> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Please Provide \nFurther Information',
+          'Please Provide \ Your Details',
           style: TextStyle(
             fontSize: 18.0,
             letterSpacing: 1.8,

@@ -1,20 +1,20 @@
 import 'dart:ui';
+import 'package:fitnessapp/view/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
-import '../foodview/nutri_viewfood.dart';
-import '../forum/main_forum.dart';
 import '../login/login_screen.dart';
+import 'auth_service.dart';
 
 
-class NutritionistPage extends StatelessWidget {
-  static String routeName = "/NutritionistPage";
+class RegisterPage extends StatelessWidget {
+  static String routeName = "/RegisterPage";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          ' Nutritionist Dashboard',
+          'Registeration Counter',
           style: TextStyle(
             fontSize: 22.0,
             letterSpacing: 1.8,
@@ -41,7 +41,27 @@ class NutritionistPage extends StatelessWidget {
         ),
         child :ListView(
             children: [
-              SizedBox(height: 150),
+              SizedBox(height: 120),
+              Text(
+                'Do you want to register as a...?',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.adminpageColor4, // Choose a color that fits your design
+                  letterSpacing: 1.2,
+                  fontStyle: FontStyle.italic,
+                  shadows: [
+                    Shadow(
+                      color: Colors.grey,
+                      blurRadius: 2,
+                      offset: Offset(1, 1),
+                    ),
+                  ],
+                ),
+                textAlign: TextAlign.center,
+              ),
+
+              SizedBox(height: 30),
               SizedBox(
                 width: 200,
                 height: 150,
@@ -49,10 +69,10 @@ class NutritionistPage extends StatelessWidget {
                   padding: const EdgeInsets.all(10.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, NutriFoodViewPage.routeName);
+                      Navigator.pushNamed(context, SignupScreen.routeName);
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: AppColors.adminpageColor1, // Background color
+                      primary: AppColors.adminpageColor3, // Background color
                       onPrimary: AppColors.blackColor, // Text color
                       elevation: 8, // Elevation (shadow)
                       shape: RoundedRectangleBorder(
@@ -64,13 +84,13 @@ class NutritionistPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Image.asset(
-                          "assets/icons/food_logo.png",
+                          "assets/icons/user_icon.png",
                           width: 150,
                           height: 150,
                         ),
                         Text(
-                          'Food Center',
-                          style: TextStyle(fontSize: 18),
+                          'User',
+                          style: TextStyle(fontSize: 25),
                         ),
                       ],
                     ),
@@ -87,11 +107,7 @@ class NutritionistPage extends StatelessWidget {
                   padding: const EdgeInsets.all(10.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MainForum()),
-                      );
+                      Navigator.pushNamed(context, AuthService.routeName);
                     },
                     style: ElevatedButton.styleFrom(
                       primary: AppColors.adminpageColor3, // Background color
@@ -107,11 +123,11 @@ class NutritionistPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                          'Forum Center',
-                          style: TextStyle(fontSize: 18),
+                          'Nutritionist',
+                          style: TextStyle(fontSize: 25),
                         ),
                         Image.asset(
-                          "assets/icons/forum_logo.png",
+                          "assets/icons/user_icon.png",
                           width: 150,
                           height: 150,
                         ),
@@ -127,3 +143,4 @@ class NutritionistPage extends StatelessWidget {
     );
   }
 }
+

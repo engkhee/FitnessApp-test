@@ -17,6 +17,7 @@ import 'package:fitnessapp/view/on_boarding/on_boarding_screen.dart';
 import 'package:fitnessapp/view/on_boarding/start_screen.dart';
 import 'package:fitnessapp/view/profile/complete_profile_screen.dart';
 import 'package:fitnessapp/view/signup/nutritionist_privacy_terms.dart';
+import 'package:fitnessapp/view/signup/register.dart';
 import 'package:fitnessapp/view/signup/signup_screen.dart';
 import 'package:fitnessapp/view/tutorial_videos/add_exercise_tuto.dart';
 import 'package:fitnessapp/view/tutorial_videos/add_video_v2.dart';
@@ -35,7 +36,7 @@ final Map<String, WidgetBuilder> routes = {
   LoginScreen.routeName: (context) => const LoginScreen(),
   StartScreen.routeName: (context) => const StartScreen(),
   SignupScreen.routeName: (context) => const SignupScreen(),
-  CompleteProfileScreen.routeName: (context) => const CompleteProfileScreen(),
+  CompleteProfileScreen.routeName: (context) => CompleteProfileScreen(),
   YourGoalScreen.routeName: (context) => const YourGoalScreen(),
   DashboardScreen.routeName: (context) => const DashboardScreen(),
   NotificationScreen.routeName: (context) => const NotificationScreen(),
@@ -58,4 +59,5 @@ final Map<String, WidgetBuilder> routes = {
   NutritionistPage.routeName:(context) => NutritionistPage(),
   VerifyCode.routeName:(context) => VerifyCode(),
   NutriFoodViewPage.routeName:(context) =>NutriFoodViewPage(),
+  RegisterPage.routeName:(context) => RegisterPage(),
 };

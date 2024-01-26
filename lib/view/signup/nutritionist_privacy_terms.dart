@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../utils/app_colors.dart';
+
 class NutritionistTermsConditionsScreen extends StatelessWidget {
   static const String routeName = "/NutritionistTermsConditionsScreen";
 
@@ -16,7 +18,7 @@ class NutritionistTermsConditionsScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.deepPurpleAccent,
+        backgroundColor: AppColors.adminpageColor4,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),

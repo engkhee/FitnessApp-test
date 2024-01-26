@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitnessapp/view/profile/bmi.dart';
-import 'package:fitnessapp/view/signup/auth_service.dart';
+import 'package:fitnessapp/view/profile/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../common_widgets/round_gradient_button.dart';
 import '../../common_widgets/round_textfield.dart';
 import '../profile/complete_profile_screen.dart';
@@ -25,17 +25,26 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  // Define controllers for additional user data
-  var _selectedGender;
-  var _dobController = TextEditingController();
-  var _weightController = TextEditingController();
-  var _heightController = TextEditingController();
-
   Future<void> _register(String userType) async {
-    String collectionName =
-    (userType == 'user') ? 'Users_public_user' : 'Users_nutritionist';
+    String collectionName;
+
+    if (userType == 'user') {
+      collectionName = 'Users_public_user';
+    } else {
+      collectionName = 'Users_nutritionist';
+    }
 
     try {
+      // Check if required fields are not empty
+      if (_firstNameController.text.isEmpty ||
+          _lastNameController.text.isEmpty ||
+          _emailController.text.isEmpty ||
+          _passwordController.text.isEmpty) {
+        // Display an error message or handle the empty fields appropriately
+        print("Please fill in all required fields.");
+        return;
+      }
+
       // Create user with email and password
       await _auth.createUserWithEmailAndPassword(
         email: _emailController.text,
@@ -46,40 +55,30 @@ class _SignupScreenState extends State<SignupScreen> {
       User? user = _auth.currentUser;
 
       // Store user data in Firestore
-      Map<String, dynamic> userData = {
+      await FirebaseFirestore.instance.collection(collectionName).doc(user!.uid).set({
         'firstName': _firstNameController.text,
         'lastName': _lastNameController.text,
         'email': _emailController.text,
-      };
+      });
 
-      if (userType == 'user') {
-        userData.addAll({
-          'gender': _selectedGender ?? null,
-          'dob': _dobController.text ?? null,
-          'weight': _weightController.text ?? null,
-          'height': _heightController.text ?? null,
-          'bmi': calculateBMI(
-            double.tryParse(_weightController.text ?? "0.0") ?? 0.0,
-            double.tryParse(_heightController.text ?? "0.0") ?? 0.0,
-          ),
-        });
-      }
+      // Use Provider to set user data
+      Provider.of<UserDataProvider>(context, listen: false).setUserData({
+        'Fname': _firstNameController.text,
+        'Lname': _lastNameController.text,
+        'Email': _emailController.text,
+      });
 
-      await FirebaseFirestore.instance
-          .collection(collectionName)
-          .doc(user!.uid)
-          .set(userData);
-
-      Navigator.pushNamed(
-        context,
-        CompleteProfileScreen.routeName,
-        arguments: {
-          'Fname': _firstNameController.text,
-          'Lname': _lastNameController.text,
-        },
-      );
+      print("First Name: ${_firstNameController.text}");
+      print("Last Name: ${_lastNameController.text}");
 
       print("Registration successful!");
+      // Navigate to the CompleteProfileScreen with user data
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CompleteProfileScreen(),
+        ),
+      );
     } catch (error) {
       print("Error during registration: $error");
       // Handle the error (display a message, log, etc.)
@@ -98,18 +97,18 @@ class _SignupScreenState extends State<SignupScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const SizedBox(
+                SizedBox(
                   height: 15,
                 ),
-                const Text(
+                Text(
                   "Welcome to the fitness application",
                   style: TextStyle(
                     color: AppColors.blackColor,
                     fontSize: 16,
                   ),
                 ),
-                const SizedBox(height: 5),
-                const Text(
+                SizedBox(height: 5),
+                Text(
                   "Create an Account",
                   style: TextStyle(
                     color: AppColors.blackColor,
@@ -118,7 +117,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 15,
                 ),
                 RoundTextField(
@@ -127,16 +126,15 @@ class _SignupScreenState extends State<SignupScreen> {
                   icon: "assets/icons/profile_icon.png",
                   textInputType: TextInputType.name,
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 15,
                 ),
                 RoundTextField(
-                  controller: _lastNameController,
-                  hintText: "Last Name",
-                  icon: "assets/icons/profile_icon.png",
-                  textInputType: TextInputType.name,
-                ),
-                const SizedBox(
+                    controller: _lastNameController,
+                    hintText: "Last Name",
+                    icon: "assets/icons/profile_icon.png",
+                    textInputType: TextInputType.name),
+                SizedBox(
                   height: 15,
                 ),
                 RoundTextField(
@@ -145,7 +143,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   icon: "assets/icons/message_icon.png",
                   textInputType: TextInputType.emailAddress,
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 15,
                 ),
                 RoundTextField(
@@ -155,41 +153,38 @@ class _SignupScreenState extends State<SignupScreen> {
                   textInputType: TextInputType.text,
                   isObscureText: true,
                   rightIcon: TextButton(
-                    onPressed: () {},
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: 20,
-                      height: 20,
-                      child: Image.asset(
-                        "assets/icons/hide_pwd_icon.png",
-                        width: 20,
-                        height: 20,
-                        fit: BoxFit.contain,
-                        color: AppColors.grayColor,
-                      ),
-                    ),
-                  ),
+                      onPressed: () {},
+                      child: Container(
+                          alignment: Alignment.center,
+                          width: 20,
+                          height: 20,
+                          child: Image.asset(
+                            "assets/icons/hide_pwd_icon.png",
+                            width: 20,
+                            height: 20,
+                            fit: BoxFit.contain,
+                            color: AppColors.grayColor,
+                          ))),
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 15,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     IconButton(
-                      onPressed: () {
-                        setState(() {
-                          isCheck = !isCheck;
-                        });
-                      },
-                      icon: Icon(
-                        isCheck
-                            ? Icons.check_box_outline_blank_outlined
-                            : Icons.check_box_outlined,
-                        color: AppColors.grayColor,
-                      ),
-                    ),
-                    const Expanded(
+                        onPressed: () {
+                          setState(() {
+                            isCheck = !isCheck;
+                          });
+                        },
+                        icon: Icon(
+                          isCheck
+                              ? Icons.check_box_outline_blank_outlined
+                              : Icons.check_box_outlined,
+                          color: AppColors.grayColor,
+                        )),
+                    Expanded(
                       child: Text(
                         "By continuing you accept our Privacy Policy and\nTerm of Use",
                         style: TextStyle(
@@ -200,7 +195,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     )
                   ],
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 40,
                 ),
                 RoundGradientButton(
@@ -209,123 +204,35 @@ class _SignupScreenState extends State<SignupScreen> {
                     _register('user');
                   },
                 ),
-                RoundGradientButton(
-                  title: "Register as nutritionist",
-                  onPressed: () {
-                    _register('nutritionist');
-                  },
-                ),
                 SizedBox(
                   height: 10,
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        width: double.maxFinite,
-                        height: 1,
-                        color: AppColors.grayColor.withOpacity(0.5),
-                      ),
-                    ),
-                    const Text(
-                      "  Or  ",
-                      style: TextStyle(
-                        color: AppColors.grayColor,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        width: double.maxFinite,
-                        height: 1,
-                        color: AppColors.grayColor.withOpacity(0.5),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        width: 50,
-                        height: 50,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14),
-                          border: Border.all(
-                            color: AppColors.primaryColor1.withOpacity(0.5),
-                            width: 1,
-                          ),
-                        ),
-                        child: Image.asset(
-                          "assets/icons/google_icon.png",
-                          width: 20,
-                          height: 20,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 30,
-                    ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        width: 50,
-                        height: 50,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14),
-                          border: Border.all(
-                            color: AppColors.primaryColor1.withOpacity(0.5),
-                            width: 1,
-                          ),
-                        ),
-                        child: Image.asset(
-                          "assets/icons/facebook_icon.png",
-                          width: 20,
-                          height: 20,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
+                SizedBox(
                   height: 20,
                 ),
                 TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: RichText(
-                    textAlign: TextAlign.center,
-                    text: const TextSpan(
-                      style: TextStyle(
-                        color: AppColors.blackColor,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      children: [
-                        TextSpan(
-                          text: "Already have an account? ",
-                        ),
-                        TextSpan(
-                          text: "Login",
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
                           style: TextStyle(
-                            color: AppColors.secondaryColor1,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                              color: AppColors.blackColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400),
+                          children: [
+                            const TextSpan(
+                              text: "Already have an account? ",
+                            ),
+                            TextSpan(
+                                text: "Login",
+                                style: TextStyle(
+                                    color: AppColors.secondaryColor1,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w800)),
+                          ]),
+                    )),
               ],
             ),
           ),
