@@ -61,7 +61,7 @@ class _AuthService extends State<AuthService> {
               _buildEducationLevelField(),
               _buildTextField(_eduController, 'Education name'),
               _buildTextField(_certController,
-                  'Certification link (eg: google drive link)'),
+                  'Supporting document (eg: certification link)'),
               SizedBox(height: 16),
               Row(
                 children: [
@@ -116,7 +116,7 @@ class _AuthService extends State<AuthService> {
               ElevatedButton(
                 onPressed: () {
                   // if (isTermsAccepted) {
-                    _submitForm();
+                  _submitForm();
                   Navigator.pushNamed(context, LoginScreen.routeName);
                   // } else {
                   //   // Show a message or handle the case where terms are not accepted
@@ -261,13 +261,14 @@ class _AuthService extends State<AuthService> {
     String email = _emailController.text;
 
     // Send data to Firestore
-    FirebaseFirestore.instance.collection('nutritionist_registeration').add({
+    FirebaseFirestore.instance.collection('Users_nutritionist').add({
       'name': name,
       'Ic': Ic,
       'phone': phone,
       'education': edu,
       'certification': cert,
       'email':email,
+      'status': 'pending', // Default status
 
     }).then((value) {
       // Clear input fields after successful submission

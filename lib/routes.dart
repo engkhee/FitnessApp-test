@@ -7,6 +7,7 @@ import 'package:fitnessapp/view/admin/manage_fitness.dart';
 import 'package:fitnessapp/view/admin/nutritionist.dart';
 import 'package:fitnessapp/view/admin/verify_code.dart';
 import 'package:fitnessapp/view/admin/verify_nutritionist.dart';
+import 'package:fitnessapp/view/admin/veriry_rule.dart';
 import 'package:fitnessapp/view/admin/view_database.dart';
 import 'package:fitnessapp/view/dashboard/dashboard_screen.dart';
 import 'package:fitnessapp/view/foodview/admin_viewfood.dart';
@@ -60,4 +61,5 @@ final Map<String, WidgetBuilder> routes = {
   VerifyCode.routeName:(context) => VerifyCode(),
   NutriFoodViewPage.routeName:(context) =>NutriFoodViewPage(),
   RegisterPage.routeName:(context) => RegisterPage(),
+  VerifyRule.routeName:(context)=> VerifyRule(),
 };
