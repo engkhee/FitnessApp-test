@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitnessapp/view/calories/piechart.dart';
 import 'package:fitnessapp/view/tutorial_videos/exercise_tuto.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +24,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final PageController _pageController = PageController();
   late Timer _timer;
+  late String firstName = '';
+  late String lastName = '';
   int _currentPage = 0;
 
   @override
@@ -41,6 +45,34 @@ class _HomeScreenState extends State<HomeScreen> {
         curve: Curves.easeInOut,
       );
     });
+    // Fetch user profile info
+    fetchUserInfo();
+  }
+
+  void fetchUserInfo() async {
+    try {
+      String userEmail = FirebaseAuth.instance.currentUser?.email ?? "";
+      if (userEmail.isNotEmpty) {
+        final personalInfoQuery = await FirebaseFirestore.instance
+            .collection('User_profile_info')
+            .where('email', isEqualTo: userEmail)
+            .get();
+
+        if (personalInfoQuery.docs.isNotEmpty) {
+          var personalInfoDoc = personalInfoQuery.docs.first;
+          setState(() {
+            firstName = personalInfoDoc.get('fname') ?? "";
+            lastName = personalInfoDoc.get('lname') ?? "";
+          });
+        } else {
+          print("Error: No document found for the user");
+        }
+      } else {
+        print("Error: User not authenticated");
+      }
+    } catch (e) {
+      print("Error fetching user profile: $e");
+    }
   }
 
   @override
@@ -49,6 +81,8 @@ class _HomeScreenState extends State<HomeScreen> {
     _pageController.dispose();
     super.dispose();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Text(
-                          "Stefani Wong",
+                          '$firstName $lastName',
                           style: TextStyle(
                             color: AppColors.blackColor,
                             fontSize: 20,

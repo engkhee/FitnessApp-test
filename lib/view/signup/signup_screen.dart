@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitnessapp/view/signup/auth_service.dart';
+import 'package:fitnessapp/view/profile/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../common_widgets/round_gradient_button.dart';
 import '../../common_widgets/round_textfield.dart';
 import '../profile/complete_profile_screen.dart';
@@ -25,16 +26,25 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   Future<void> _register(String userType) async {
-
     String collectionName;
 
-    if(userType =='user'){
+    if (userType == 'user') {
       collectionName = 'Users_public_user';
-    }else {
-        collectionName = 'Users_nutritionist';
+    } else {
+      collectionName = 'Users_nutritionist';
     }
 
     try {
+      // Check if required fields are not empty
+      if (_firstNameController.text.isEmpty ||
+          _lastNameController.text.isEmpty ||
+          _emailController.text.isEmpty ||
+          _passwordController.text.isEmpty) {
+        // Display an error message or handle the empty fields appropriately
+        print("Please fill in all required fields.");
+        return;
+      }
+
       // Create user with email and password
       await _auth.createUserWithEmailAndPassword(
         email: _emailController.text,
@@ -51,7 +61,24 @@ class _SignupScreenState extends State<SignupScreen> {
         'email': _emailController.text,
       });
 
+      // Use Provider to set user data
+      Provider.of<UserDataProvider>(context, listen: false).setUserData({
+        'Fname': _firstNameController.text,
+        'Lname': _lastNameController.text,
+        'Email': _emailController.text,
+      });
+
+      print("First Name: ${_firstNameController.text}");
+      print("Last Name: ${_lastNameController.text}");
+
       print("Registration successful!");
+      // Navigate to the CompleteProfileScreen with user data
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CompleteProfileScreen(),
+        ),
+      );
     } catch (error) {
       print("Error during registration: $error");
       // Handle the error (display a message, log, etc.)
@@ -74,11 +101,11 @@ class _SignupScreenState extends State<SignupScreen> {
                   height: 15,
                 ),
                 Text(
-                  "Welcome to fitness application",
+                  "Welcome to the fitness application",
                   style: TextStyle(
-                  color: AppColors.blackColor,
-                  fontSize: 16,
-                ),
+                    color: AppColors.blackColor,
+                    fontSize: 16,
+                  ),
                 ),
                 SizedBox(height: 5),
                 Text(
@@ -111,7 +138,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   height: 15,
                 ),
                 RoundTextField(
-                  controller: _emailController, // Add this line
+                  controller: _emailController,
                   hintText: "Email",
                   icon: "assets/icons/message_icon.png",
                   textInputType: TextInputType.emailAddress,
@@ -119,15 +146,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 SizedBox(
                   height: 15,
                 ),
-                // RoundTextField(
-                //   hintText: "Password",
-                //   icon: "assets/icons/lock_icon.png",
-                //   textInputType: TextInputType.text,
-                //   isObscureText: true,
-
-                // Update the Password TextField
                 RoundTextField(
-                  controller: _passwordController, // Add this line
+                  controller: _passwordController,
                   hintText: "Password",
                   icon: "assets/icons/lock_icon.png",
                   textInputType: TextInputType.text,
@@ -166,102 +186,27 @@ class _SignupScreenState extends State<SignupScreen> {
                         )),
                     Expanded(
                       child: Text(
-                          "By continuing you accept our Privacy Policy and\nTerm of Use",
-                          style: TextStyle(
-                            color: AppColors.grayColor,
-                            fontSize: 10,
-                          )),
+                        "By continuing you accept our Privacy Policy and\nTerm of Use",
+                        style: TextStyle(
+                          color: AppColors.grayColor,
+                          fontSize: 10,
+                        ),
+                      ),
                     )
                   ],
                 ),
                 SizedBox(
                   height: 40,
                 ),
-                // RoundGradientButton(
-                //   title: "Register as user",
-                //   onPressed: () {
-                //     Navigator.pushNamed(context, CompleteProfileScreen.routeName);
-                //   },
-                // ),
-                // Update the Register Button
                 RoundGradientButton(
                   title: "Register as user",
                   onPressed: () {
-                    _register('user'); // Call the register function
-                    Navigator.pushNamed(context, CompleteProfileScreen.routeName,arguments: {'Fname': _firstNameController, 'Lname': _lastNameController},);
-                    // Navigator.pop(context);
+                    _register('user');
                   },
                 ),
-                // RoundGradientButton(
-                //   title: "Register as nutritionist",
-                //   onPressed: () {
-                //     _register('nutritionist'); // Call the register function
-                //     Navigator.pushNamed(context, AuthService.routeName);
-                //   },
-                // ),
                 SizedBox(
                   height: 10,
                 ),
-                // Row(
-                //   children: [
-                //     Expanded(
-                //         child: Container(
-                //           width: double.maxFinite,
-                //           height: 1,
-                //           color: AppColors.grayColor.withOpacity(0.5),
-                //         )),
-                //     Text("  Or  ",
-                //         style: TextStyle(
-                //             color: AppColors.grayColor,
-                //             fontSize: 12,
-                //             fontWeight: FontWeight.w400)),
-                //     Expanded(
-                //         child: Container(
-                //           width: double.maxFinite,
-                //           height: 1,
-                //           color: AppColors.grayColor.withOpacity(0.5),
-                //         )),
-                //   ],
-                // ),
-                // SizedBox(
-                //   height: 20,
-                // ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     GestureDetector(
-                //       onTap: () {
-                //
-                //       },
-                //       child: Container(
-                //         width: 50,
-                //         height: 50,
-                //         alignment: Alignment.center,
-                //         decoration: BoxDecoration(
-                //           borderRadius: BorderRadius.circular(14),
-                //           border: Border.all(color: AppColors.primaryColor1.withOpacity(0.5), width: 1, ),
-                //         ),
-                //         child: Image.asset("assets/icons/google_icon.png",width: 20,height: 20,),
-                //       ),
-                //     ),
-                //     SizedBox(width: 30,),
-                //     GestureDetector(
-                //       onTap: () {
-                //
-                //       },
-                //       child: Container(
-                //         width: 50,
-                //         height: 50,
-                //         alignment: Alignment.center,
-                //         decoration: BoxDecoration(
-                //           borderRadius: BorderRadius.circular(14),
-                //           border: Border.all(color: AppColors.primaryColor1.withOpacity(0.5), width: 1, ),
-                //         ),
-                //         child: Image.asset("assets/icons/facebook_icon.png",width: 20,height: 20,),
-                //       ),
-                //     ),
-                //   ],
-                // ),
                 SizedBox(
                   height: 20,
                 ),
@@ -296,5 +241,3 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 }
-
-
