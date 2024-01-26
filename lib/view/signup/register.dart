@@ -1,7 +1,7 @@
 import 'dart:ui';
+import 'package:fitnessapp/view/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
-import '../admin/register_user.dart';
 import '../login/login_screen.dart';
 import 'auth_service.dart';
 
