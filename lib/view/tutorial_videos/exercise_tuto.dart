@@ -221,9 +221,9 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                       icon: Icon(_controller.value.isPlaying ? Icons.pause : Icons.play_arrow),
                       onPressed: () {
                         if (_controller.value.isPlaying)
-                          _controller.play();
-                        else
                           _controller.pause();
+                        else
+                          _controller.play();
                       },
                       color: Colors.purple,
                     ),
