@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:fitnessapp/utils/app_colors.dart';
-import 'package:fitnessapp/view/admin/verify_nutritionist.dart';
 import 'package:fitnessapp/view/admin/veriry_rule.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -463,10 +462,10 @@ class _NutritionistDetailsState extends State<NutritionistDetails> {
                   sendApprovalCode(widget.nutritionist['email']);
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.green[300], // Replace with your desired background color
+                  primary: AppColors.verifyNut3, // Replace with your desired background color
                   onPrimary: Colors.black, // Text color
                 ),
-                child: Text('Approve applicant'),
+                child: Text('Approve this applicant'),
               ),
               ElevatedButton(
                 onPressed: () async {
@@ -479,10 +478,10 @@ class _NutritionistDetailsState extends State<NutritionistDetails> {
                   sendRejectEmail(widget.nutritionist['email']);
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.red[300], // Replace with your desired background color
+                  primary: Colors.red, // Replace with your desired background color
                   onPrimary: Colors.black, // Text color
                 ),
-                child: Text('Reject applicant'),
+                child: Text('Reject this applicant'),
               ),
             ],
           ),
@@ -593,9 +592,20 @@ class _NutritionistDetailsState extends State<NutritionistDetails> {
       _isLoading = false; // Reset loading state
     });
   }
+  void launchCertificationLink(String? certificationLink) async {
+    if (certificationLink != null && certificationLink.isNotEmpty) {
+      if (await canLaunch(certificationLink)) {
+        await launch(certificationLink);
+      } else {
+        print('Could not launch $certificationLink');
+        // Handle error if the link cannot be launched
+      }
+    } else {
+      print('Certification link is empty or null');
+      // Handle the case where the certification link is empty or null
+    }
+  }
 
-  void launchCertificationLink(nutritionist) {}
 
 }
-
 
