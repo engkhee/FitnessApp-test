@@ -1,17 +1,12 @@
-# fitnessapp
+# Fitness Pro System
  
-Fitness workout app is a professional app template that provides pre-set workout plans for
-bodybuilding, Weight Gain, Weight loss & other Fitness Workout as your bodybuilding and Workout trainer.
+Fitness System is an application-based system for users to manage and sustain their healthy lifestyle conveniently. There will be five main modules in this system including authentication module, admin module, food plan module, exercise module and forum module.
 
-**Features**:
 
-- Material mobile UI/UX design.
-- Beautiful Pie, Line, Progress chart.
-- Workout tracker, Workout schedule.
-- Exercises details with steps UI.
-- Progress photo gallery UI.
-- Profile screen UI.
-- Notification screen UI.
-- Custom widgets, clean code.
+**Project Objectives**:
+To design a mobile application that can provide a balanced diet to the user with food plans by individual assessment for a healthier lifestyle.
+To suggest the type of workout and duration of exercise to be given to the user based on the diet that they have chosen.
+To help users with the answer inquiries with dietary information, exercise training and recipes within the forum. 
+
 
 ![Preview](fitness_app.png)
