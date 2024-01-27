@@ -254,8 +254,8 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
 
 double calculateBMI(double weightInKg, double heightInCM) {
   if (heightInCM > 0) {
-    return (weightInKg /
-        ((heightInCM / 100) * (heightInCM / 100)));
+    double bmi = weightInKg / ((heightInCM / 100) * (heightInCM / 100));
+    return double.parse(bmi.toStringAsFixed(2));
   } else {
     return 0.00;
   }

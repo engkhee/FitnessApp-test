@@ -12,6 +12,8 @@ import '../../common_widgets/round_button.dart';
 import '../login/login_screen.dart';
 
 class UserProfile extends StatefulWidget {
+  static String routeName = "/UserProfile";
+
   const UserProfile({Key? key}) : super(key: key);
 
   @override
