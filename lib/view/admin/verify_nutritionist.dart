@@ -462,10 +462,25 @@ class _NutritionistDetailsState extends State<NutritionistDetails> {
                   sendApprovalCode(widget.nutritionist['email']);
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: AppColors.verifyNut3, // Replace with your desired background color
+                  primary: Colors.green[300], // Background color
                   onPrimary: Colors.black, // Text color
+                  elevation: 3, // Button shadow
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20), // Rounded corners
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24), // Button padding
                 ),
-                child: Text('Approve this applicant'),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Icon(Icons.check_circle, color: Colors.white), // Icon
+                    // SizedBox(width: 10), // Spacer
+                    Text(
+                      'Approve applicant',
+                      style: TextStyle(fontSize: 16), // Text style
+                    ),
+                  ],
+                ),
               ),
               ElevatedButton(
                 onPressed: () async {
@@ -478,11 +493,27 @@ class _NutritionistDetailsState extends State<NutritionistDetails> {
                   sendRejectEmail(widget.nutritionist['email']);
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.red, // Replace with your desired background color
+                  primary: Colors.red[300], // Background color
                   onPrimary: Colors.black, // Text color
+                  elevation: 3, // Button shadow
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20), // Rounded corners
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24), // Button padding
                 ),
-                child: Text('Reject this applicant'),
-              ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Icon(Icons.cancel, color: Colors.white), // Icon
+                    // SizedBox(width: 10), // Spacer
+                    Text(
+                      'Reject applicant',
+                      style: TextStyle(fontSize: 16), // Text style
+                    ),
+                  ],
+                ),
+              )
+
             ],
           ),
         ],
