@@ -111,11 +111,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         fit: BoxFit.fitHeight,
                       ),
                     ),
-                    SizedBox(width: 16),
+                    const SizedBox(width: 16),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "Welcome Back,",
                           style: TextStyle(
                             color: AppColors.midGrayColor,
@@ -124,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         Text(
                           '$firstName $lastName',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: AppColors.blackColor,
                             fontSize: 20,
                             fontFamily: "Poppins",
@@ -133,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(width: 16),
+                    const SizedBox(width: 16),
                     IconButton(
                       onPressed: () {
                         Navigator.push(
@@ -366,7 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
               title: '',
               radius: 55,
               titlePositionPercentageOffset: 0.55,
-              badgeWidget: Text(
+              badgeWidget: const Text(
                 "20.1",
                 style: TextStyle(
                   color: AppColors.whiteColor,
