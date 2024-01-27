@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late Timer _timer;
   late String firstName = '';
   late String lastName = '';
-  late double bmi = 0.0;
+  late double bmi = 0.00;
   int _currentPage = 0;
 
   @override
