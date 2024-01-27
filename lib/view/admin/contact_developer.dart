@@ -187,19 +187,24 @@ class _ContactDeveloperState extends State<ContactDeveloper> {
               // ),
             SizedBox(height: 16.0),
             ElevatedButton(
-              // onPressed: () {
-              //   _launchGmail(''); // Pass an empty string for the user's name
-              // },
               onPressed: () async {
-                String url = // will redirect to the google chrome to open firebase
-                // 'https://mail.google.com/mail/mu/mp/501/#tl/%E6%94%B6%E4%BB%B6%E7%AE%B1';
-                // 'https://mail.google.com/mail/mu/mp/501/#co';
-                    'https://mail.google.com/mail/u/1/#inbox?compose=jrjtXFBkBqFVXqKvxXCtxgqqrlqttzGVnZqZhkZMBsKtjgjlZCBLxGqjJQHlBXfrLZrRrkFB';
-                print('Email Open! Link: $url');
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  print('Could not launch $url');
+                final String recipientEmail = 'fitnesssystemdeveloper@gmail.com';
+                final String subject = 'Admin of Fitness Pro System';
+                final String content = 'Hi developer,...'; // Add your content here
+
+                final Uri emailUri = Uri(
+                  scheme: 'mailto',
+                  path: recipientEmail,
+                  queryParameters: {
+                    'subject': subject,
+                    'body': content,
+                  },
+                );
+                try {
+                  await launch(emailUri.toString());
+                } catch (e) {
+                  print('Error launching email: $e');
+                  // Handle error if email client cannot be launched
                 }
               },
               style: ElevatedButton.styleFrom(
