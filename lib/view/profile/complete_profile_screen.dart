@@ -227,8 +227,8 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                     double weightInKg = double.tryParse(weight) ?? 0.0;
                     double heightInCm = double.tryParse(height) ?? 0.0;
                     double bmi = calculateBMI(weightInKg, heightInCm);
+                    String bmiGroup = determineBMIGroup(bmi)??'';
 
-                    // Store the user profile information including BMI and user details in Firestore
                     await _userProfileCollection.add({
                       'fname': userFname,
                       'lname': userLname,
@@ -238,7 +238,9 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       'weight': weight,
                       'height': height,
                       'bmi': bmi.toString(),
+                      'bmigroup': bmiGroup,
                     });
+
                     // Navigate to the next screen
                     Navigator.pushNamed(context, LoginScreen.routeName);
                   },
@@ -260,3 +262,15 @@ double calculateBMI(double weightInKg, double heightInCM) {
     return 0.00;
   }
 }
+
+//determine user's BMI Group
+String? determineBMIGroup(double bmi) {
+  if (bmi < 18.5) {
+    return 'Underweight';
+  } else if (bmi >= 18.5 && bmi <= 24.9) {
+    return 'Normal';
+  } else if (bmi >= 25 && bmi <= 29.9) {
+    return 'Overweight';
+  }
+}
+

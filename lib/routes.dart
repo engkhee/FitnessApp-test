@@ -48,7 +48,7 @@ final Map<String, WidgetBuilder> routes = {
   UserPage.routeName: (context) => UserPage(),
   DanceWorkout.routeName: (context) => DanceWorkout(),
   ExerciseTutos.routeName: (context) => ExerciseTutos(),
-  AuthService.routeName:(context) => AuthService(),
+  AuthService.routeName:(context) => const AuthService(),
   training.routeName:(context) => training(),
   AdminPage.routeName: (context) => AdminPage(),
   NutritionistList.routeName: (context) => NutritionistList(),
@@ -63,5 +63,5 @@ final Map<String, WidgetBuilder> routes = {
   NutriFoodViewPage.routeName:(context) =>NutriFoodViewPage(),
   RegisterPage.routeName:(context) => RegisterPage(),
   VerifyRule.routeName:(context)=> VerifyRule(),
-  UserProfile.routeName:(context)=> UserProfile(),
+  UserProfile.routeName:(context)=> const UserProfile(),//addUserProfile
 };
