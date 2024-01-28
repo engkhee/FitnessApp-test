@@ -10,3 +10,4 @@ To help users with the answer inquiries with dietary information, exercise train
 
 
 ![Preview](fitness_app.png)
+![Alt text](/assets/images/card.png)
