@@ -9,29 +9,12 @@ To suggest the type of workout and duration of exercise to be given to the user 
 To help users with the answer inquiries with dietary information, exercise training and recipes within the forum. 
 
 
+# A Glimpse Into the Application
+<img src="/assets/images/register_page.png" alt="Image 1" width="250"/> <img src="/assets/images/darshboard_page.png" alt="Image 2" width="250"/> <img src="/assets/images/calories_page.png" alt="Image 3" width="250"/>
+<img src="/assets/images/fitness_page.png" alt="Image 1" width="250"/> <img src="/assets/images/fitness_list_page.png" alt="Image 2" width="250"/> <img src="/assets/images/workout_page.png" alt="Image 3" width="250"/>
+<img src="/assets/images/meal_page.png" alt="Image 1" width="250"/> <img src="/assets/images/cook_page.png" alt="Image 2" width="250"/> <img src="/assets/images/forum_page.png" alt="Image 3" width="250"/>
+
+
 # Contact
 mailto:  ***fitnessprosystem@gmail.com***
 
-
-# A Glimpse Into the Application
-![Alt text](/assets/images/register.png)
-<p align="center">
-  <img src="/assets/images/darshboard.png" alt="Description of image">
-</p>
-<div style="text-align:right">
-    <img src="/path/to/calories.png" alt="Description of image">
-</div>
-![Alt text](/assets/images/register.png)
-<p align="center">
-  <img src="/assets/images/darshboard.png" alt="Description of image">
-</p>
-<div style="text-align:right">
-    <img src="/path/to/calories.png" alt="Description of image">
-</div>
-![Alt text](/assets/images/register.png)
-<p align="center">
-  <img src="/assets/images/darshboard.png" alt="Description of image">
-</p>
-<div style="text-align:right">
-    <img src="/path/to/calories.png" alt="Description of image">
-</div>
