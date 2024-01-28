@@ -333,7 +333,12 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
                                 LikeButton(
                                   isLiked: isFavorite,
                                   onTap: () {
-                                    _toggleFavorite(foodItem.id);
+                                    _toggleFavorite(foodItem.id).then((_) {
+                                      // Update the isFavorite variable after the toggle
+                                      setState(() {
+                                        isFavorite = !isFavorite;
+                                      });
+                                    });
                                   },
                                 ),
                               Text(
@@ -360,28 +365,32 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
     );
   }
 
-  void _toggleFavorite(String foodItemId) async {
-    if (currentUserId != null) {
-      bool isAlreadyLiked = await dbHelper.getUserLikeStatus(foodItemId);
+  Future<void> _toggleFavorite(String foodItemId) async {
+    try {
+      if (currentUserId != null) {
+        bool isAlreadyLiked = await dbHelper.getUserLikeStatus(foodItemId);
 
-      setState(() {
-        if (userLikes.containsKey(currentUserId!)) {
-          if (isAlreadyLiked) {
-            userLikes[currentUserId!]!.remove(foodItemId);
+        setState(() {
+          if (userLikes.containsKey(currentUserId!)) {
+            if (isAlreadyLiked) {
+              userLikes[currentUserId!]!.remove(foodItemId);
+            } else {
+              userLikes[currentUserId!]!.add(foodItemId);
+            }
           } else {
-            userLikes[currentUserId!]!.add(foodItemId);
+            userLikes[currentUserId!] = [foodItemId];
           }
-        } else {
-          userLikes[currentUserId!] = [foodItemId];
-        }
 
-        favoriteStatusMap[foodItemId] = !isAlreadyLiked;
-      });
+          favoriteStatusMap[foodItemId] = !isAlreadyLiked;
+        });
 
-      int currentLikes = await dbHelper.getLikesCount(foodItemId);
-      dbHelper.updateLikes(foodItemId, !isAlreadyLiked, currentLikes);
-    } else {
-      print('Current user ID is null.');
+        int currentLikes = await dbHelper.getLikesCount(foodItemId);
+        await dbHelper.updateLikes(foodItemId, !isAlreadyLiked, currentLikes);
+      } else {
+        print('Current user ID is null.');
+      }
+    } catch (e) {
+      print('Error toggling favorite: $e');
     }
   }
 }
