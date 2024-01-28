@@ -23,6 +23,7 @@ class _EditCaloriesState extends State<EditCalories> {
   double? fat;
   double? totalCalories;
   DateTime? date;
+  String? originalMealType;
 
   final TextEditingController _dateController = TextEditingController();
   DatabaseHelper _dbHelper = DatabaseHelper();
@@ -33,6 +34,8 @@ class _EditCaloriesState extends State<EditCalories> {
     // Set the original date in the date controller
     _dateController.text = DateFormat('yyyy-MM-dd').format(widget.originalMeal.date);
     date = widget.originalMeal.date;
+    originalMealType = widget.originalMeal.mealType;
+    mealType = originalMealType;
 
     // Print the original meal's ID
     print('Original Meal ID: ${widget.originalMeal.id}');

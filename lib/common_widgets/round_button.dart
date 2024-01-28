@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utils/app_colors.dart';
+import 'package:fitnessapp/utils/app_colors.dart';
 
 enum RoundButtonType { primaryBG, secondaryBG, primaryGradient, secondaryGradient }
 

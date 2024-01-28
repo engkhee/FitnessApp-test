@@ -45,18 +45,21 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   }
 
   Future<void> _selectDate(BuildContext context) async {
-    DateTime? pickedDate = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
+      initialDatePickerMode: DatePickerMode.year,
     );
 
-    if (pickedDate != null && pickedDate != DateTime.now()) {
-      String formattedDate = "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
-      _dobController.text = formattedDate;
+    if (picked != null && picked != DateTime.now()) {
+      String formattedDate =
+          "${picked.day}/${picked.month}/${picked.year}";
+      _dobController!.text = formattedDate;
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -76,10 +79,10 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
             child: Column(
               children: [
                 Image.asset("assets/images/complete_profile.png", width: media.width),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
-                Text(
+                const Text(
                   "Let’s complete your profile",
                   style: TextStyle(
                     color: AppColors.blackColor,
@@ -87,8 +90,8 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                SizedBox(height: 5),
-                Text(
+                const SizedBox(height: 5),
+                const Text(
                   "It will help us to know more about you!",
                   style: TextStyle(
                     color: AppColors.grayColor,
@@ -97,7 +100,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                SizedBox(height: 25),
+                const SizedBox(height: 25),
                 Container(
                   decoration: BoxDecoration(
                     color: AppColors.lightGrayColor,
@@ -136,11 +139,11 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           hint: Text("Choose Gender"),
                         ),
                       ),
-                      SizedBox(width: 8)
+                      const SizedBox(width: 8)
                     ],
                   ),
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 // RoundTextField(
                 //   controller: _dobController,
                 //   hintText: "Date of Birth",
@@ -150,21 +153,21 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                 //     _selectDate(context);
                 //   },
                 // ),
-                SizedBox(height: 15),
+                //SizedBox(height: 15),
                 RoundTextField(
                   controller: _weightController,
                   hintText: "Your Weight (kg)",
                   icon: "assets/icons/weight_icon.png",
                   textInputType: TextInputType.text,
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 RoundTextField(
                   controller: _heightController,
                   hintText: "Your Height (cm)",
                   icon: "assets/icons/swap_icon.png",
                   textInputType: TextInputType.text,
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 Container(
                   decoration: BoxDecoration(
                     color: AppColors.lightGrayColor,
@@ -193,7 +196,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           child: AbsorbPointer(
                             child: TextField(
                               controller: _dobController,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: "Date of Birth",
                                 border: InputBorder.none,
                               ),
@@ -202,11 +205,11 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 8)
+                      const SizedBox(width: 8)
                     ],
                   ),
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 RoundGradientButton(
                   title: "Next >",
                   onPressed: () async {
@@ -222,10 +225,10 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
 
                     // Calculate BMI
                     double weightInKg = double.tryParse(weight) ?? 0.0;
-                    double heightInMeter = double.tryParse(height) ?? 0.0;
-                    double bmi = calculateBMI(weightInKg, heightInMeter);
+                    double heightInCm = double.tryParse(height) ?? 0.0;
+                    double bmi = calculateBMI(weightInKg, heightInCm);
+                    String bmiGroup = determineBMIGroup(bmi)??'';
 
-                    // Store the user profile information including BMI and user details in Firestore
                     await _userProfileCollection.add({
                       'fname': userFname,
                       'lname': userLname,
@@ -235,7 +238,9 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       'weight': weight,
                       'height': height,
                       'bmi': bmi.toString(),
+                      'bmigroup': bmiGroup,
                     });
+
                     // Navigate to the next screen
                     Navigator.pushNamed(context, LoginScreen.routeName);
                   },
@@ -249,11 +254,23 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   }
 }
 
-double calculateBMI(double weightInKg, double heightInMeter) {
-  // BMI formula: BMI = weight (kg) / (height (m) * height (m))
-  if (heightInMeter > 0) {
-    return weightInKg / (heightInMeter * heightInMeter);
+double calculateBMI(double weightInKg, double heightInCM) {
+  if (heightInCM > 0) {
+    double bmi = weightInKg / ((heightInCM / 100) * (heightInCM / 100));
+    return double.parse(bmi.toStringAsFixed(2));
   } else {
-    return 0.0;
+    return 0.00;
   }
 }
+
+//determine user's BMI Group
+String? determineBMIGroup(double bmi) {
+  if (bmi < 18.5) {
+    return 'Underweight';
+  } else if (bmi >= 18.5 && bmi <= 24.9) {
+    return 'Normal';
+  } else if (bmi >= 25 && bmi <= 29.9) {
+    return 'Overweight';
+  }
+}
+

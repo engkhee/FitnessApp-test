@@ -14,6 +14,31 @@ class DatabaseHelper {
   final CollectionReference userFavoritesCollection =
   FirebaseFirestore.instance.collection('user_favorites');
 
+  Future<String?> getUserBMIgroup() async {
+    try {
+      String userEmail = FirebaseAuth.instance.currentUser?.email ?? "";
+
+      if (userEmail.isNotEmpty) {
+        QuerySnapshot<Map<String, dynamic>> userProfileDocs =
+        await FirebaseFirestore.instance
+            .collection('User_profile_info')
+            .where('email', isEqualTo: userEmail)
+            .get();
+
+        if (userProfileDocs.size > 0) {
+          // Use the first document in the query result
+          Map<String, dynamic>? userData = userProfileDocs.docs.first.data();
+          return userData?['bmigroup'] ?? '';
+        }
+      }
+      return ''; // Default BMI value if not found
+    } catch (e) {
+      print('Error getting user BMI: $e');
+      rethrow;
+    }
+  }
+
+
   Future<void> insertFoodItem(FoodItem foodItem) async {
     try {
       await foodCollection.add(foodItem.toMap());
@@ -46,6 +71,47 @@ class DatabaseHelper {
           likes: doc['likes'],
         );
       }).toList();
+    } catch (e) {
+      print('Error getting food items: $e');
+      rethrow;
+    }
+  }
+
+  Future<List<FoodItem>> UsergetFoodItems(String userBMIgroup) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> snapshot =
+      await foodCollection.get() as QuerySnapshot<Map<String, dynamic>>;
+
+      List<FoodItem> userSpecificItems = [];
+
+      snapshot.docs.forEach((DocumentSnapshot<Map<String, dynamic>> doc) {
+        FoodItem foodItem = FoodItem(
+          id: doc.id,
+          name: doc['name'],
+          image: doc['image'],
+          description: doc['description'],
+          category: doc['category'],
+          calories: doc['calories'],
+          fat: doc['fat'],
+          protein: doc['protein'],
+          carbohydrate: doc['carbohydrate'],
+          BMIgroup: doc['BMIgroup'],
+          ingredient: doc['ingredient'],
+          preparvideo: doc['preparvideo'],
+          likes: doc['likes'],
+        );
+
+        // Check if the food item's BMI group matches the user's BMI group after trimming
+        if (userBMIgroup.isNotEmpty &&
+            foodItem.BMIgroup
+                .split(',')
+                .map((group) => group.trim())
+                .contains(userBMIgroup.trim())) {
+          userSpecificItems.add(foodItem);
+        }
+      });
+
+      return userSpecificItems;
     } catch (e) {
       print('Error getting food items: $e');
       rethrow;

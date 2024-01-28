@@ -69,7 +69,7 @@ class _AdminFoodViewPageState extends State<AdminFoodViewPage> {
                           case SortingOption.Calories:
                             return a.calories.compareTo(b.calories);
                           case SortingOption.Favorite:
-                            return b.likes.compareTo(a.likes);;
+                            return b.likes.compareTo(a.likes);
                         }
                       });
 

@@ -17,6 +17,7 @@ import 'package:fitnessapp/view/notification/notification_screen.dart';
 import 'package:fitnessapp/view/on_boarding/on_boarding_screen.dart';
 import 'package:fitnessapp/view/on_boarding/start_screen.dart';
 import 'package:fitnessapp/view/profile/complete_profile_screen.dart';
+import 'package:fitnessapp/view/profile/user_profile.dart';
 import 'package:fitnessapp/view/signup/nutritionist_privacy_terms.dart';
 import 'package:fitnessapp/view/signup/register.dart';
 import 'package:fitnessapp/view/signup/signup_screen.dart';
@@ -47,7 +48,7 @@ final Map<String, WidgetBuilder> routes = {
   UserPage.routeName: (context) => UserPage(),
   DanceWorkout.routeName: (context) => DanceWorkout(),
   ExerciseTutos.routeName: (context) => ExerciseTutos(),
-  AuthService.routeName:(context) => AuthService(),
+  AuthService.routeName:(context) => const AuthService(),
   training.routeName:(context) => training(),
   AdminPage.routeName: (context) => AdminPage(),
   NutritionistList.routeName: (context) => NutritionistList(),
@@ -62,4 +63,5 @@ final Map<String, WidgetBuilder> routes = {
   NutriFoodViewPage.routeName:(context) =>NutriFoodViewPage(),
   RegisterPage.routeName:(context) => RegisterPage(),
   VerifyRule.routeName:(context)=> VerifyRule(),
+  UserProfile.routeName:(context)=> const UserProfile(),//addUserProfile
 };
