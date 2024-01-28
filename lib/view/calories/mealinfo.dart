@@ -133,6 +133,7 @@ class MealInformationWidget extends StatelessWidget {
     );
   }
 
+
   void editMeal(BuildContext context, Meal meal) async {
     final updatedMeal = await Navigator.push(
       context,
@@ -148,22 +149,7 @@ class MealInformationWidget extends StatelessWidget {
     }
   }
 
-
-  Map<String, List<Meal>> groupMealsByType(List<Meal> meals) {
-    Map<String, List<Meal>> mealsByType = {};
-
-    for (var meal in meals) {
-      if (!mealsByType.containsKey(meal.mealType)) {
-        mealsByType[meal.mealType] = [];
-      }
-
-      mealsByType[meal.mealType]!.add(meal);
-    }
-
-    return mealsByType;
-  }
-
-  void deleteMeal(BuildContext context, Meal meal) {
+  void deleteMeal(BuildContext context, Meal meal) async {
     print('Deleting meal with ID: ${meal.id}');
     showDialog(
       context: context,
@@ -187,7 +173,23 @@ class MealInformationWidget extends StatelessWidget {
                 // Perform the deletion using dbHelper
                 await dbHelper.deleteMeal(meal.id);
                 print('Meal deleted successfully.');
-                Navigator.of(context).pop(); // Close the dialog
+
+                // Show a Snackbar to indicate successful deletion
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Meal successfully deleted'),
+                  ),
+                );
+
+                // Close the dialog
+                Navigator.of(context).pop();
+
+                // Assuming you have a callback to update the selected date
+                // Call the callback to update the selected date
+                updateSelectedDate(meal.date);
+
+                // You can also add a callback to refresh the meal information
+                // refreshMealInformation();
               },
               child: const Text('Delete'),
             ),
@@ -195,5 +197,19 @@ class MealInformationWidget extends StatelessWidget {
         );
       },
     );
+  }
+
+  Map<String, List<Meal>> groupMealsByType(List<Meal> meals) {
+    Map<String, List<Meal>> mealsByType = {};
+
+    for (var meal in meals) {
+      if (!mealsByType.containsKey(meal.mealType)) {
+        mealsByType[meal.mealType] = [];
+      }
+
+      mealsByType[meal.mealType]!.add(meal);
+    }
+
+    return mealsByType;
   }
 }
