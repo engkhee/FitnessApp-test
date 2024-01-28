@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../common_widgets/round_button.dart';
 import '../../utils/app_colors.dart';
+import 'bmi_utils.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -94,6 +95,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void updateUserDataInFirestore() {
     try {
+      _updateBMI();
+      String? bmigroup = determineBMIGroup(double.parse(bmiController.text));
       // Update data in 'User_profile_info' collection
       FirebaseFirestore.instance
           .collection('User_profile_info')
@@ -109,6 +112,7 @@ class _ProfilePageState extends State<ProfilePage> {
             'height': heightController.text,
             'dob': dobController.text,
             'bmi': bmiController.text,
+            'bmigroup': bmigroup,
           });
         });
       }).catchError((error) {
@@ -119,7 +123,8 @@ class _ProfilePageState extends State<ProfilePage> {
       FirebaseFirestore.instance.collection('Users_public_user').doc(currentUser.uid).update({
         'firstName': firstnameController.text,
         'lastName': lastnameController.text,
-        // Add other fields as needed
+        'bmi': bmiController.text,
+        'bmiGroup': bmigroup,
       });
 
       // Show a success message or navigate to a different screen

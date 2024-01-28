@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../common_widgets/round_gradient_button.dart';
 import '../../common_widgets/round_textfield.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'bmi_utils.dart';
 
 class CompleteProfileScreen extends StatefulWidget {
   static String routeName = "/CompleteProfileScreen";
@@ -261,14 +262,14 @@ double calculateBMI(double weightInKg, double heightInCM) {
   }
 }
 
-//determine user's BMI Group
-String? determineBMIGroup(double bmi) {
-  if (bmi < 18.5) {
-    return 'Lightweight';
-  } else if (bmi >= 18.5 && bmi <= 24.9) {
-    return 'Normal';
-  } else if (bmi >= 25) {
-    return 'Overweight';
-  }
-}
+// //determine user's BMI Group
+// String? determineBMIGroup(double bmi) {
+//   if (bmi < 18.5) {
+//     return 'Lightweight';
+//   } else if (bmi >= 18.5 && bmi <= 24.9) {
+//     return 'Normal';
+//   } else if (bmi >= 25) {
+//     return 'Overweight';
+//   }
+// }
 
