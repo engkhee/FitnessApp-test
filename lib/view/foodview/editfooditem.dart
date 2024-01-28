@@ -60,7 +60,7 @@ class _EditFoodItemState extends State<EditFoodItem> {
               _buildTextField('Name', nameController),
               _buildTextField('Image URL', imageController),
               _buildTextField('Description', descriptionController),
-              _buildTextField('Calories', caloriesController, keyboardType: TextInputType.number),
+              _buildTextField('Calories (cal)', caloriesController, keyboardType: TextInputType.number),
               _buildTextField('Fat (g)', fatController, keyboardType: TextInputType.number),
               _buildTextField('Protein (g)', proteinController, keyboardType: TextInputType.number),
               _buildTextField('Carbohydrate (g)', carbohydrateController, keyboardType: TextInputType.number),

@@ -242,7 +242,7 @@ class _AddCaloriesPageState extends State<AddCaloriesPage> {
                     controller: _caloriesController,
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
-                      labelText: 'Calories:',
+                      labelText: 'Calories (cal):',
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
                     ),

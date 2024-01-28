@@ -175,7 +175,7 @@ class _UserProfileState extends State<UserProfile> {
                       children: [
                         Text(
                           username, // Concatenated user's first and last name
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: AppColors.blackColor,
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -212,7 +212,7 @@ class _UserProfileState extends State<UserProfile> {
                       subtitle: "Height",
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 15,
                   ),
                   Expanded(
@@ -221,7 +221,7 @@ class _UserProfileState extends State<UserProfile> {
                       subtitle: "Weight",
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 15,
                   ),
                   Expanded(
@@ -244,7 +244,7 @@ class _UserProfileState extends State<UserProfile> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Account",
                       style: TextStyle(
                         color: AppColors.blackColor,
@@ -283,7 +283,7 @@ class _UserProfileState extends State<UserProfile> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Notification",
                       style: TextStyle(
                         color: AppColors.blackColor,
@@ -304,7 +304,7 @@ class _UserProfileState extends State<UserProfile> {
                           const SizedBox(
                             width: 15,
                           ),
-                          Expanded(
+                          const Expanded(
                             child: Text(
                               "Pop-up Notification",
                               style: TextStyle(
