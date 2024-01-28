@@ -23,7 +23,9 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
   SortingOption selectedSortingOption = SortingOption.Name;
   String? currentUserId;
   Map<String, List<String>> userLikes = {};
-  String userBMIGroup = "Normal"; // Set a default BMI group
+  String userBMIGroup = "Normal"; // Default BMI group
+  Map<String, bool> favoriteStatusMap = {};
+
 
   @override
   void initState() {
@@ -53,20 +55,26 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
     });
   }
 
-  // Method to load user likes from the database
   Future<void> _loadUserLikes() async {
     try {
       // Load user likes from the database
       List<String> likes = await dbHelper.getUserLikes(currentUserId!);
       print('User likes loaded for $currentUserId: $likes');
 
+      Map<String, bool> updatedFavoriteStatusMap = {};
+      likes.forEach((foodItemId) {
+        updatedFavoriteStatusMap[foodItemId] = true;
+      });
+
       setState(() {
         userLikes[currentUserId!] = likes;
+        favoriteStatusMap = updatedFavoriteStatusMap;
       });
     } catch (e) {
       print('Error loading user likes: $e');
     }
   }
+
 
   // Method to load user's BMI group from the database
   Future<void> _loadUserBMIGroup() async {
@@ -83,22 +91,10 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
     }
   }
 
-  // Method to check if a food item is the user's favorite
   bool _isUserFavorite(String foodItemId) {
-    print('Checking favorite status for item $foodItemId');
-    print('currentUserId: $currentUserId');
-    print('userLikes: $userLikes');
-
-    if (currentUserId != null &&
-        userLikes.containsKey(currentUserId!) &&
-        userLikes[currentUserId!]!.contains(foodItemId)) {
-      print('Returning true');
-      return true;
-    } else {
-      print('Returning false');
-      return false;
-    }
+    return favoriteStatusMap.containsKey(foodItemId) && favoriteStatusMap[foodItemId]!;
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -275,7 +271,6 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
     );
   }
 
-  // Helper method to build a food item box
   Widget _buildFoodItemBox(BuildContext context, FoodItem foodItem) {
     List<String> itemBMIgroups =
     foodItem.BMIgroup.split(',').map((group) => group.trim()).toList();
@@ -283,103 +278,112 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
     List<String> itemCategories =
     foodItem.category.split(', ').map((category) => category.trim()).toList();
 
-    if (selectedCategory == 'All' ||
-        itemBMIgroups.contains(userBMIGroup)) {
-      bool isFavorite = _isUserFavorite(foodItem.id);
+    return FutureBuilder<bool>(
+      future: dbHelper.getUserLikeStatus(foodItem.id),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          bool isFavorite = snapshot.data ?? false;
 
-      return Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 2,
-              offset: Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Material(
-          borderRadius: BorderRadius.circular(15),
-          clipBehavior: Clip.antiAlias,
-          child: InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => FoodDetailPage(foodItem)),
-              );
-            },
-            child: Stack(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Image.network(
-                      foodItem.image,
-                      width: double.infinity,
-                      height: 120,
-                      fit: BoxFit.cover,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
+          if (selectedCategory == 'All' ||
+              itemBMIgroups.contains(userBMIGroup)) {
+            return Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 2,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Material(
+                borderRadius: BorderRadius.circular(15),
+                clipBehavior: Clip.antiAlias,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FoodDetailPage(foodItem)),
+                    );
+                  },
+                  child: Stack(
+                    children: [
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            foodItem.name,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          Image.network(
+                            foodItem.image,
+                            width: double.infinity,
+                            height: 120,
+                            fit: BoxFit.cover,
                           ),
-                          const SizedBox(height: 4),
-                          Text(
-                            'Calories: ${foodItem.calories}',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: AppColors.grayColor,
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  foodItem.name,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  'Calories: ${foodItem.calories}',
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: AppColors.grayColor,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      if (currentUserId != null)
-                        LikeButton(
-                          isLiked: _isUserFavorite(foodItem.id),
-                          onTap: () {
-                            _toggleFavorite(foodItem.id);
-                          },
-                        ),
-                      Text(
-                        '${foodItem.likes}',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: AppColors.grayColor,
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            if (currentUserId != null)
+                              LikeButton(
+                                isLiked: isFavorite,
+                                onTap: () {
+                                  _toggleFavorite(foodItem.id);
+                                },
+                              ),
+                            Text(
+                              '${foodItem.likes}',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: AppColors.grayColor,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
-      );
-    } else {
-      return Container();
-    }
+              ),
+            );
+          } else {
+            return Container();
+          }
+        } else {
+          // If connectionState is not done, return an empty container or any widget you prefer
+          return Container();
+        }
+      },
+    );
   }
 
 
-  // Method to toggle the favorite status of a food item
   void _toggleFavorite(String foodItemId) async {
     if (currentUserId != null) {
       bool isAlreadyLiked = await dbHelper.getUserLikeStatus(foodItemId);
@@ -399,6 +403,8 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
         } else {
           userLikes[currentUserId!] = [foodItemId];
         }
+
+        favoriteStatusMap[foodItemId] = !isAlreadyLiked;
       });
     } else {
       print('Current user ID is null.');
