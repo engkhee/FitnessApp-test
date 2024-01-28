@@ -190,32 +190,32 @@ class _HomeScreenState extends State<HomeScreen> {
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
-                                  const SizedBox(height: 8),
+                                  const SizedBox(height: 10),
                                   Text(
                                     getBmiStatus(bmi),
                                     style: TextStyle(
                                       color: AppColors.whiteColor.withOpacity(0.8),
-                                      fontSize: 13,
+                                      fontSize: 16,
                                       fontFamily: "Poppins",
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                   SizedBox(height: media.width * 0.05),
-                                  SizedBox(
-                                    height: 35,
-                                    width: 100,
-                                    child: RoundButton(
-                                      title: "View More",
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => UserProfile(),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
+                                  // SizedBox(
+                                  //   height: 35,
+                                  //   width: 100,
+                                  //   child: RoundButton(
+                                  //     title: "View More",
+                                  //     onPressed: () {
+                                  //       Navigator.push(
+                                  //         context,
+                                  //         MaterialPageRoute(
+                                  //           builder: (context) => UserProfile(),
+                                  //         ),
+                                  //       );
+                                  //     },
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                               AspectRatio(
