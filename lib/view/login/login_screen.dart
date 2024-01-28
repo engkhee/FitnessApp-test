@@ -24,14 +24,37 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   Future<void> _login() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailController.text,
-      password: _passwordController.text,
-    );
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
 
-    // Check if the logged-in user is the admin
-    if (_emailController.text == 'admin@fitness.com' && _passwordController.text == 'admin123') {
-      Navigator.pushNamed(context, AdminPage.routeName);
+    if (email.isEmpty || password.isEmpty) {
+      // Show an error message if email or password is empty
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please enter both email and password.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      // Check if the logged-in user is the admin
+      if (email == 'admin@fitness.com' && password == 'admin123') {
+        Navigator.pushNamed(context, AdminPage.routeName);
+      } else {
+        // Navigate to the user dashboard
+        Navigator.pushNamed(context, DashboardScreen.routeName);
+      }
+    } catch (e) {
+      // Handle login errors here (e.g., invalid credentials)
+      print("Login failed: $e");
+      // You can show an error message to the user if needed
     }
   }
 
@@ -119,10 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const Spacer(),
                 RoundGradientButton(
                   title: "Login as user",
-                  onPressed: () {
-                    _login();
-                    Navigator.pushNamed(context, DashboardScreen.routeName);
-                  },
+                  onPressed: _login,
                 ),
                 RoundGradientButton(
                   title: "Login as nutritionist",

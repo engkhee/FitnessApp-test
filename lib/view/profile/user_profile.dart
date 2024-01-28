@@ -127,7 +127,7 @@ class _UserProfileState extends State<UserProfile> {
         actions: [
           GestureDetector(
             onTap: () {
-              // Call the signOut method here if needed
+              signOut();
               Navigator.pushNamed(context, LoginScreen.routeName);
             },
             child: Container(
