@@ -49,6 +49,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
     // Fetch user data from Firestore when the page initializes
     fetchUserInfo();
+
+    _updateBMI();
   }
 
   void fetchUserInfo() async {
@@ -106,6 +108,7 @@ class _ProfilePageState extends State<ProfilePage> {
             'weight': weightController.text,
             'height': heightController.text,
             'dob': dobController.text,
+            'bmi': bmiController.text,
           });
         });
       }).catchError((error) {
@@ -289,12 +292,32 @@ class _ProfilePageState extends State<ProfilePage> {
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
+      onChanged: (value) {
+        // Trigger BMI calculation when weight or height changes
+        _updateBMI();
+      },
       decoration: InputDecoration(
         label: Text(label),
         prefixIcon: _getPrefixIcon(label),
       ),
     );
   }
+
+
+  void _updateBMI() {
+    // Get the current weight and height values
+    double weight = double.tryParse(weightController.text) ?? 0.0;
+    double height = double.tryParse(heightController.text) ?? 0.0;
+
+    print("Weight: $weight, Height: $height");
+
+    // Calculate BMI and update the BMI controller
+    double bmi = calculateBMI(weight, height);
+    bmiController.text = bmi.toStringAsFixed(2);
+    print("BMI: $bmi");
+  }
+
+
 
   Widget _buildDateOfBirthField() {
     return Container(
@@ -360,6 +383,16 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 }
+
+double calculateBMI(double weightInKg, double heightInCM) {
+  if (heightInCM > 0) {
+    double bmi = weightInKg / ((heightInCM / 100) * (heightInCM / 100));
+    return double.parse(bmi.toStringAsFixed(2));
+  } else {
+    return 0.00;
+  }
+}
+
 
 void main() {
   runApp(MyApp());
