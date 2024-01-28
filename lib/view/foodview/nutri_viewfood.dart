@@ -14,6 +14,11 @@ class NutriFoodViewPage extends StatefulWidget {
 
 class _FoodViewPageState extends State<NutriFoodViewPage> {
   final DatabaseHelper dbHelper = DatabaseHelper();
+
+  Future<void> _refreshData() async {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -202,13 +207,26 @@ class _FoodViewPageState extends State<NutriFoodViewPage> {
     );
   }
 
-  void _editFoodItem(BuildContext context, FoodItem foodItem) {
-    // Navigate to the Edit Food Item Page
-    Navigator.push(
+  // void _editFoodItem(BuildContext context, FoodItem foodItem) {
+  //   // Navigate to the Edit Food Item Page
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => EditFoodItem(foodItem)),
+  //   );
+  // }
+  void _editFoodItem(BuildContext context, FoodItem foodItem) async {
+    final result = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => EditFoodItem(foodItem)),
     );
+
+    // Check if result is true (edited successfully)
+    if (result == true) {
+      // Refresh the data
+      _refreshData();
+    }
   }
+
 
 
   void _deleteFoodItem(BuildContext context, FoodItem foodItem) {

@@ -1,4 +1,3 @@
-// Import necessary packages and classes
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/utils/app_colors.dart';
 import 'package:fitnessapp/view/foodview/database_helper.dart';
@@ -7,25 +6,25 @@ import 'package:fitnessapp/view/foodview/fooddetails.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitnessapp/view/forum/like_button.dart';
 
-// Enum to represent sorting options
 enum SortingOption { Name, Calories, Favorite }
 
-// Main class for the user's food view page
 class UserFoodViewPage extends StatefulWidget {
   @override
   _UserFoodViewPageState createState() => _UserFoodViewPageState();
 }
 
-// State class for the user's food view page
-class _UserFoodViewPageState extends State<UserFoodViewPage> {
+class _UserFoodViewPageState extends State<UserFoodViewPage>
+    with AutomaticKeepAliveClientMixin {
   final DatabaseHelper dbHelper = DatabaseHelper();
-  String selectedCategory = 'All'; // Default category
+  String selectedCategory = 'All';
   SortingOption selectedSortingOption = SortingOption.Name;
   String? currentUserId;
   Map<String, List<String>> userLikes = {};
-  String userBMIGroup = "Normal"; // Default BMI group
+  String userBMIGroup = "Normal";
   Map<String, bool> favoriteStatusMap = {};
 
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -34,30 +33,31 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
     _getCurrentUser();
   }
 
-  // Method to get the current user's information
   void _getCurrentUser() {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       setState(() {
         currentUserId = user?.uid;
         print('Current user ID: $currentUserId');
         if (currentUserId != null) {
-          // Load user likes when the user logs in
-          _loadUserLikes().then((_) {
-            // After likes are loaded, build the UI
-            setState(() {
-              // Update any other UI state if needed
-            });
-          });
-          // Load user BMI group
-          _loadUserBMIGroup();
+          _loadUserData();
         }
       });
     });
+
+    _loadUserData();
+  }
+
+  void _loadUserData() {
+    _loadUserLikes().then((_) {
+      setState(() {
+        // Update any other UI state if needed
+      });
+    });
+    _loadUserBMIGroup();
   }
 
   Future<void> _loadUserLikes() async {
     try {
-      // Load user likes from the database
       List<String> likes = await dbHelper.getUserLikes(currentUserId!);
       print('User likes loaded for $currentUserId: $likes');
 
@@ -75,11 +75,8 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
     }
   }
 
-
-  // Method to load user's BMI group from the database
   Future<void> _loadUserBMIGroup() async {
     try {
-      // Load user's BMI group from the database
       String? bmiGroup = await dbHelper.getUserBMIgroup();
       if (bmiGroup != null && bmiGroup.isNotEmpty) {
         setState(() {
@@ -92,13 +89,23 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
   }
 
   bool _isUserFavorite(String foodItemId) {
-    return favoriteStatusMap.containsKey(foodItemId) && favoriteStatusMap[foodItemId]!;
+    return favoriteStatusMap.containsKey(foodItemId) &&
+        favoriteStatusMap[foodItemId]!;
   }
 
+  Widget _buildLikeButton(bool isFavorite, String foodItemId) {
+    return LikeButton(
+      isLiked: isFavorite,
+      onTap: () {
+        _toggleFavorite(foodItemId);
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     print('Building FutureBuilder...');
+    super.build(context); // Ensure that AutomaticKeepAlive is properly called
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -129,15 +136,15 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
-                    } else if (snapshot.data == null || snapshot.data!.isEmpty) {
+                    } else if (snapshot.data == null ||
+                        snapshot.data!.isEmpty) {
                       return const Text('No food items available.');
                     } else {
-                      // Filter and sort the items
                       List<FoodItem> filteredItems = snapshot.data!;
                       if (selectedCategory != 'All') {
                         filteredItems = filteredItems
-                            .where((foodItem) =>
-                            foodItem.category.contains(selectedCategory))
+                            .where((foodItem) => foodItem.category
+                            .contains(selectedCategory))
                             .toList();
                       }
 
@@ -150,7 +157,9 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
                           case SortingOption.Favorite:
                             bool isAFavorite = _isUserFavorite(a.id);
                             bool isBFavorite = _isUserFavorite(b.id);
-                            return isAFavorite == isBFavorite ? 0 : isAFavorite
+                            return isAFavorite == isBFavorite
+                                ? 0
+                                : isAFavorite
                                 ? -1
                                 : 1;
                         }
@@ -167,7 +176,10 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
                         itemCount: filteredItems.length,
                         itemBuilder: (context, index) {
                           return _buildFoodItemBox(
-                              context, filteredItems[index]);
+                            context,
+                            filteredItems[index],
+                            _isUserFavorite(filteredItems[index].id),
+                          );
                         },
                       );
                     }
@@ -183,7 +195,6 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
     );
   }
 
-  // Helper method to build the category filter dropdown
   Widget _buildCategoryFilterDropdown() {
     return Row(
       children: [
@@ -216,7 +227,6 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
     );
   }
 
-  // Helper method to build the sorting button
   Widget _buildSortingButton() {
     return IconButton(
       icon: const Icon(Icons.sort),
@@ -226,7 +236,6 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
     );
   }
 
-  // Helper method to show sorting options in a modal bottom sheet
   void _showSortingOptions(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -271,127 +280,107 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
     );
   }
 
-  Widget _buildFoodItemBox(BuildContext context, FoodItem foodItem) {
+  Widget _buildFoodItemBox(
+      BuildContext context, FoodItem foodItem, bool isFavorite) {
     List<String> itemBMIgroups =
     foodItem.BMIgroup.split(',').map((group) => group.trim()).toList();
 
     List<String> itemCategories =
     foodItem.category.split(', ').map((category) => category.trim()).toList();
 
-    return FutureBuilder<bool>(
-      future: dbHelper.getUserLikeStatus(foodItem.id),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          bool isFavorite = snapshot.data ?? false;
-
-          if (selectedCategory == 'All' ||
-              itemBMIgroups.contains(userBMIGroup)) {
-            return Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 2,
-                    offset: Offset(0, 2),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 2,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Material(
+        borderRadius: BorderRadius.circular(15),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => FoodDetailPage(foodItem)),
+            );
+          },
+          child: Stack(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image.network(
+                    foodItem.image,
+                    width: double.infinity,
+                    height: 120,
+                    fit: BoxFit.cover,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          foodItem.name,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Calories: ${foodItem.calories}',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: AppColors.grayColor,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-              child: Material(
-                borderRadius: BorderRadius.circular(15),
-                clipBehavior: Clip.antiAlias,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => FoodDetailPage(foodItem)),
-                    );
-                  },
-                  child: Stack(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Image.network(
-                            foodItem.image,
-                            width: double.infinity,
-                            height: 120,
-                            fit: BoxFit.cover,
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    if (currentUserId != null)
+                      _buildLikeButton(isFavorite, foodItem.id),
+                    FutureBuilder<int>(
+                      future: dbHelper.getLikesCount(foodItem.id),
+                      builder: (context, snapshot) {
+                        int likesCount = snapshot.data ?? 0;
+
+                        return Text(
+                          '$likesCount',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: AppColors.grayColor,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  foodItem.name,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  'Calories: ${foodItem.calories}',
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: AppColors.grayColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            if (currentUserId != null)
-                              LikeButton(
-                                isLiked: isFavorite,
-                                onTap: () {
-                                  _toggleFavorite(foodItem.id);
-                                },
-                              ),
-                            Text(
-                              '${foodItem.likes}',
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: AppColors.grayColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
-            );
-          } else {
-            return Container();
-          }
-        } else {
-          // If connectionState is not done, return an empty container or any widget you prefer
-          return Container();
-        }
-      },
+            ],
+          ),
+        ),
+      ),
     );
   }
-
 
   void _toggleFavorite(String foodItemId) async {
     if (currentUserId != null) {
       bool isAlreadyLiked = await dbHelper.getUserLikeStatus(foodItemId);
-
-      int currentLikes = await dbHelper.getLikesCount(foodItemId);
-
-      // Update the likes count and favorite status in the user interface
-      dbHelper.updateLikes(foodItemId, !isAlreadyLiked, currentLikes);
 
       setState(() {
         if (userLikes.containsKey(currentUserId!)) {
@@ -406,6 +395,9 @@ class _UserFoodViewPageState extends State<UserFoodViewPage> {
 
         favoriteStatusMap[foodItemId] = !isAlreadyLiked;
       });
+
+      int currentLikes = await dbHelper.getLikesCount(foodItemId);
+      dbHelper.updateLikes(foodItemId, !isAlreadyLiked, currentLikes);
     } else {
       print('Current user ID is null.');
     }

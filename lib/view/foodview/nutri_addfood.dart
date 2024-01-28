@@ -48,181 +48,283 @@ class _AddFoodState extends State<AddFood> {
 
 
   Widget _buildPageOne() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Form(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildInputField('Meal Name', nameController),
-            const SizedBox(height: 12),
-            const Text(
-              'Description:',
-              style: TextStyle(
-                color: AppColors.grayColor,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            TextField(
-              controller: descriptionController,
-              maxLines: null,
-              decoration: const InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.secondaryColor1),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Card(
+          elevation: 5.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildInputField('Meal Name', nameController),
+                const SizedBox(height: 12),
+                const Text(
+                  'Description:',
+                  style: TextStyle(
+                    color: AppColors.grayColor,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: descriptionController,
+                  maxLines: null,
+                  decoration: const InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AppColors.secondaryColor1),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                _buildInputField('Image URL', imageController),
+                const SizedBox(height: 12),
+                _buildDropdownField('Category', selectedCategories, categories),
+                const SizedBox(height: 12),
+                Align(
+                  alignment: Alignment.center,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      _pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+                      setState(() {
+                        _currentPage = 1;
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: AppColors.adminpageColor2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 12),
+                      child: Text(
+                        'Next',
+                        style: TextStyle(
+                          color: AppColors.whiteColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 12),
-            _buildInputField('Image URL', imageController),
-            const SizedBox(height: 12),
-            _buildDropdownField('Category', selectedCategories, categories),
-            const SizedBox(height: 12),
-            Align(
-              alignment: Alignment.center,
-              child: RoundButton(
-                title: 'Next',
-                onPressed: () {
-                  _pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-                  setState(() {
-                    _currentPage = 1;
-                  });
-                },
-                type: RoundButtonType.primaryBG,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
 
   Widget _buildPageTwo() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Form(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildInputField('Calories', caloriesController),
-            const SizedBox(height: 12),
-            _buildInputField('Fat (g)', fatController),
-            const SizedBox(height: 12),
-            _buildInputField('Protein (g)', proteinController),
-            const SizedBox(height: 12),
-            _buildInputField('Carbohydrate (g)', carbohydrateController),
-            const SizedBox(height: 12),
-            _buildDropdownField('Suitable for BMI Group', bmiGroupsselected, bmiGroups),
-            const SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Card(
+          elevation: 5.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: RoundButton(
-                    title: 'Back',
-                    onPressed: () {
-                      _pageController.previousPage(duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-                      setState(() {
-                        _currentPage = 0;
-                      });
-                    },
-                    type: RoundButtonType.primaryBG,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: RoundButton(
-                    title: 'Next',
-                    onPressed: () {
-                      _pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-                      setState(() {
-                        _currentPage = 2;
-                      });
-                    },
-                    type: RoundButtonType.primaryBG,
-                  ),
+                _buildInputField('Calories (cal)', caloriesController),
+                const SizedBox(height: 12),
+                _buildInputField('Fat (g)', fatController),
+                const SizedBox(height: 12),
+                _buildInputField('Protein (g)', proteinController),
+                const SizedBox(height: 12),
+                _buildInputField('Carbohydrate (g)', carbohydrateController),
+                const SizedBox(height: 12),
+                _buildDropdownField('Suitable for BMI Group', bmiGroupsselected, bmiGroups),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _pageController.previousPage(duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+                          setState(() {
+                            _currentPage = 0;
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: AppColors.adminpageColor2,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 12),
+                          child: Text(
+                            'Back',
+                            style: TextStyle(
+                              color: AppColors.whiteColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+                          setState(() {
+                            _currentPage = 2;
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: AppColors.adminpageColor2,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 12),
+                          child: Text(
+                            'Next',
+                            style: TextStyle(
+                              color: AppColors.whiteColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );
   }
 
   Widget _buildPageThree() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Form(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Ingredients:',
-              style: const TextStyle(
-                color: AppColors.grayColor,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            TextField(
-              controller: ingredientsController,
-              maxLines: null,  // Allow multiple lines
-              decoration: const InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.secondaryColor1),
-                ),
-              ),
-            ),
-            const SizedBox(height: 12),
-            const Text(
-              'Preparation Video Link:',
-              style: TextStyle(
-                color: AppColors.grayColor,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            TextField(
-              controller: preparationController,
-              decoration: const InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.secondaryColor1),
-                ),
-              ),
-            ),
-            const SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Card(
+          elevation: 5.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: RoundButton(
-                    title: 'Back',
-                    onPressed: () {
-                      _pageController.previousPage(duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-                      setState(() {
-                        _currentPage = 1;
-                      });
-                    },
-                    type: RoundButtonType.primaryBG,
+                const Text(
+                  'Ingredients:',
+                  style: TextStyle(
+                    color: AppColors.grayColor,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: RoundButton(
-                    title: 'Submit',
-                    onPressed: () {
-                      _addFoodItem(context);
-                    },
-                    type: RoundButtonType.primaryBG,
+                const SizedBox(height: 8),
+                TextField(
+                  controller: ingredientsController,
+                  maxLines: null,  // Allow multiple lines
+                  decoration: const InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AppColors.secondaryColor1),
+                    ),
                   ),
+                ),
+                const SizedBox(height: 12),
+                const Text(
+                  'Preparation Video Link:',
+                  style: TextStyle(
+                    color: AppColors.grayColor,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: preparationController,
+                  decoration: const InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AppColors.secondaryColor1),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _pageController.previousPage(duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+                          setState(() {
+                            _currentPage = 1;
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: AppColors.adminpageColor2,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 12),
+                          child: Text(
+                            'Back',
+                            style: TextStyle(
+                              color: AppColors.whiteColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _addFoodItem(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: AppColors.adminpageColor2,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 12),
+                          child: Text(
+                            'Submit',
+                            style: TextStyle(
+                              color: AppColors.whiteColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -337,7 +439,7 @@ class _AddFoodState extends State<AddFood> {
         ));
 
         Future.delayed(Duration(milliseconds: 500), () {
-          Navigator.pop(context);
+          Navigator.pop(context, true);
         });
 
       } catch (e) {

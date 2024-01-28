@@ -75,7 +75,7 @@ class _EditCaloriesState extends State<EditCalories> {
                   _buildTextField('Fat (g):', widget.originalMeal.fat.toString(), (value) {
                     fat = double.parse(value!);
                   }),
-                  _buildTextField('Calories:', widget.originalMeal.totalCalories.toString(), (value) {
+                  _buildTextField('Calories (cal):', widget.originalMeal.totalCalories.toString(), (value) {
                     totalCalories = double.parse(value!);
                   }),
                   _buildDateField(),
