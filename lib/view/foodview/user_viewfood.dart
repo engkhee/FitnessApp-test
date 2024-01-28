@@ -14,7 +14,7 @@ class UserFoodViewPage extends StatefulWidget {
 }
 
 class _UserFoodViewPageState extends State<UserFoodViewPage>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin, WidgetsBindingObserver {
   final DatabaseHelper dbHelper = DatabaseHelper();
   String selectedCategory = 'All';
   SortingOption selectedSortingOption = SortingOption.Name;
@@ -31,6 +31,19 @@ class _UserFoodViewPageState extends State<UserFoodViewPage>
     super.initState();
     print('Initializing state...');
     _getCurrentUser();
+    WidgetsBinding.instance?.addObserver(this);
+  }
+
+  void dispose() {
+    WidgetsBinding.instance?.removeObserver(this); // Add this line to unregister the observer
+    super.dispose();
+  }
+
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      // When the app comes back to the foreground, reload the user data
+      _loadUserData();
+    }
   }
 
   void _getCurrentUser() {
@@ -43,17 +56,15 @@ class _UserFoodViewPageState extends State<UserFoodViewPage>
         }
       });
     });
-
-    _loadUserData();
   }
 
   void _loadUserData() {
-    _loadUserLikes().then((_) {
-      setState(() {
-        // Update any other UI state if needed
+    if (currentUserId != null) {
+      _loadUserLikes().then((_) {
+        // Ensure that _loadUserLikes is called only once during initialization
+        _loadUserBMIGroup();
       });
-    });
-    _loadUserBMIGroup();
+    }
   }
 
   Future<void> _loadUserLikes() async {
