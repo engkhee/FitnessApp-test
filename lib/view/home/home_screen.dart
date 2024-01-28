@@ -207,7 +207,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: RoundButton(
                                       title: "View More",
                                       onPressed: () {
-                                        Navigator.pushNamed(context, UserProfile.routeName);
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => UserProfile(),
+                                          ),
+                                        );
                                       },
                                     ),
                                   ),

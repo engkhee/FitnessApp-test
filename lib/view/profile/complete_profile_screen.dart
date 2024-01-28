@@ -54,12 +54,10 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     );
 
     if (picked != null && picked != DateTime.now()) {
-      String formattedDate =
-          "${picked.day}/${picked.month}/${picked.year}";
-      _dobController!.text = formattedDate;
+      String formattedDate = "${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}";
+      _dobController.text = formattedDate;
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
