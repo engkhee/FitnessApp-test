@@ -23,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  Future<void> _login() async {
+  Future<void> _login(String role) async {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
 
@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -48,8 +48,19 @@ class _LoginScreenState extends State<LoginScreen> {
       if (email == 'admin@fitness.com' && password == 'admin123') {
         Navigator.pushNamed(context, AdminPage.routeName);
       } else {
-        // Navigate to the user dashboard
-        Navigator.pushNamed(context, DashboardScreen.routeName);
+        // Navigate to the appropriate dashboard based on the role
+        switch (role) {
+          case 'user':
+            Navigator.pushNamed(context, DashboardScreen.routeName);
+            break;
+          case 'nutritionist':
+            Navigator.pushNamed(context, VerifyCode.routeName);
+            break;
+        // Add more cases for other roles if needed
+          default:
+            print('Unknown role');
+            break;
+        }
       }
     } catch (e) {
       // Handle login errors here (e.g., invalid credentials)
@@ -57,6 +68,10 @@ class _LoginScreenState extends State<LoginScreen> {
       // You can show an error message to the user if needed
     }
   }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -142,13 +157,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 const Spacer(),
                 RoundGradientButton(
                   title: "Login as user",
-                  onPressed: _login,
+                  onPressed: () => _login('user'),
                 ),
                 RoundGradientButton(
                   title: "Login as nutritionist",
-                  onPressed: () {
-                    Navigator.pushNamed(context, VerifyCode.routeName);
-                  },
+                  onPressed: () => _login('nutritionist'),
                 ),
                 SizedBox(height: media.width * 0.01),
                 const SizedBox(height: 20),
@@ -188,3 +201,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
