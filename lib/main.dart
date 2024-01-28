@@ -4,7 +4,6 @@ import 'package:fitnessapp/view/admin/admin_page.dart';
 import 'package:fitnessapp/view/auth/auth.dart';
 import 'package:fitnessapp/view/login/login_screen.dart';
 import 'package:fitnessapp/view/profile/provider.dart';
-import 'package:fitnessapp/view/profile/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnessapp/view/firebase/firebase_functions.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -36,9 +35,8 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           fontFamily: "Poppins"
       ),
-      home: Authpage(),
-         //LoginScreen(),
-      //UserProfile(),
+      home: //Authpage(),
+         LoginScreen(),
       //CaloriesTrackerPage(),
     );
   }
