@@ -30,6 +30,33 @@ class NutritionistPage extends StatelessWidget {
             'assets/icons/back_icon.png',
           ),
         ),
+        actions: [
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, LoginScreen.routeName);
+            },
+            child: Container(
+              margin: const EdgeInsets.all(8),
+              height: 40,
+              width: 40,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: AppColors.lightGrayColor,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Image.asset(
+                "assets/icons/logout.png",
+                width: 12,
+                height: 12,
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+        ],
+
+
+
+
       ),
 
       body: Container(
