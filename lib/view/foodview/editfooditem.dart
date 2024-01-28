@@ -206,6 +206,6 @@ class _EditFoodItemState extends State<EditFoodItem> {
     DatabaseHelper dbHelper = DatabaseHelper();
     // Update the database using the instance of DatabaseHelper
     await dbHelper.updateFoodItem(updatedFoodItem);
-    Navigator.pop(context, updatedFoodItem);
+    Navigator.pop(context, true);
   }
 }
